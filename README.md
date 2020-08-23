@@ -11,3 +11,17 @@ Since income comparision is complicated, we offer _three default deflators_ (nam
 If you like _interactive_ visualization, our graph can be display using JavaScript AmChart library. If you like _animated_ visualization, we offer a dynamically control animation of our graph based on Python Matplotlib library.
 
 Happy exploring the complexity of national income distribution via visualization!
+
+You can import this module with PIP.
+
+```bash
+$ python3 -m pip install incomevis
+```
+
+**TODO:**
+- [ ] Get gif animation for readme
+- [ ] change package name
+- [ ] safe large file on git?
+- [ ] update homepage
+- [ ] comprehensively test for other functionality - percentile, bootstrap, etc
+- [ ] marketing?
