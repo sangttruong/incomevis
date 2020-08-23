@@ -1,3 +1,10 @@
+<p align="center">
+  <img width="40%" src="https://raw.githubusercontent.com/sangttruong/incomevis/master/logo.png" />
+</p>
+
+--------------------------------------------------------------------------------
+
+
 # incomevis
 [![License: MIT](https://img.shields.io/github/license/BayesWitnesses/m2cgen.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
 [![Python Versions](https://img.shields.io/pypi/pyversions/m2cgen.svg?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
