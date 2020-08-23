@@ -33,7 +33,7 @@ Interactive visualization in AmChart. More example of this type of graph is avai
 
 
 ## Contact
-Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) (technical) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
+Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
 
 **TODO:**
 - [ ] Get gif animation for readme
