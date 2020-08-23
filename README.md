@@ -57,7 +57,7 @@ $ python3 -m pip install incomevis
 </div>
 
 
-![logo](Gallery/YEAR2018_HHINCOME.jpeg)
+![logo](logo.png)
 
 
 ## Contact
