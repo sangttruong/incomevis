@@ -24,44 +24,16 @@ $ python3 -m pip install incomevis
 
 ## Gallery
 
+Interactive visualization in AmChart. More example of this type of graph is available at (https://research.depauw.edu/econ/incomevis)[https://research.depauw.edu/econ/IncIneq/index.html]
+![logo](gallery/YEAR2018_HHINCOME.jpeg)
+
 *   Dynamic animation
 *   AmChart
 *   Bootstrap
 
-<div class="row">
-
-<a href=https://seaborn.pydata.org/examples/scatterplot_matrix.html>
-<img src="https://seaborn.pydata.org/_static/scatterplot_matrix_thumb.png" height="135" width="135">
-</a>
-
-<a href=https://seaborn.pydata.org/examples/errorband_lineplots.html>
-<img src="https://seaborn.pydata.org/_static/errorband_lineplots_thumb.png" height="135" width="135">
-</a>
-
-<a href=https://seaborn.pydata.org/examples/different_scatter_variables.html>
-<img src="https://seaborn.pydata.org/_static/different_scatter_variables_thumb.png" height="135" width="135">
-</a>
-
-<a href=https://seaborn.pydata.org/examples/many_facets.html>
-<img src="https://seaborn.pydata.org/_static/many_facets_thumb.png" height="135" width="135">
-</a>
-
-<a href=https://seaborn.pydata.org/examples/structured_heatmap.html>
-<img src="https://seaborn.pydata.org/_static/structured_heatmap_thumb.png" height="135" width="135">
-</a>
-
-<a href=https://seaborn.pydata.org/examples/horizontal_boxplot.html>
-<img src="https://seaborn.pydata.org/_static/horizontal_boxplot_thumb.png" height="135" width="135">
-</a>
-
-</div>
-
-
-![logo](gallery/YEAR2018_HHINCOME.jpeg)
-
 
 ## Contact
-Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
+Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) (technical) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
 
 **TODO:**
 - [ ] Get gif animation for readme
