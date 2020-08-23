@@ -3,9 +3,6 @@
 </p>
 
 --------------------------------------------------------------------------------
-
-
-# incomevis
 [![License: MIT](https://img.shields.io/github/license/BayesWitnesses/m2cgen.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
 [![Python Versions](https://img.shields.io/pypi/pyversions/m2cgen.svg?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
 [![PyPI Version](https://img.shields.io/pypi/v/m2cgen.svg?logo=pypi&logoColor=white)](https://pypi.org/project/IncomeVis/)
