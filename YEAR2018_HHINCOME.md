@@ -1,5 +1,3 @@
-<!--Comment-->
-<!DOCTYPE html>
 <html>
 		<!-- amCharts javascript sources -->
 		<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
