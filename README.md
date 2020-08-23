@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="40%" src="https://raw.githubusercontent.com/sangttruong/incomevis/master/logo.png" />
+  <img width="80%" src="https://raw.githubusercontent.com/sangttruong/incomevis/master/logo.png" />
 </p>
 
 --------------------------------------------------------------------------------
