@@ -1,4 +1,15 @@
-![logo](Picture1.png)
+# incomevis
+[![GitHub Actions Status](https://github.com/BayesWitnesses/m2cgen/workflows/GitHub%20Actions/badge.svg?branch=master)](https://github.com/BayesWitnesses/m2cgen/actions)
+[![Coverage Status](https://coveralls.io/repos/github/BayesWitnesses/m2cgen/badge.svg?branch=master)](https://coveralls.io/github/BayesWitnesses/m2cgen?branch=master)
+[![License: MIT](https://img.shields.io/github/license/BayesWitnesses/m2cgen.svg)](https://github.com/BayesWitnesses/m2cgen/blob/master/LICENSE)
+[![Python Versions](https://img.shields.io/pypi/pyversions/m2cgen.svg?logo=python&logoColor=white)](https://pypi.org/project/m2cgen)
+[![PyPI Version](https://img.shields.io/pypi/v/m2cgen.svg?logo=pypi&logoColor=white)](https://pypi.org/project/m2cgen)
+[![Downloads](https://pepy.tech/badge/m2cgen)](https://pepy.tech/project/m2cgen)
 
-## Motivation
-Information about the distribution of income is communicated by tabulation and statistics (e.g., the Gini coefficient). These can be difficult to understand and often require expert knowledge. Our goal is to provide a novel, eye-catching visual display of the income distribution in the United States that conveys fundamental information about the evolution and current level of income inequality to a wide audience. We use IPUMS CPS data to create household income deciles adjusted for price level and household size for each of the 50 states and the District of Columbia from 1976 to 2018. Plotting these data gives a 3D chart that provides a startling picture of income differences within and across states over time. The visualization is thought provoking and can be used at all levels to stimulate further investigation: [research.depauw.edu/econ/IncIneq](https://research.depauw.edu/econ/IncIneq/).
+Are you a policy-maker who wants to see the dynamic of national income inequality? Are you a researcher who want to visualize economic growth puzzles such as convergence? Or are you simply wondering where you are in the national income distribution? Wonder no more because we present IncomeVis, a library for income visualization!
+
+Since income comparision is complicated, we offer three default deflators (namely consumer price index, household size, and regional price parities) to bring the nominal income level to the real income level as much as we can. The income adjustment process is automatically handled for you. How convinient is that! If these deflators couldn't make you sastify, you can further adjust our deflated income if you have additional deflators.
+
+If you like interactive visualization, our graph can be display using JavaScript AmChart library. If you like animated visualization, we offer a dynamically control animation of our graph based on Python Matplotlib library.
+
+Happy exploring the complexity of national income distribution via visualization!
