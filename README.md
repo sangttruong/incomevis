@@ -19,7 +19,7 @@ Happy visualizing economic complexity!
 ## Installation
 You can import this module with PIP:
 ```bash
-$ python3 -m pip install incomevis
+$ pip install incomevis
 ```
 
 ## Gallery
