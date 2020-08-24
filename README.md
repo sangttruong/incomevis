@@ -22,8 +22,6 @@ You can import this module with PIP:
 $ pip install incomevis
 ```
 
-![flask-share demo](gallery/interactive.jpeg)
-
 ## Gallery
 <div class="row">
 
