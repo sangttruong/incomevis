@@ -22,6 +22,9 @@ You can import this module with PIP:
 $ pip install incomevis
 ```
 
+![logo](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
+
+
 ## Gallery
 <div class="row">
 
