@@ -3,9 +3,9 @@
 </p>
 
 --------------------------------------------------------------------------------
-[![License: MIT](https://img.shields.io/github/license/BayesWitnesses/m2cgen.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
-[![Python Versions](https://img.shields.io/pypi/pyversions/m2cgen.svg?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
-[![PyPI Version](https://img.shields.io/pypi/v/m2cgen.svg?logo=pypi&logoColor=white)](https://pypi.org/project/IncomeVis/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
+[![Python Versions](https://img.shields.io/pypi/pyversions/incomevis?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
+[![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/IncomeVis/)
 [![Downloads](https://pepy.tech/badge/incomevis)](https://pepy.tech/project/incomevis)
 
 **[Documentation](https://pytorch-geometric.readthedocs.io)** | **[Paper](https://arxiv.org/abs/1903.02428)** | **[External Resources](https://cps.ipums.org/cps/)** | **[Use case examples](https://github.com/snap-stanford/ogb/tree/master/examples)**
@@ -23,7 +23,6 @@ $ python3 -m pip install incomevis
 ```
 
 ## Gallery
---------------------------------------------------------------------------------
 <div class="row">
 
 <a href=https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg>
@@ -35,7 +34,6 @@ $ python3 -m pip install incomevis
 </a>
 
 </div>
---------------------------------------------------------------------------------
 
 Interactive graph (left) and dynamic graph (right) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [https://research.depauw.edu/econ/incomevis](https://research.depauw.edu/econ/IncIneq/index.html)
 
