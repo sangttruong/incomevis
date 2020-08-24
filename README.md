@@ -36,12 +36,7 @@ $ python3 -m pip install incomevis
 
 </div>
 
-Interactive visualization in AmChart. More example of this type of graph is available at [https://research.depauw.edu/econ/incomevis](https://research.depauw.edu/econ/IncIneq/index.html)
-
-*   Dynamic animation
-*   AmChart
-*   Bootstrap
-
+Interactive graph (left) and dynamic graph (right) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [https://research.depauw.edu/econ/incomevis](https://research.depauw.edu/econ/IncIneq/index.html)
 
 ## Contact
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
