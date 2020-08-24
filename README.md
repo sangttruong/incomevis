@@ -24,10 +24,19 @@ $ python3 -m pip install incomevis
 
 ## Gallery
 
-Interactive visualization in AmChart. More example of this type of graph is available at [https://research.depauw.edu/econ/incomevis](https://research.depauw.edu/econ/IncIneq/index.html)
-![Interactive](gallery/YEAR2018_HHINCOME.jpeg)
+<div class="row">
 
-![Dynamic](gallery/ezgif.com-optimize.gif)
+<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg>
+<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg" height="160" width="470">
+</a>
+
+<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/ezgif.com-optimize.gif>
+<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/ezgif.com-optimize.gif" height="160" width="470">
+</a>
+
+</div>
+
+Interactive visualization in AmChart. More example of this type of graph is available at [https://research.depauw.edu/econ/incomevis](https://research.depauw.edu/econ/IncIneq/index.html)
 
 *   Dynamic animation
 *   AmChart
