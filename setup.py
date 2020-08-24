@@ -39,3 +39,8 @@ setup(
     author='Sang T. Truong',
     author_email='sangtruong_2021@depauw.edu'
 )
+
+# python setup.py bdist_wheel sdist
+# pip install --user -e .
+# pip install twine
+# twine upload dist/*
