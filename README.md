@@ -22,21 +22,10 @@ You can import this module with PIP:
 $ pip install incomevis
 ```
 
-![logo](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
-
-
 ## Gallery
-<div class="row">
 
-<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/interactive.jpeg>
-<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/interactive.jpeg" height="160" width="410">
-</a>
-
-<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/dynamic.gif>
-<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/dynamic.gif" height="160" width="410">
-</a>
-
-</div>
+![interactive](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png)
+![dynamic](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
 
 Interactive graph (left) and dynamic graph (right) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq)
 
