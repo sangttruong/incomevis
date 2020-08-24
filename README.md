@@ -27,11 +27,11 @@ $ python3 -m pip install incomevis
 <div class="row">
 
 <a href=https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg>
-<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg" height="160" width="480">
+<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/YEAR2018_HHINCOME.jpeg" height="160" width="470">
 </a>
 
 <a href=https://github.com/sangttruong/incomevis/blob/master/gallery/ezgif.com-optimize.gif>
-<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/ezgif.com-optimize.gif" height="160" width="480">
+<img src="https://github.com/sangttruong/incomevis/blob/master/gallery/ezgif.com-optimize.gif" height="160" width="470">
 </a>
 
 </div>
