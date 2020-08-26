@@ -1,11 +1,11 @@
 # My Table of content
-- [Section 1](#id-section1)
-- [Section 2](#id-section2)
+- [1. incomevis class](#id-section1)
+- [2. Helper functions](#id-section2)
 
 The IncomeVis library includes incomevis class and several helper functions.
 
 <div id='id-section1'/>
-**IncomeVis class:**
+## **IncomeVis class:**
 
 1. Constructor: `IncomeVis(input_path_ipums, input_path_rpp)`
   * `input_path_ipums`: path to IPUMS file. `CSV` format required. 
@@ -21,7 +21,7 @@ The IncomeVis library includes incomevis class and several helper functions.
   * `KDE(self, variable=0, lags=40, fig=None, figsize=(15,7), savefig = False, title = None, path = None)`
 
 <div id='id-section2'/>
-**Helper functions**
+## **Helper functions**
 
 1. `getInteractive(k = 'decile', toState = False, outputHTML = False, input_path = 'output/decile/Year/AmChart/JS/YEAR1976_HHINCOME.js', output_path = 'gdrive/My Drive/Colab Notebooks/USIncomeVis/output/decile/Year/AmChart/HTML/YEAR1976_HHINCOME.html')`
 2. `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, input_path = 'output/decile/Year/Matplotlib/')`
