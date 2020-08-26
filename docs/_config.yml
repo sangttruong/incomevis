@@ -1,7 +1,6 @@
 # Book settings
-title: "incomevis"
-description: "Documentation and User Manual"
-author: "Sang T. Truong and Humberto Barreto"
+title: "incomevis: Documentation and User Manual"
+description: "Sang T. Truong"
 logo: logo/logo.png
 
 html:
