@@ -33,7 +33,5 @@ Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript Am
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
 
 **TODO:**
-- [ ] safe large file on git?
-- [ ] update homepage
 - [ ] comprehensively test for other functionality - percentile, bootstrap, etc
 - [ ] marketing?
