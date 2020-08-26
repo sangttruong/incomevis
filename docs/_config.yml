@@ -5,4 +5,4 @@ logo: logo/logo.png
 
 html:
   favicon: logo/favicon/favicon.ico
-theme: jekyll-theme-cayman
+remote_theme: aksakalli/jekyll-doc-theme@gh-pages
