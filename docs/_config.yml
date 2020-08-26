@@ -6,3 +6,5 @@ logo: logo/logo.png
 html:
   favicon: logo/favicon/favicon.ico
 remote_theme: aksakalli/jekyll-doc-theme@gh-pages
+
+theme: jekyll-theme-cayman
