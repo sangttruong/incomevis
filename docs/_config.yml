@@ -9,4 +9,4 @@ latex:
 
 html:
   favicon: logo/favicon/favicon.ico
-theme: jekyll-theme-cayman
+theme: jekyll-theme-modernist
