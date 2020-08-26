@@ -4,8 +4,8 @@
 
 --------------------------------------------------------------------------------
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
-[![Python Versions](https://img.shields.io/pypi/pyversions/incomevis?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
-[![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/IncomeVis/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/incomevis?logo=python&logoColor=white)](https://pypi.org/project/incomevis/)
+[![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/incomevis/)
 [![Downloads](https://pepy.tech/badge/incomevis)](https://pepy.tech/project/incomevis)
 
 **[Paper](https://arxiv.org/abs/1903.02428)** | **[Step-by-step Notebook](https://colab.research.google.com/drive/1oebYZsoDHM8e0urOedVfjimrjvrxR-nY?usp=sharing)** | **[Documentation](https://sangttruong.github.io/incomevis/)** | **[PyPI package](https://pypi.org/project/incomevis/)** |**[External Resources](https://cps.ipums.org/cps/)**

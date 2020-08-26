@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import proj3d
 from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
 
-class IncomeVis:
+class incomevis:
   def __init__(self, input_path_ipums = '', input_path_rpp = ''):
     if not input_path_ipums: self.__raw = pd.concat([pd.read_csv('src/input/ipums-cps-lite1.gz'),
                                                      pd.read_csv('src/input/ipums-cps-lite2.gz')])
