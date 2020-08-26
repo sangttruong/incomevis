@@ -1,1 +1,12 @@
+# Book settings
+title: incomevis: Visualizing Income Distribution
+author: Sang T. Truong and Humberto Barreto
+logo: logo/logo.png
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+html:
+  favicon: logo/favicon/favicon.ico
 theme: jekyll-theme-cayman
