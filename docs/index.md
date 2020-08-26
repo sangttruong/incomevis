@@ -1,4 +1,3 @@
-# My Table of content
 - [1. incomevis class](#id-section1)
 - [2. Helper functions](#id-section2)
 
