@@ -6,6 +6,7 @@ The IncomeVis library includes incomevis class and several helper functions.
 
 <div id='id-section1'/>
 ## **IncomeVis class:**
+
 1. Constructor: `IncomeVis(input_path_ipums, input_path_rpp)`
   * `input_path_ipums`: path to IPUMS file. `CSV` format required. 
   * `input_path_rpp`: path to RPP file. `CSV` format required.
@@ -21,5 +22,6 @@ The IncomeVis library includes incomevis class and several helper functions.
 
 <div id='id-section2'/>
 ## **Helper functions**
+
 1. `getInteractive(k = 'decile', toState = False, outputHTML = False, input_path = 'output/decile/Year/AmChart/JS/YEAR1976_HHINCOME.js', output_path = 'gdrive/My Drive/Colab Notebooks/USIncomeVis/output/decile/Year/AmChart/HTML/YEAR1976_HHINCOME.html')`
 2. `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, input_path = 'output/decile/Year/Matplotlib/')`
