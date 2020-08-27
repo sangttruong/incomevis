@@ -27,6 +27,8 @@ $ pip install incomevis
 
 ![interactive](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png)
 ![dynamic](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
+![dynamic1](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
+
 
 Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq)
 
