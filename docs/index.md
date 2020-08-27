@@ -39,6 +39,7 @@ incomevis is a visualization toolbox to graphically representing income distribu
   
 <div id='id-section2'/>
 ## **Helper functions**
+
 1. `getInteractive(k = 'decile', toState = False, outputHTML = False, input_path = 'src/output/decile/year/amchart/js/RHHINCOME1976.js', output_path = 'src/output/decile/year/amchart/html/RHHINCOME1976.html')`
 2.  `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, input_path = 'src/output/decile/year/matplotlib/')`
 3.  `KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv'))`
