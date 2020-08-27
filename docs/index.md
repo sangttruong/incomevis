@@ -12,7 +12,7 @@ incomevis is a visualization toolbox to graphically representing income distribu
     
 2. Methods:
   * `getData()`:
-     * Parameters: None
+    * Parameters: None
      * Return type: Pandas dataframe 
      * Return value: primary dataframe that is currently in the analysis flow.
   * `getPop()`:
