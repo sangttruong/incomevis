@@ -2,7 +2,7 @@
 incomevis is a visualization toolbox to graphically representing income distribution. It includes incomevis class and several helper functions.
 
 <div id='id-section1'/>
-## **incomevis class:**
+# **incomevis class**
 
 ### Constructor:
 `incomeVis(input_path_ipums, input_path_rpp)`
