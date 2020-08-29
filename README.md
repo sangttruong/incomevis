@@ -18,7 +18,7 @@ Happy visualizing economic complexity!
 
 ## Installation
 
-You can import this module with PIP:
+incomevis can be installed via pip:
 ```bash
 $ pip install incomevis
 ```
@@ -45,7 +45,7 @@ $ pip install incomevis
 
 </div>
 
-Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). A separated page for gallery will be available soon! 
+Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). A completed and separated page for gallery will be available soon! 
 
 ## Contact
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
