@@ -27,20 +27,20 @@ $ pip install incomevis
 
 <div class="row">
 
-<a href=https://github.com/sangttruongl>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png" height="135" width="405">
+<a href=https://github.com/sangttruong>
+<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/interactive.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruongl>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOME.gif" height="135" width="405">
+<a href=https://github.com/sangttruong>
+<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruongl>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted.gif" height="135" width="405">
+<a href=https://github.com/sangttruong>
+<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruongl>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+<a href=https://github.com/sangttruong>
+<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
 </a>
 
 </div>
