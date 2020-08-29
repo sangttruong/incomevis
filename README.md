@@ -28,7 +28,7 @@ $ pip install incomevis
 <div class="row">
 
 <a href=https://github.com/sangttruong>
-<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/interactive.gif" height="135" width="405">
+<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/interactive.png" height="135" width="405">
 </a>
 
 <a href=https://github.com/sangttruong>
