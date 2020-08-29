@@ -32,15 +32,15 @@ $ pip install incomevis
 </a>
 
 <a href=https://github.com/sangttruong>
-<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
 </a>
 
 <a href=https://github.com/sangttruong>
-<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
 </a>
 
 <a href=https://github.com/sangttruong>
-<img src="https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
 </a>
 
 </div>
