@@ -75,11 +75,12 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: IPython.display.HTML object
 * Return value: Interactive graph
 
-### `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, input_path = 'src/output/decile/year/matplotlib/')`
+### `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '', input_path = 'src/output/decile/year/matplotlib/')`
 * Parameters:
     * incomeType: income type. By default, there is 5 options: 'HHINCOME', 'RHHINCOME', 'ERHHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME'
     * year_start: Analysis starting year
     * year_end: Analysis ending year, which also be included
+    * highlight: Full name (not STATEFIP) of state that will be highlighted.
     * input_path = input directory of all files that will be animated
 * Return type: matplotlib.animation.FuncAnimation object
 * Return value: animated graph
