@@ -25,12 +25,27 @@ $ pip install incomevis
 
 ## Gallery
 
-![interactive](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png)
-![dynamic](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
-![dynamic1](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
+<div class="row">
 
+<a href=https://github.com/sangttruongl>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png" height="135" width="405">
+</a>
 
-Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq)
+<a href=https://github.com/sangttruongl>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOME.gif" height="135" width="405">
+</a>
+
+<a href=https://github.com/sangttruongl>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted.gif" height="135" width="405">
+</a>
+
+<a href=https://github.com/sangttruongl>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+</a>
+
+</div>
+
+Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). A separated page for gallery will be available soon! 
 
 ## Contact
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
