@@ -11,9 +11,9 @@ Description: <p align="center">
         </p>
         
         --------------------------------------------------------------------------------
-        [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/sangttruong/IncomeVis/blob/master/LICENSE)
-        [![Python Versions](https://img.shields.io/pypi/pyversions/incomevis?logo=python&logoColor=white)](https://pypi.org/project/IncomeVis/)
-        [![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/IncomeVis/)
+        [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/sangttruong/incomevis/blob/master/LICENSE)
+        [![Python Versions](https://img.shields.io/pypi/pyversions/incomevis?logo=python&logoColor=white)](https://pypi.org/project/incomevis/)
+        [![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/incomevis/)
         [![Downloads](https://pepy.tech/badge/incomevis)](https://pepy.tech/project/incomevis)
         
         **[Paper](https://arxiv.org/abs/1903.02428)** | **[Step-by-step Notebook](https://colab.research.google.com/drive/1oebYZsoDHM8e0urOedVfjimrjvrxR-nY?usp=sharing)** | **[Documentation](https://sangttruong.github.io/incomevis/)** | **[PyPI package](https://pypi.org/project/incomevis/)** |**[External Resources](https://cps.ipums.org/cps/)**
@@ -26,17 +26,34 @@ Description: <p align="center">
         
         ## Installation
         
-        You can import this module with PIP:
+        incomevis can be installed via pip:
         ```bash
         $ pip install incomevis
         ```
         
         ## Gallery
         
-        ![interactive](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png)
-        ![dynamic](https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/dynamic.gif)
+        <div class="row">
         
-        Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq)
+        <a href=https://github.com/sangttruong>
+        <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/interactive.png" height="135" width="405">
+        </a>
+        
+        <a href=https://github.com/sangttruong>
+        <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
+        </a>
+        
+        <a href=https://github.com/sangttruong>
+        <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
+        </a>
+        
+        <a href=https://github.com/sangttruong>
+        <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+        </a>
+        
+        </div>
+        
+        Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). A completed and separated page for gallery will be available soon! 
         
         ## Contact
         Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
