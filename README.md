@@ -31,21 +31,21 @@ $ pip install incomevis
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/interactive.png" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruong>
+<a href=https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruong>
+<a href=https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruong>
+<a href=https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
 </a>
 
 </div>
 
-Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). A completed and separated page for gallery will be available soon! 
+Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/IncIneq). Animated graphs with better control can be generated in a (preferably local) Python environment (for example, see [this notebook](https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing)). A completed and separated page for gallery will be available soon! 
 
 ## Contact
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
