@@ -42,7 +42,12 @@ $ pip install incomevis
 <a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
 </a>
+</div>
 
+Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/incomevis). Animated graphs with better control can be generated in a (preferably local) Python environment (for example, see [this notebook](https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing)).
+
+Bellow are bootstrap resampling of 50p of DC in 1977 10000 times (bottom right) and 1 million times (bottom left). We also show the relative growth of CA and DC overtime. 
+<div class="row">
 <a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/CArank.png" height="135" width="405">
 </a>
@@ -61,7 +66,7 @@ $ pip install incomevis
 
 </div>
 
-Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript AmChart and Python Matplotlib, respectively. More instant examples of interactive graphs can be found at [research.depauw.edu/econ/incomevis](research.depauw.edu/econ/incomevis). Animated graphs with better control can be generated in a (preferably local) Python environment (for example, see [this notebook](https://colab.research.google.com/drive/1JtPi9w6ecJ-u8gdIiQlgcvgjWjb6XrpI?usp=sharing)). A completed and separated page for gallery will be available soon! 
+ A completed and separated page for gallery will be available soon! 
 
 ## Contact
 Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
