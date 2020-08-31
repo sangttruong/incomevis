@@ -48,7 +48,16 @@ Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript Am
 
 4 levels of deflating income. 
 
-2 state graphs.
+<div class="row">
+
+<a href=https://research.depauw.edu/econ/incomevis/>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/CA.png" height="135" width="405">
+</a>
+
+<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DC.png" height="135" width="405">
+</a>
+</div>
 
 Bellow are bootstrap resampling of 50p of DC in 1977 10000 times (bottom right) and 1 million times (bottom left). We also show the relative growth of CA and DC overtime. 
 <div class="row">
