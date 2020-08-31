@@ -360,23 +360,21 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')):
-  _import_mpl()
-  fig = create_mpl_fig()
-  plt.close()
+def KDE(data = pd.read_csv('gdrive/My Drive/Colab Notebooks/incomevis/src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
+  fig = plt.figure(figsize=(15,7))
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
-  ax = fig.add_subplot(222)
-  try: ax.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
-  except AttributeError: ax.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  try: plt.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  except AttributeError: plt.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
   kde = gaussian_kde(data_nonmissing, bw_method = 0.3)
   xlim = (-1.96*2, 1.96*2)
   x = np.linspace(xlim[0], xlim[1])
-  ax.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
-  ax.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
-  ax.set_xlim(xlim)
-  ax.legend()
-  ax.grid(True)
-  ax.set_xlabel('', fontweight = 'bold', fontsize = 'x-large')
-  ax.set_ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
+  plt.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
+  plt.xlim(xlim)
+  plt.legend()
+  plt.grid(True)
+  plt.xlabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.close()
   return fig
