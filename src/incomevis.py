@@ -362,7 +362,7 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
 
 def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')):
   _import_mpl()
-  fig = create_mpl_fig(figsiize = (15,7))
+  fig = create_mpl_fig()
   plt.close()
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
