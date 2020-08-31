@@ -39,8 +39,24 @@ $ pip install incomevis
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
 </a>
 
-<a href=https://rb.gy/yiaexf>
+<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
 <img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+</a>
+
+<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/CArank.png" height="135" width="405">
+</a>
+
+<a href=https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DCrank.png>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DCrank.png" height="135" width="405">
+</a>
+
+<a href=https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_1M.png>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_1M.png" height="135" width="405">
+</a>
+
+<a href=https://rb.gy/yiaexf>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_10K.png" height="135" width="405">
 </a>
 
 </div>
