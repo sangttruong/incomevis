@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
@@ -8,7 +8,6 @@ setup(
     version='0.1',
     description='Visualization toolbox for income distribution',
     py_modules=['incomevis'],
-    package_dir={'':'src'},
 
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -27,8 +26,13 @@ setup(
         'pandas >= 1.0',
         'multiprocess >= 0.7',
         'ipython >= 5.5.0',
+        'statsmodels >= 0.12.0'
     ],
 
+    packages=find_packages("src"),  # include all packages under src
+    package_dir={"": "src"},   # tell distutils packages are under src
+
+    include_package_data=True,    # include everything in source control
     # extras_require = {
     #     'dev': [
     #         'pytest >= 3.7',
