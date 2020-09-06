@@ -282,7 +282,7 @@ def getInteractive(k = 'decile', toState = False, outputHTML = False,
       outfile.write(AmChart)
   return IPython.display.HTML(data = AmChart)
 
-def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
+def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
                 input_path = 'src/output/decile/year/matplotlib/'):
   # Display setting
   fig = plt.figure(figsize=(15,15))
@@ -331,40 +331,50 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
     ax.set_yticks(np.arange(len(deciles)))
     ax.set_yticklabels(['' for year in range(len(deciles))])
     ax.zaxis.set_rotate_label(False)  
-    ax.set_zlabel('Anual Household Income (2018$)', rotation = 90, labelpad = 30, fontsize = 'large', fontweight = 'bold')
+    ax.set_zlabel('Annual Household Income (2018$)', rotation = 90, labelpad = 30, fontsize = 'large', fontweight = 'bold')
     ax.set_xlabel('Poorer States                                    ' + str(year) + '                                         Richer States',
                   fontweight = 'bold', labelpad = 20, fontsize = 'large')
 
-    #Draw the 3D bar chart
+    #Draw the 3D bar chart 11
     for state in range(year_df.index.size):
       for decile in range(len(deciles)):
-        ax.bar3d(state, decile, 0,
-                year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                color = year_df.loc[year_df.iloc[state].name, 'Color'])
+        if (highlight != ''):
+          if (year_df.iloc[state].name != highlight):
+            ax.bar3d(state, decile, 0,
+                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                    color = '#00C2FB08')
+          else:
+            ax.bar3d(state, decile, 0,
+                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                    color = year_df.loc[year_df.iloc[state].name, 'Color'])
+        else:
+          ax.bar3d(state, decile, 0,
+                  year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                  year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                  color = year_df.loc[year_df.iloc[state].name, 'Color'])
 
   #Animation features: frames - max range for year in animate function; interval - time changing between each frame
-  dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500) 
+  dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')):
-  _import_mpl()
-  fig = create_mpl_fig(figsiize = (15,7))
-  plt.close()
+def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
+  fig = plt.figure(figsize=(15,7))
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
-  ax = fig.add_subplot(222)
-  try: ax.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
-  except AttributeError: ax.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  try: plt.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  except AttributeError: plt.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
   kde = gaussian_kde(data_nonmissing, bw_method = 0.3)
   xlim = (-1.96*2, 1.96*2)
   x = np.linspace(xlim[0], xlim[1])
-  ax.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
-  ax.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
-  ax.set_xlim(xlim)
-  ax.legend()
-  ax.grid(True)
-  ax.set_xlabel('', fontweight = 'bold', fontsize = 'x-large')
-  ax.set_ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
+  plt.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
+  plt.xlim(xlim)
+  plt.legend()
+  plt.grid(True)
+  plt.xlabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.close()
   return fig

@@ -1,1 +1,8 @@
+# Book settings
+title: "incomevis: Documentation and User Manual"
+description: "Sang T. Truong and Humberto Barreto"
+logo: logo/logo.png
+
+html:
+  favicon: logo/favicon/favicon.ico
 theme: jekyll-theme-cayman

@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import proj3d
 from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
 
-class IncomeVis:
+class incomevis:
   def __init__(self, input_path_ipums = '', input_path_rpp = ''):
     if not input_path_ipums: self.__raw = pd.concat([pd.read_csv('src/input/ipums-cps-lite1.gz'),
                                                      pd.read_csv('src/input/ipums-cps-lite2.gz')])
@@ -282,7 +282,7 @@ def getInteractive(k = 'decile', toState = False, outputHTML = False,
       outfile.write(AmChart)
   return IPython.display.HTML(data = AmChart)
 
-def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
+def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
                 input_path = 'src/output/decile/year/matplotlib/'):
   # Display setting
   fig = plt.figure(figsize=(15,15))
@@ -331,20 +331,32 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
     ax.set_yticks(np.arange(len(deciles)))
     ax.set_yticklabels(['' for year in range(len(deciles))])
     ax.zaxis.set_rotate_label(False)  
-    ax.set_zlabel('Anual Household Income (2018$)', rotation = 90, labelpad = 30, fontsize = 'large', fontweight = 'bold')
+    ax.set_zlabel('Annual Household Income (2018$)', rotation = 90, labelpad = 30, fontsize = 'large', fontweight = 'bold')
     ax.set_xlabel('Poorer States                                    ' + str(year) + '                                         Richer States',
                   fontweight = 'bold', labelpad = 20, fontsize = 'large')
 
-    #Draw the 3D bar chart
+    #Draw the 3D bar chart 11
     for state in range(year_df.index.size):
       for decile in range(len(deciles)):
-        ax.bar3d(state, decile, 0,
-                year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                color = year_df.loc[year_df.iloc[state].name, 'Color'])
+        if (highlight != ''):
+          if (year_df.iloc[state].name != highlight):
+            ax.bar3d(state, decile, 0,
+                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                    color = '#00C2FB08')
+          else:
+            ax.bar3d(state, decile, 0,
+                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                    color = year_df.loc[year_df.iloc[state].name, 'Color'])
+        else:
+          ax.bar3d(state, decile, 0,
+                  year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                  year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                  color = year_df.loc[year_df.iloc[state].name, 'Color'])
 
   #Animation features: frames - max range for year in animate function; interval - time changing between each frame
-  dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500) 
+  dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
   rc('animation', html = 'jshtml')
   return dynamic
 
