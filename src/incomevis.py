@@ -360,7 +360,7 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv('gdrive/My Drive/Colab Notebooks/incomevis/src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
+def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
   fig = plt.figure(figsize=(15,7))
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
