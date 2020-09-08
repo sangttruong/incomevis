@@ -6,13 +6,16 @@ from mpl_toolkits.mplot3d.axes3d import Axes3D
 from mpl_toolkits.mplot3d import proj3d
 from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
+import os.path
+
+dir_name = os.path.dirname(__file__)
 
 class incomevis:
   def __init__(self, input_path_ipums = '', input_path_rpp = ''):
-    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv('src/input/ipums-cps-lite1.gz'),
-                                                     pd.read_csv('src/input/ipums-cps-lite2.gz')])
+    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + '/incomevis/input/ipums-cps-lite1.gz'),
+                                                     pd.read_csv(dir_name + '/incomevis/input/ipums-cps-lite2.gz')])
     else: self.__raw = pd.read_csv(input_path_ipums)
-    if not input_path_rpp: self.__rpp = pd.read_csv('src/input/rpp.csv')
+    if not input_path_rpp: self.__rpp = pd.read_csv(dir_name + '/incomevis/input/rpp.csv')
     else: self.__rpp = pd.read_csv(input_path_rpp)
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
@@ -94,7 +97,7 @@ class incomevis:
 
   def getIncomeVis(self, incomeType = 'RHHINCOME', k = 'decile',
                    year_start = 1977, year_end = 2019,
-                   output_path = 'src/output/',
+                   output_path = dir_name + '/incomevis/output/',
                    toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
@@ -218,7 +221,7 @@ class incomevis:
 
   def bootstrap(self, seed = 0, incomeType = 'RHHINCOME', k = 'decile',
                 year = 1977, statefip = 1, n = 1000000,
-                output_path = 'src/output/bootstrap/'):
+                output_path = dir_name + '/incomevis/output/bootstrap/'):
     np.random.seed(seed)
     year_df = self.__raw[self.__raw['YEAR'] == year]
 
@@ -265,15 +268,15 @@ class incomevis:
     return result
   
 def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = 'src/output/decile/year/amchart/js/RHHINCOME1976.js',
-                   output_path = 'src/output/decile/year/amchart/html/RHHINCOME1976.html'):
+                   input_path = dir_name + '/incomevis/output/decile/year/amchart/js/RHHINCOME1976.js',
+                   output_path = dir_name + '/incomevis/output/decile/year/amchart/html/RHHINCOME1976.html'):
   if k == 'decile':
-    if(not toState): html1 = open('src/input/html1_d_year.txt', 'r')
-    else: html1 = open('src/input/html1_p_state.txt', 'r')
+    if(not toState): html1 = open(dir_name + '/incomevis/input/html1_d_year.txt', 'r')
+    else: html1 = open(dir_name + '/incomevis/input/html1_p_state.txt', 'r')
   elif k == 'percentile':
-    if (not toState): html1 = open('src/input/html1_p_year.txt', 'r')
-    else: html1 = html1 = open('src/input/html1_p_state.txt', 'r')
-  html2 = open('src/input/html2.txt', 'r')
+    if (not toState): html1 = open(dir_name + '/incomevis/input/html1_p_year.txt', 'r')
+    else: html1 = html1 = open(dir_name + '/incomevis/input/html1_p_state.txt', 'r')
+  html2 = open(dir_name + '/incomevis/input/html2.txt', 'r')
   
   json = open(input_path,'r')
   AmChart = html1.read() + json.read() + html2.read()
@@ -283,7 +286,7 @@ def getInteractive(k = 'decile', toState = False, outputHTML = False,
   return IPython.display.HTML(data = AmChart)
 
 def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                input_path = 'src/output/decile/year/matplotlib/'):
+                input_path = dir_name + '/incomevis/output/decile/year/matplotlib/'):
   # Display setting
   fig = plt.figure(figsize=(15,15))
   ax = plt.axes(projection='3d')
@@ -360,23 +363,21 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')):
-  _import_mpl()
-  fig = create_mpl_fig(figsiize = (15,7))
-  plt.close()
+def KDE(data = pd.read_csv(dir_name + '/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
+  fig = plt.figure(figsize=(15,7))
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
-  ax = fig.add_subplot(222)
-  try: ax.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
-  except AttributeError: ax.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  try: plt.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+  except AttributeError: plt.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
   kde = gaussian_kde(data_nonmissing, bw_method = 0.3)
   xlim = (-1.96*2, 1.96*2)
   x = np.linspace(xlim[0], xlim[1])
-  ax.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
-  ax.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
-  ax.set_xlim(xlim)
-  ax.legend()
-  ax.grid(True)
-  ax.set_xlabel('', fontweight = 'bold', fontsize = 'x-large')
-  ax.set_ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
+  plt.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
+  plt.xlim(xlim)
+  plt.legend()
+  plt.grid(True)
+  plt.xlabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
+  plt.close()
   return fig

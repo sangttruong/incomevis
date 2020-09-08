@@ -8,6 +8,11 @@ setup(
     version='0.1',
     description='Visualization toolbox for income distribution',
     py_modules=['incomevis'],
+    # packages=find_packages(), # include all packages under src
+    # package_dir={'':'src'},
+    packages=['incomevis'],
+    # package_dir={'incomevis': 'src/incomevis'},   
+     
 
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -26,13 +31,11 @@ setup(
         'pandas >= 1.0',
         'multiprocess >= 0.7',
         'ipython >= 5.5.0',
-        'statsmodels >= 0.12.0'
     ],
 
-    packages=find_packages("src"),  # include all packages under src
-    package_dir={"": "src"},   # tell distutils packages are under src
-
-    include_package_data=True,    # include everything in source control
+    #Including packages and folder in src files
+    include_package_data = True,
+    
     # extras_require = {
     #     'dev': [
     #         'pytest >= 3.7',
