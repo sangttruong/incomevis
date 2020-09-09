@@ -31,7 +31,7 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: Pandas dataframe
 * Return value: primary dataframe that has adjusted HHINCOME based on 3 deflators combinations: CPI, CPI-HHSIZE, and CPI-HHSIZE-RPP
      
-### `getIncomeVis(self, incomeType = 'RHHINCOME', k = 'decile', year_start = 1977, year_end = 2019, output_path = 'package/directory', toState = False, provide_colorFrame = False, colorFrame = [], returnColor = False, provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False, AmChart = True)`
+### `getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile', year_start = 1977, year_end = 2019, output_path = 'package/directory', toState = False, provide_colorFrame = False, colorFrame = [], returnColor = False, provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False, AmChart = True)`
 * Parameters:
     * incomeType: income type. By default, there is 5 options: 'HHINCOME', 'RHHINCOME', 'ERHHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME'
     * k: segmentation level, which can either be 'decile' or 'percentile'
