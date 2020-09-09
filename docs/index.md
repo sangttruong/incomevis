@@ -1,4 +1,3 @@
-
 incomevis is a visualization toolbox to graphically representing income distribution. It includes incomevis class and several helper functions.
 
 <div id='id-section1'/>
@@ -32,13 +31,13 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: Pandas dataframe
 * Return value: primary dataframe that has adjusted HHINCOME based on 3 deflators combinations: CPI, CPI-HHSIZE, and CPI-HHSIZE-RPP
      
-### `getIncomeVis(self, incomeType = 'RHHINCOME', k = 'decile', year_start = 1977, year_end = 2019, output_path = 'src/output/', toState = False, provide_colorFrame = False, colorFrame = [], returnColor = False, provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False, AmChart = True)`
+### `getIncomeVis(self, incomeType = 'RHHINCOME', k = 'decile', year_start = 1977, year_end = 2019, output_path = 'package/directory', toState = False, provide_colorFrame = False, colorFrame = [], returnColor = False, provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False, AmChart = True)`
 * Parameters:
     * incomeType: income type. By default, there is 5 options: 'HHINCOME', 'RHHINCOME', 'ERHHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME'
     * k: segmentation level, which can either be 'decile' or 'percentile'
     * year_start: Analysis starting year
     * year_end: Analysis ending year, which also be included
-    * output_path: output path
+    * output_path: output path. We highly recommend the users to specify their own output path to avoid missing file or confusion
     * toState: if true will also return a set of state graph with the respective year ranges
     * provide_colorFrame: if colorframe will be provided or not
     * colorFrame: color list, which will be ignored if provide_colorFrame is set to False
@@ -50,7 +49,7 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: None
 * Return value: None
 
-### `bootstrap(seed = 0, incomeType = 'RHHINCOME', k = 'decile', year = 1977, statefip = 1, n = 1000000, output_path = 'src/output/bootstrap/')`
+### `bootstrap(seed = 0, incomeType = 'RHHINCOME', k = 'decile', year = 1977, statefip = 1, n = 1000000, output_path = 'package/directory')`
 * Parameters:
     * seed: seed of the uniform random sampling
     * incomeType: income type. By default, there is 5 options: 'HHINCOME', 'RHHINCOME', 'ERHHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME'
@@ -58,14 +57,14 @@ incomevis is a visualization toolbox to graphically representing income distribu
     * year: bootstrapping year
     * statefip: bootstrapping state
     * n: number of iteration
-    * output_path: output path
+    * output_path: output path. We highly recommend the users to specify their own output path to avoid missing file or confusion
 * Return type: Pandas dataframe
 * Return value: bootstrapting result
 
 <div id='id-section2'/>
 # **Helper functions**
 
-### `getInteractive(k = 'decile', toState = False, outputHTML = False, input_path = 'src/output/decile/year/amchart/js/RHHINCOME1976.js', output_path = 'src/output/decile/year/amchart/html/RHHINCOME1976.html')`
+### `getInteractive(k = 'decile', toState = False, outputHTML = False, input_path = 'package/directory/' + 'RHHINCOME1976.js', output_path = 'package/directory/' + 'RHHINCOME1976.html')`
 * Parameters:
     * k: segmentation level, which can either be 'decile' or 'percentile'
     * toState = if true will display state graph instead of year graph
@@ -75,7 +74,7 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: IPython.display.HTML object
 * Return value: Interactive graph
 
-### `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '', input_path = 'src/output/decile/year/matplotlib/')`
+### `getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '', input_path = 'package/directory/')`
 * Parameters:
     * incomeType: income type. By default, there is 5 options: 'HHINCOME', 'RHHINCOME', 'ERHHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME'
     * year_start: Analysis starting year
@@ -85,8 +84,8 @@ incomevis is a visualization toolbox to graphically representing income distribu
 * Return type: matplotlib.animation.FuncAnimation object
 * Return value: animated graph
 
-### `KDE(data = pd.read_csv('src/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv'))`
+### `KDE(data = pd.read_csv('package/directory/' + 'xRHHINCOME1977_11_10000.csv'))`
 * Parameters:
-    * data: data () that will be compared to the normal distribution
+   * data: data () that will be compared to the normal distribution
 * Return type: matplotlib.pyplot.figure object
 * Return value: Kernel density estimation of the input data
