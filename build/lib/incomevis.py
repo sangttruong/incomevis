@@ -8,14 +8,14 @@ from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
 import os.path
 
-dir_name = os.path.dirname(__file__)
+dir_name = os.path.dirname(__file__) + '/data/'
 
 class incomevis:
   def __init__(self, input_path_ipums = '', input_path_rpp = ''):
-    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + '/incomevis/input/ipums-cps-lite1.gz'),
-                                                     pd.read_csv(dir_name + '/incomevis/input/ipums-cps-lite2.gz')])
+    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + 'ipums-cps-lite1.gz'),
+                                                     pd.read_csv(dir_name + 'ipums-cps-lite2.gz')])
     else: self.__raw = pd.read_csv(input_path_ipums)
-    if not input_path_rpp: self.__rpp = pd.read_csv(dir_name + '/incomevis/input/rpp.csv')
+    if not input_path_rpp: self.__rpp = pd.read_csv(dir_name + 'rpp.csv')
     else: self.__rpp = pd.read_csv(input_path_rpp)
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
@@ -95,9 +95,9 @@ class incomevis:
     
     return self.__raw
 
-  def getIncomeVis(self, incomeType = 'RHHINCOME', k = 'decile',
+  def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
                    year_start = 1977, year_end = 2019,
-                   output_path = dir_name + '/incomevis/output/',
+                   output_path = dir_name,
                    toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
@@ -142,7 +142,7 @@ class incomevis:
       if (returnOrder): return orderFrame
 
       # Output csv file for toState
-      if (toState): result.to_csv(output_path + k + '/state/temp_' + incomeType + str(year-1) + '.csv', index = True)
+      if (toState): result.to_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
 
       # Base color
       if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors.Color), index = orderFrame, columns=['Color'])
@@ -183,12 +183,12 @@ class incomevis:
         result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year_df to HHINCOME year_df
-        with open(output_path + k + '/year/amchart/js/' + incomeType + str(year-1) + '.js', 'w') as outfile:
+        with open(output_path + k + '_year_amchart_js_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(result)
       else:
         result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year)], left_index = True, right_index = True)
         result = result.reindex(index = orderFrame)
-        result.to_csv(output_path + k + '/year/matplotlib/' + incomeType + str(year-1) + '.csv', index = True)
+        result.to_csv(output_path + k + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
     
     if (toState):    
       for statefip in self.__statefips:
@@ -196,7 +196,7 @@ class incomevis:
         data_df = []
         index_df = [i for i in range(0, 43)]
         for year in range(year_start, year_end+1):
-          df = pd.read_csv(output_path + k + '/state/temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
+          df = pd.read_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
           data_df.append(df.loc[statefip].tolist())
         if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = decileName,index=index_df)
         elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=percentileName,index=index_df)
@@ -213,15 +213,15 @@ class incomevis:
         state_df = json.dumps(state_df, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year to HHINCOME year
-        with open(output_path + k + '/state/' + incomeType + str(n) + '.js', 'w') as outfile:
+        with open(output_path + k + '_state_' + incomeType + str(n) + '.js', 'w') as outfile:
           outfile.write(state_df)
           
       for year in range(year_start, year_end+1):
-        os.remove(output_path + k + '/state/temp_' + incomeType + str(year-1) + '.csv')
+        os.remove(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv')
 
   def bootstrap(self, seed = 0, incomeType = 'RHHINCOME', k = 'decile',
                 year = 1977, statefip = 1, n = 1000000,
-                output_path = dir_name + '/incomevis/output/bootstrap/'):
+                output_path = dir_name):
     np.random.seed(seed)
     year_df = self.__raw[self.__raw['YEAR'] == year]
 
@@ -264,29 +264,31 @@ class incomevis:
     
       if (i%5000 == 0): print('Start iteration ' + str(i))        
     result = result.T
-    result.to_csv(output_path + k + '/' + str(seed) + incomeType + str(year) + '_' + str(statefip) + '_' + str(n) + '.csv', index = False)
+    result.to_csv(output_path + k + '_' + str(seed) + incomeType + str(year) + '_' + str(statefip) + '_' + str(n) + '.csv', index = False)
     return result
   
 def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = dir_name + '/incomevis/output/decile/year/amchart/js/RHHINCOME1976.js',
-                   output_path = dir_name + '/incomevis/output/decile/year/amchart/html/RHHINCOME1976.html'):
+                   input_path = dir_name,
+                   output_path = dir_name):
+  #Missing files - Need to fix
   if k == 'decile':
-    if(not toState): html1 = open(dir_name + '/incomevis/input/html1_d_year.txt', 'r')
-    else: html1 = open(dir_name + '/incomevis/input/html1_p_state.txt', 'r')
+    if(not toState): html1 = open(dir_name + 'html1_d_year.txt', 'r')
+    else: html1 = open(dir_name + 'html1_p_state.txt', 'r')
   elif k == 'percentile':
-    if (not toState): html1 = open(dir_name + '/incomevis/input/html1_p_year.txt', 'r')
-    else: html1 = html1 = open(dir_name + '/incomevis/input/html1_p_state.txt', 'r')
-  html2 = open(dir_name + '/incomevis/input/html2.txt', 'r')
-  
-  json = open(input_path,'r')
+    if (not toState): html1 = open(dir_name + 'html1_p_year.txt', 'r')
+    else: html1 = html1 = open(dir_name + 'html1_p_state.txt', 'r')
+  html2 = open(dir_name + 'html2.txt', 'r')
+
+  #Need to fix 
+  json = open(input_path + 'decile_year_amchart_js_RHHINCOME1976.js','r')
   AmChart = html1.read() + json.read() + html2.read()
   if outputHTML:
-    with open(output_path, 'w') as outfile:
+    with open(output_path + 'decile_year_amchart_html_RHHINCOME1976.html', 'w') as outfile:
       outfile.write(AmChart)
   return IPython.display.HTML(data = AmChart)
 
 def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                input_path = dir_name + '/incomevis/output/decile/year/matplotlib/'):
+                input_path = dir_name):
   # Display setting
   fig = plt.figure(figsize=(15,15))
   ax = plt.axes(projection='3d')
@@ -304,7 +306,7 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   def animate(year):
     #Read the data
     pop_label = 'UR_NORMPOP_' + str(year+1)
-    year_df = pd.read_csv(input_path + incomeType + str(year) + '.csv', index_col='State')
+    year_df = pd.read_csv(input_path + 'decile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
 
     ax.view_init(5,-140)
     #Convert the data to suitable format for the 3D bar chart
@@ -363,7 +365,7 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv(dir_name + '/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv')['50p']):
+def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
   fig = plt.figure(figsize=(15,7))
   data = (data - np.nanmean(data)) / np.nanstd(data)
   data_nonmissing = data[~(np.isnan(data))]
