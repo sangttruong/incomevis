@@ -11,9 +11,9 @@ import os.path
 dir_name = os.path.dirname(__file__) + '/data/'
 
 class incomevis:
-  def __init__(self, input_path_ipums = dir_name, input_path_rpp = dir_name):
-    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv('ipums-cps-lite1.gz'),
-                                                     pd.read_csv('ipums-cps-lite2.gz')])
+  def __init__(self, input_path_ipums = '', input_path_rpp = ''):
+    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + 'ipums-cps-lite1.gz'),
+                                                     pd.read_csv(dir_name + 'ipums-cps-lite2.gz')])
     else: self.__raw = pd.read_csv(input_path_ipums)
     if not input_path_rpp: self.__rpp = pd.read_csv(dir_name + 'rpp.csv')
     else: self.__rpp = pd.read_csv(input_path_rpp)
