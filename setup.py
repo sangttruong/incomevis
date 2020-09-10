@@ -10,7 +10,7 @@ setup(
     py_modules=['incomevis'],
     # packages=find_packages(), # include all packages under src
     # package_dir={'':'src'},
-    packages=['incomevis'],
+    packages=['data'],
     # package_dir={'incomevis': 'src/incomevis'},   
      
 

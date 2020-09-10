@@ -1,0 +1,287 @@
+<!--Comment-->
+<!DOCTYPE html>
+<html>
+		<!-- amCharts javascript sources -->
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/plugins/export/export.js"></script>
+		<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css">
+
+		<!-- amCharts javascript code -->
+		<script type="text/javascript">
+			AmCharts.makeChart("chartdiv",
+				{
+					"type": "serial",
+					"categoryField": "Label",
+					"columnWidth": 1,
+					"angle": 30,
+					"depth3D": 170,
+					"marginLeft": 40,
+					"marginRight": 200,
+					"marginBottom": 100,
+					"marginTop": 70,
+					"minMarginBottom": 80,
+					"sequencedAnimation": false,
+					"startDuration": 0.000000,
+					"startEffect": "easeOutSine",	
+					"theme": "light",
+					"accessible": true,
+					"mouseWheelZoomEnabled": false,
+					"precision": 0,
+					"gridAboveGraphs": false,
+					"export": {
+						"enabled": true
+					},
+					"categoryAxis": {
+						"gridPosition": "start",
+						"axisAlpha": 0,
+						"labelOffset": -5,
+						"labelsEnabled": true,
+						"minHorizontalGap": 5,
+						"minVerticalGap": 5,
+						"labelColorField": "Label Color",
+						"labelRotation": 25,
+						"gridCount": 10000,
+						// Change gridAlpha and minorGirdAlpha to 0 to eliminate the vertical grid 
+						"gridAlpha": 0,
+						"minorGridEnabled": true,
+						"minorGridAlpha": 0,
+						"minorTickLength": 10,
+					},
+					"valueScrollbar": {
+						"enabled": false
+					},
+					//"chartCursor": {
+					//	"enabled": true,
+					//	"animationDuration": 0,
+					//	"avoidBalloonOverlapping": false,
+					//	"bulletsEnabled": true,
+					//	"bulletSize": 13,
+					//	"leaveCursor": true,
+					//	"limitToGraph": "AmGraph-10",
+					//	"oneBalloonOnly": true,
+					//	"pan": true,
+					//	"tabIndex": 5
+				//	},
+					"trendLines": [],
+					"graphs": [
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"behindColumns": true,
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-1",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "5p",
+							"type": "column",
+							"valueField": "5p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-2",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "15p",
+							"type": "column",
+							"valueField": "15p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-3",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "25p",
+							"type": "column",
+							"valueField": "25p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-4",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "35p",
+							"type": "column",
+							"valueField": "35p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-5",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "45p",
+							"type": "column",
+							"valueField": "45p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-6",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "50p",
+							"type": "column",
+							"valueField": "50p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"							
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-7",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "55p",
+							"type": "column",
+							"valueField": "55p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-8",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "65p",
+							"type": "column",
+							"valueField": "65p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-9",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "75p",
+							"type": "column",
+							"valueField": "75p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-10",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "85p",
+							"type": "column",
+							"valueField": "85p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						},
+						{
+							"alphaField": "Transparency",
+							"balloonText": "[[title]] of [[Year]]: $[[value]]",
+							"fillAlphas": 1,
+							"fillColors": "#6899b5",
+							"id": "AmGraph-11",
+							"lineAlpha": 0.9,
+							"lineColor": "#74bee9",
+							"title": "95p",
+							"type": "column",
+							"valueField": "95p",
+							"fillColorsField": "Color",
+							"lineColorField": "Color"
+						}
+					],
+					"guides": [
+							{
+							"balloonText": "Taller columns correspond to higher incomes.",
+							"category": "X",
+							"dashLength": 4,
+							"expand": true,
+							"id": "Guide-1",
+							"inside": true,
+							"label": "",
+							"lineAlpha": 1,
+							"position": "right",
+							"toCategory": "X",
+							"toValue": 400000,
+							"value": 0,
+							"valueAxis": "ValueAxis-1",
+										"position": "top",
+													"inside": true
+							}
+						],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"stackType": "3d",
+							"title": "Annual Household Income (2018$)",
+							"maximum": 400000,
+							"titleFontSize": 15
+						}
+					],
+					"allLabels": [
+						{
+							"id": "Label-1",
+							"size": 15,
+							"text": "Time",
+							"x": "10%",
+							"y": "95%"
+					//	},
+					//	{
+					//		"id": "Label-2",
+					//		"size": 15,
+					//		"text": "Richer States",
+					//		"x": "70%",
+					//		"y": "95%"
+					//	},
+					//	{
+					//		"id": "Label-3",
+					//		"size": 12,
+					//		"text": "Poorer to richer people",
+					//		"x": "76%",
+					//		"y": "86%",
+					//		"rotation": -30.6
+					//	},
+					//	{
+					//		"id": "Label-3",
+					//		"size": 12,
+					//		"text": "within a country",
+					//		"x": "77%",
+					//		"y": "87%",
+					//		"rotation": -30.6
+						}
+					],					
+					"balloon": {
+						"fixedPosition": false
+					},
+					"dataProvider":

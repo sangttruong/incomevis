@@ -18,3 +18,17 @@ incomevis/output/percentile/.DS_Store
 incomevis/output/percentile/year/.DS_Store
 incomevis/output/percentile/year/amchart/.DS_Store
 .DS_Store
+build/lib/incomevis.py
+build/lib/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv
+build/lib/incomevis/input/rpp.csv
+build/lib/incomevis/input/ipums-cps-lite2.gz
+build/lib/incomevis/input/ipums-cps-lite1.gz
+build/lib/incomevis.py
+build/lib/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv
+build/lib/incomevis/input/rpp.csv
+build/lib/incomevis/input/ipums-cps-lite2.gz
+build/lib/incomevis/input/ipums-cps-lite1.gz
+build/lib/incomevis.py
+dist/.DS_Store
+dist/incomevis-0.1-py3-none-any.whl
+dist/incomevis-0.1.tar.gz
