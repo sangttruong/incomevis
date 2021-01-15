@@ -383,3 +383,7 @@ def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
   plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
   plt.close()
   return fig
+
+incomevis = incomevis()
+a = incomevis.adjustIncome()
+print(a.head())
