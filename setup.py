@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='incomevis',
-    version='0.1',
+    version='1.0',
     description='Visualization toolbox for income distribution',
     py_modules=['incomevis'],
     # packages=find_packages(), # include all packages under src
@@ -13,7 +13,6 @@ setup(
     packages=['data'],
     # package_dir={'incomevis': 'src/incomevis'},   
      
-
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
@@ -35,13 +34,6 @@ setup(
 
     #Including packages and folder in src files
     include_package_data = True,
-    
-    # extras_require = {
-    #     'dev': [
-    #         'pytest >= 3.7',
-    #     ],
-    # },
-
     url='https://github.com/sangttruong/incomevis',
     author='Sang T. Truong',
     author_email='sangtruong_2021@depauw.edu'
