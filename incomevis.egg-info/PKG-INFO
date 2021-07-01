@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: incomevis
-Version: 0.1
+Version: 0.3
 Summary: Visualization toolbox for income distribution
 Home-page: https://github.com/sangttruong/incomevis
 Author: Sang T. Truong
@@ -90,7 +90,7 @@ Description: <p align="center">
          A completed and separated page for gallery will be available soon! 
         
         ## Contact
-        Any question, feedback, or comment can be directed to [sangtruong_2021@depauw.edu](sangtruong_2021@depauw.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
+        Any question, feedback, or comment can be directed to [sttruong@stanford.edu](sttruong@stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu). 
         
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
