@@ -1,20 +1,29 @@
-.. incomevis documentation master file, created by
-   sphinx-quickstart on Mon Jul  5 11:01:17 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to incomevis's documentation!
 =====================================
 
-**incomevis** is a visualization toolbox to graphically representing income distribution.
-It includes incomevis class and several helper functions.
-
-
-Contents
-==================
+.. image:: https://raw.githubusercontent.com/sangttruong/incomevis/master/logo/logo.png
+   :align: center
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Introduction
+
+   about
+   installation
+   example
+   gallery
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API DOCUMENTATION
    
-   reference
+   constructor
+   method
+   helper
 
 
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
