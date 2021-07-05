@@ -1,9 +1,0 @@
-MANIFEST.in
-README.md
-incomevis.py
-setup.py
-incomevis.egg-info/PKG-INFO
-incomevis.egg-info/SOURCES.txt
-incomevis.egg-info/dependency_links.txt
-incomevis.egg-info/requires.txt
-incomevis.egg-info/top_level.txt
