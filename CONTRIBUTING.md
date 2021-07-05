@@ -4,7 +4,7 @@ The following is a set of guidelines for contributing to the `Python` package `i
 
 ## Code Licensing
 
-The **incomevis** project is [licensed under the MIT license](https://github.com/drorlab/incomevis/blob/master/LICENSE). By contributing, you understand and agree that your work becomes a part of the **incomevis** project and you grant permission to the **incomevis** project to  license your contribution under the [MIT license](https://opensource.org/licenses/MIT) or a compatible license.
+The **incomevis** project is [licensed under the MIT license](https://github.com/sangttruong/incomevis/blob/master/LICENSE). By contributing, you understand and agree that your work becomes a part of the **incomevis** project and you grant permission to the **incomevis** project to  license your contribution under the [MIT license](https://opensource.org/licenses/MIT) or a compatible license.
 
 ## Reporting Bugs and Submitting Suggestions
 
