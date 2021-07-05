@@ -28,19 +28,19 @@ $ pip install incomevis
 <div class="row">
 
 <a href=https://research.depauw.edu/econ/incomevis/>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/interactive.png" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/interactive.png" height="135" width="405">
 </a>
 
 <a href=https://rb.gy/yiaexf>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOME.gif" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOME.gif" height="135" width="405">
 </a>
 
 <a href=https://rb.gy/yiaexf>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted.gif" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted.gif" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
+<a href=https://github.com/sangttruong/incomevis/blob/master/galery/DCrank.xlsx>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/RHHINCOMEsorted_DC.gif" height="135" width="405">
 </a>
 </div>
 
@@ -51,38 +51,41 @@ Interactive graph (top) and dynamic graph (bottom) is implement in JavaScript Am
 <div class="row">
 
 <a href=https://research.depauw.edu/econ/incomevis/>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/CA.png" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/CA.png" height="135" width="405">
 </a>
 
-<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DC.png" height="135" width="405">
+<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/ranking.xlsx>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/DC.png" height="135" width="405">
 </a>
 </div>
 
 Bellow are bootstrap resampling of 50p of DC in 1977 10000 times (bottom right) and 1 million times (bottom left). We also show the relative growth of CA and DC overtime. 
 <div class="row">
-<a href=https://github.com/sangttruong/incomevis/blob/gh-pages/gallery/DCrank.xlsx>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/CArank.png" height="135" width="405">
+<a href=https://github.com/sangttruong/incomevis/blob/master/gallery/ranking.xlsx>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/CArank.png" height="135" width="405">
 </a>
 
-<a href=https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DCrank.png>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/DCrank.png" height="135" width="405">
+<a href=https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/DCrank.png>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/DCrank.png" height="135" width="405">
 </a>
 
-<a href=https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_1M.png>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_1M.png" height="135" width="405">
+<a href=https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/50p1977_11_1M.png>
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/50p1977_11_1M.png" height="135" width="405">
 </a>
 
 <a href=https://rb.gy/yiaexf>
-<img src="https://raw.githubusercontent.com/sangttruong/incomevis/gh-pages/gallery/50p1977_11_10K.png" height="135" width="405">
+<img src="https://raw.githubusercontent.com/sangttruong/incomevis/master/gallery/50p1977_11_10K.png" height="135" width="405">
 </a>
 
 </div>
 
  A completed and separated page for gallery will be available soon! 
 
-## Contact
-Any question, feedback, or comment can be directed to [sttruong@stanford.edu](sttruong@stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu).
+## Authors
+* [Sang Truong](sangttruong.github.io) (Stanford University)
+* [Humberto Barreto](http://academic.depauw.edu/hbarreto_web/) (DePauw University)
+
+As this research is continue to evolve, please direct any question, feedback, or comment to [sttruong@stanford.edu](sttruong@stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu).
 
 ## Acknowledgements
-We thank Frank M. Howland (Wabash College) for his help in revising an early version of this paper. We thanks to Jonah Barreto for writing the JavaScript code for this website. We thank Bu Tran for his help in displaying the 3D graph in python.
+This project was started by Sang Truong and Humberto Barreto during summer 2019 under the support of Hewlett Mellon Presidential Fund for undergraduate research at DePauw University. We thank [Frank Howland](http://persweb.wabash.edu/facstaff/howlandf/) for his help in revising an early version of this paper. We thanks Jonah Barreto for writing the JavaScript code for this website. We thank [Bu Tran](https://github.com/hieumtran) for his help in displaying the 3D graph in python.
