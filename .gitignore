@@ -48,3 +48,4 @@ incomevis.egg-info/PKG-INFO
 dist/.DS_Store
 dist/.DS_Store
 docs/touch.exe
+incomevis.egg-info/*
