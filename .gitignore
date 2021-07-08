@@ -35,7 +35,7 @@ dist/incomevis-0.1-py3-none-any.whl
 dist/incomevis-0.1.tar.gz
 dist/.DS_Store
 dist/.DS_Store
-__pycache__/incomevis.cpython-37.pyc
+
 dist/.DS_Store
 dist/.DS_Store
 dist/incomevis-0.112-py3-none-any.whl
@@ -48,4 +48,7 @@ incomevis.egg-info/PKG-INFO
 dist/.DS_Store
 dist/.DS_Store
 docs/touch.exe
-incomevis.egg-info/*
+
+# Py cache folder
+incomevis.egg-info
+__pycache__
