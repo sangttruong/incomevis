@@ -52,3 +52,9 @@ docs/touch.exe
 # Py cache folder
 incomevis.egg-info
 __pycache__
+
+# Unused file
+.DS_Store
+
+# Data
+data
