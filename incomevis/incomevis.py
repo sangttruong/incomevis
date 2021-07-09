@@ -90,7 +90,7 @@ class incomevis:
     self.__raw['HHSIZE'] = (self.__raw['HHSIZE'])**(1/2)
     self.__raw['ERHHINCOME'] = self.__raw['RHHINCOME']/self.__raw['HHSIZE']
     
-    # 3. RHHRHHINCOME and RHHERHHINCOME
+    # 3. RPPRHHINCOME and RPPERHHINCOME
     self.__raw['RPPRHHINCOME'] = self.__raw['RHHINCOME']/(self.__raw['RPP']/100)
     self.__raw['RPPERHHINCOME'] = self.__raw['ERHHINCOME']/(self.__raw['RPP']/100)
     
@@ -146,7 +146,7 @@ class incomevis:
       if (toState): result.to_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
 
       # Base color
-      if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors.Color), index = orderFrame, columns=['Color'])
+      if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
       if (returnColor): return colorFrame
       result = pd.concat([self.__state_name, result, self.state_label, colorFrame], axis = 1)
 
@@ -199,13 +199,13 @@ class incomevis:
         for year in range(year_start, year_end+1):
           df = pd.read_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
           data_df.append(df.loc[statefip].tolist())
-        if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = decileName,index=index_df)
-        elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=percentileName,index=index_df)
+        if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = self.__decileNames,index=index_df)
+        elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=self.__percentileNames,index=index_df)
         else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
         state_df['Year'] = [i-1 for i in range(year_start, year_end + 1)]
         state_df['Label'] = ''
-        if (k == 'decile'): state_df = state_df.reindex(columns = ['Year'] + decileName + ['Label'])
-        elif (k == 'percentile'): state_df = state_df.reindex(columns = ['Year'] + percentileName + ['Label'])
+        if (k == 'decile'): state_df = state_df.reindex(columns = ['Year'] + self.__decileNames + ['Label'])
+        elif (k == 'percentile'): state_df = state_df.reindex(columns = ['Year'] + self.__percentileNames + ['Label'])
         else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
 
         # Convert dataframe to JSON
@@ -214,7 +214,7 @@ class incomevis:
         state_df = json.dumps(state_df, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year to HHINCOME year
-        with open(output_path + k + '_state_' + incomeType + str(n) + '.js', 'w') as outfile:
+        with open(output_path + k + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(state_df)
           
       for year in range(year_start, year_end+1):
@@ -297,7 +297,7 @@ class incomevis:
       if (toState): result.to_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
 
       # Base color
-      if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors.Color), index = orderFrame, columns=['Color'])
+      if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
       if (returnColor): return colorFrame
       result = pd.concat([self.__state_name, result, self.state_label, colorFrame], axis = 1)
 
@@ -350,13 +350,13 @@ class incomevis:
         for year in range(year_start, year_end+1):
           df = pd.read_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
           data_df.append(df.loc[statefip].tolist())
-        if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = decileName,index=index_df)
-        elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=percentileName,index=index_df)
+        if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = self.__decileNames,index=index_df)
+        elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=self.__percentileNames,index=index_df)
         else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
         state_df['Year'] = [i-1 for i in range(year_start, year_end + 1)]
         state_df['Label'] = ''
-        if (k == 'decile'): state_df = state_df.reindex(columns = ['Year'] + decileName + ['Label'])
-        elif (k == 'percentile'): state_df = state_df.reindex(columns = ['Year'] + percentileName + ['Label'])
+        if (k == 'decile'): state_df = state_df.reindex(columns = ['Year'] + self.__decileNames + ['Label'])
+        elif (k == 'percentile'): state_df = state_df.reindex(columns = ['Year'] + self.__percentileNames + ['Label'])
         else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
 
         # Convert dataframe to JSON
@@ -365,7 +365,7 @@ class incomevis:
         state_df = json.dumps(state_df, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year to HHINCOME year
-        with open(output_path + k + '_state_' + incomeType + str(n) + '.js', 'w') as outfile:
+        with open(output_path + k + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(state_df)
           
       for year in range(year_start, year_end+1):
@@ -522,21 +522,22 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   rc('animation', html = 'jshtml')
   return dynamic
 
-def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
-  fig = plt.figure(figsize=(15,7))
-  data = (data - np.nanmean(data)) / np.nanstd(data)
-  data_nonmissing = data[~(np.isnan(data))]
-  try: plt.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
-  except AttributeError: plt.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
-  kde = gaussian_kde(data_nonmissing, bw_method = 0.3)
-  xlim = (-1.96*2, 1.96*2)
-  x = np.linspace(xlim[0], xlim[1])
-  plt.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
-  plt.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
-  plt.xlim(xlim)
-  plt.legend()
-  plt.grid(True)
-  plt.xlabel('', fontweight = 'bold', fontsize = 'x-large')
-  plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
-  plt.close()
-  return fig
+# KDE is now unavailable
+# def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
+#   fig = plt.figure(figsize=(15,7))
+#   data = (data - np.nanmean(data)) / np.nanstd(data)
+#   data_nonmissing = data[~(np.isnan(data))]
+#   try: plt.hist(data_nonmissing, 60, density = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+#   except AttributeError: plt.hist(data_nonmissing, 60, normed = True, label = 'Normalized bootstrap histogram', facecolor = '#568ae6', alpha = 0.3)
+#   kde = gaussian_kde(data_nonmissing, bw_method = 0.3)
+#   xlim = (-1.96*2, 1.96*2)
+#   x = np.linspace(xlim[0], xlim[1])
+#   plt.plot(x, kde(x), 'r--', linewidth = 2, color = '#a924b7', label = 'KDE')
+#   plt.plot(x, norm.pdf(x), 'r--', linewidth = 2, color = '#449ff0', label = r'$\mathcal{N}(0,1)$')
+#   plt.xlim(xlim)
+#   plt.legend()
+#   plt.grid(True)
+#   plt.xlabel('', fontweight = 'bold', fontsize = 'x-large')
+#   plt.ylabel('', fontweight = 'bold', fontsize = 'x-large')
+#   plt.close()
+#   return fig
