@@ -7,11 +7,13 @@ from mpl_toolkits.mplot3d import proj3d
 from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
 import os.path
+import utils
 
 dir_name = os.path.dirname(__file__) + '/data/'
 
 class incomevis:
   def __init__(self, input_path_ipums = '', input_path_rpp = ''):
+    utils.features()
     if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + 'ipums-cps-lite1.gz'),
                                                      pd.read_csv(dir_name + 'ipums-cps-lite2.gz')])
     else: self.__raw = pd.read_csv(input_path_ipums)
@@ -22,23 +24,13 @@ class incomevis:
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
     self.__raw = self.__raw[self.__raw['YEAR'] > 1976]
     self.__statefips = list(set(self.__raw['STATEFIP']))
-    self.__state_name = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                        'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-                        'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
-                        'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-                        'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-                        'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-                        'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
-                        'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-                        'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',
-                        'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+    self.__state_name = utils.state_name
     self.label_list = ['']
     notLabelList = list(set(self.__state_name) - set(self.label_list))
     notLabelDict = dict.fromkeys(notLabelList , '')
     self.__state_name = pd.DataFrame(data = self.__state_name, index = self.__statefips, columns = ['State'])
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
-
     self.__colors = ['#FF0000', '#FF0A00', '#FF1400', '#FF1E00', '#FF2800', '#FF3300', '#FF3D00',
                      '#FF4700', '#FF5100', '#FF5B00', '#FF6600', '#FF7000', '#FF7A00', '#FF8400',
                      '#FF8E00', '#FF9900', '#FFA300', '#FFAD00', '#FFB700', '#FFC100', '#FFCC00',
@@ -51,18 +43,8 @@ class incomevis:
     self.__deciles = np.arange(0.05, 1.05, 0.1) # 10
     self.__deciles = np.insert(arr = self.__deciles, obj = 5, values = 0.5) # 11  
     self.__percentiles = np.arange(0.02, 1, 0.01) # 98
-    self.__decileNames = ['5p', '15p', '25p', '35p', '45p', '50p', '55p', '65p', '75p', '85p', '95p']
-    self.__percentileNames = ['2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p',
-                              '12p', '13p', '14p', '15p', '16p', '17p', '18p', '19p', '20p',
-                              '21p', '22p', '23p', '24p', '25p', '26p', '27p', '28p', '29p',
-                              '30p', '31p', '32p', '33p', '34p', '35p', '36p', '37p', '38p',
-                              '39p', '40p', '41p', '42p', '43p', '44p', '45p', '46p', '47p',
-                              '48p', '49p', '50p', '51p', '52p', '53p', '54p', '55p', '56p',
-                              '57p', '58p', '59p', '60p', '61p', '62p', '63p', '64p', '65p',
-                              '66p', '67p', '68p', '69p', '70p', '71p', '72p', '73p', '74p',
-                              '75p', '76p', '77p', '78p', '79p', '80p', '81p', '82p', '83p',
-                              '84p', '85p', '86p', '87p', '88p', '89p', '90p', '91p', '92p',
-                              '93p', '94p', '95p', '96p', '97p', '98p', '99p']
+    self.__decileNames = utils.decile
+    self.__percentileNames = utils.percentile
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
@@ -96,10 +78,10 @@ class incomevis:
     
     return self.__raw
 
+
   def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
                    year_start = 1977, year_end = 2019,
-                   output_path = dir_name,
-                   toState = False,
+                   output_path = dir_name, toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
                    AmChart = True):
@@ -220,206 +202,32 @@ class incomevis:
       for year in range(year_start, year_end+1):
         os.remove(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv')
 
-  def getIncomevis_subpop(self, incomeType = 'RHHINCOME', k = 'decile',
-                   year_start = 1977, year_end = 2019,
-                   output_path = dir_name,
-                   toState = False,
-                   provide_colorFrame = False, colorFrame = [], returnColor = False,
-                   provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
-                   AmChart = True, 
-                   subpop = False, black = None, hispan = None, sex=None, educ=None):
+  def getIncomevis_subpop(self, subpop = False, black = None, hispan = None, sex=None, educ=None):
     if subpop:
       if black is not None:
         if black == True:
-          sub_raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
+          self.__raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
                                       (self.__raw['RACE'] == 807) | (self.__raw['RACE'] == 810) | (self.__raw['RACE'] == 811) |
                                       (self.__raw['RACE'] == 814) | (self.__raw['RACE'] == 816) | (self.__raw['RACE'] == 818), :]
         if black == False:
-          sub_raw = self.__raw.loc[(self.__raw['RACE'] != 200) & (self.__raw['RACE'] != 801) & (self.__raw['RACE'] != 805) & (self.__raw['RACE'] != 806) &
+          self.__raw = self.__raw.loc[(self.__raw['RACE'] != 200) & (self.__raw['RACE'] != 801) & (self.__raw['RACE'] != 805) & (self.__raw['RACE'] != 806) &
                                       (self.__raw['RACE'] != 807) & (self.__raw['RACE'] != 810) & (self.__raw['RACE'] != 811) &
                                       (self.__raw['RACE'] != 814) & (self.__raw['RACE'] != 816) & (self.__raw['RACE'] != 818), :]         
       if hispan is not None:
         if hispan == True:
-          sub_raw = self.__raw.loc[(self.__raw['HISPAN'] > 0) & (self.__raw['HISPAN'] < 900), :]
+          self.__raw = self.__raw.loc[(self.__raw['HISPAN'] > 0) & (self.__raw['HISPAN'] < 900), :]
         if hispan == False:
-          sub_raw = self.__raw.loc[self.__raw['HISPAN'] == 0, :]
+          self.__raw = self.__raw.loc[self.__raw['HISPAN'] == 0, :]
       if sex is not None:
         if sex == True:
-          sub_raw = self.__raw.loc[self.__raw['SEX'] == 1, :]
+          self.__raw = self.__raw.loc[self.__raw['SEX'] == 1, :]
         if sex == False:
-          sub_raw = self.__raw.loc[self.__raw['SEX'] == 2, :]
+          self.__raw = self.__raw.loc[self.__raw['SEX'] == 2, :]
       if educ is not None:
         if educ == True:
-          sub_raw = self.__raw.loc[(self.__raw['EDUC'] > 73) & (self.__raw['EDUC'] < 999), :]
+          self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 73) & (self.__raw['EDUC'] < 999), :]
         if educ == False:
-          sub_raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
-
-    for year in range(year_start, year_end+1):
-      year_df = sub_raw[sub_raw['YEAR'] == year] # Generate year_df dataframe
-
-      # Decile or percentile
-      if (k == 'decile'):
-        kiles = self.__deciles
-        kNames = self.__decileNames
-      elif (k == 'percentile'):
-        kiles = self.__percentiles
-        kNames = self.__percentileNames
-      else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
-
-      # Generate result grid, decile-column
-      result = pd.DataFrame(index = kNames, columns = self.__statefips)
-
-      # Iterate through each state
-      c = 0
-      for statefip in self.__statefips:
-        state_df = year_df[year_df['STATEFIP'] == statefip] # Generate state dataframe
-        state_df = state_df.reset_index(drop = True)
-        state_df = state_df.sort_values(incomeType) # Sort state dataframe by RHHINCOME
-        state_df['CUMWTH'] = state_df['ASECWTH'].cumsum() # Calculate cumulated weight and Percentage
-        state_df['PERCENTH'] = state_df['CUMWTH']/(state_df['ASECWTH'].sum())
-
-        # Calculate decile
-        r = 0
-        for kile in kiles:
-          result.iloc[r,c] = state_df.loc[state_df['PERCENTH'] <= kile, incomeType].max()
-          r = r + 1
-        c = c + 1
-
-      # Transpose result table: column-decile
-      result = result.T
-
-      if (not provide_orderFrame):
-        sorted_result = result.sort_values(by = ['50p'], ascending = True)
-        orderFrame = sorted_result.index
-      if (returnOrder): return orderFrame
-
-      # Output csv file for toState
-      if (toState): result.to_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
-
-      # Base color
-      if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
-      if (returnColor): return colorFrame
-      result = pd.concat([self.__state_name, result, self.state_label, colorFrame], axis = 1)
-
-      # Amchart vs. Matplotlib
-      if (AmChart):
-        # Replicate each state's dataline with its respective replication number
-        for statefip in self.__statefips:
-          rep = self.__pop.loc[statefip, 'NORMPOP_' + str(year)] - 1
-          rep = int(rep)
-          line = pd.DataFrame(result.loc[statefip]).T
-          line.loc[statefip, 'Label'] = ''
-          for _ in range(0, rep): result = pd.concat([result, line])
-        result.reset_index(drop = False, inplace = True)
-        result.rename_axis('ID', inplace = True)
-        result.rename(columns={'index': 'STATEFIP'}, inplace = True)
-        result.set_index('STATEFIP', append=True, inplace=True)
-        result = result.groupby(['STATEFIP', 'ID']).sum() # Sum has no effect since all key combinations are unique
-        result = result.reindex(orderFrame, level = 'STATEFIP')
-
-        # Add the middle property
-        result.reset_index(drop = True, inplace = True)
-        result['Middle'] = np.nan
-        counter = 0
-        for state in result.State.drop_duplicates():
-          temp = result[result.State == state]
-          temp_size = len(temp.index)
-          middle = (temp_size // 2)
-          counter = counter + middle
-          result.loc[counter, 'Middle'] = 1
-          counter = counter - middle + temp_size
-        
-        # Convert dataframe to JSON
-        result = result.to_json(orient = 'records')
-        result = json.loads(result, object_pairs_hook = OrderedDict)
-        result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
-
-        # Save JSON file -- y-1 adjusts sample year_df to HHINCOME year_df
-        with open(output_path + k + '_year_amchart_js_' + incomeType + str(year-1) + '.js', 'w') as outfile:
-          outfile.write(result)
-      else:
-        result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year)], left_index = True, right_index = True)
-        result = result.reindex(index = orderFrame)
-        result.to_csv(output_path + k + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
-    
-    if (toState):    
-      for statefip in self.__statefips:
-        #Reformat the columns
-        data_df = []
-        index_df = [i for i in range(0, 43)]
-        for year in range(year_start, year_end+1):
-          df = pd.read_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
-          data_df.append(df.loc[statefip].tolist())
-        if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = self.__decileNames,index=index_df)
-        elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=self.__percentileNames,index=index_df)
-        else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
-        state_df['Year'] = [i-1 for i in range(year_start, year_end + 1)]
-        state_df['Label'] = ''
-        if (k == 'decile'): state_df = state_df.reindex(columns = ['Year'] + self.__decileNames + ['Label'])
-        elif (k == 'percentile'): state_df = state_df.reindex(columns = ['Year'] + self.__percentileNames + ['Label'])
-        else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
-
-        # Convert dataframe to JSON
-        state_df = state_df.to_json(orient = 'records')
-        state_df = json.loads(state_df, object_pairs_hook = OrderedDict)
-        state_df = json.dumps(state_df, indent = 4, sort_keys = False) # Make JSON format readable
-
-        # Save JSON file -- y-1 adjusts sample year to HHINCOME year
-        with open(output_path + k + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
-          outfile.write(state_df)
-          
-      for year in range(year_start, year_end+1):
-        os.remove(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv')
-
-
-  def bootstrap(self, seed = 0, incomeType = 'RHHINCOME', k = 'decile',
-                year = 1977, statefip = 1, n = 1000000,
-                output_path = dir_name):
-    np.random.seed(seed)
-    year_df = self.__raw[self.__raw['YEAR'] == year]
-
-    # Decile or percentile
-    if (k == 'decile'):
-      kiles = self.__deciles
-      kNames = self.__decileNames
-    elif (k == 'percentile'):
-      kiles = self.__percentiles
-      kNames = self.__percentileNames
-    else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
-
-    # Generate result grid, decile-column
-    result = pd.DataFrame(index = kNames, columns = np.arange(n))
-
-    # Resampling n times
-    for i in range(n):
-      # Generate state dataframe
-      state_df = year_df[year_df['STATEFIP'] == statefip]
-      state_df = state_df.reset_index(drop = True) # Optional
-      # sample_size = len(state_df)
-      
-      # Resampling
-      # index = np.random.choice(state_df.index, sample_size)
-      # state_df = state_df.iloc[index, :]
-      state_df = state_df.sample(frac= 1, replace=True)
-      state_df = state_df.reset_index(drop = True)
-
-      # Sort state dataframe by RHHINCOME
-      state_df = state_df.sort_values(incomeType)
-
-      # Calculate cumulated weight and Percentage
-      state_df['CUMWTH'] = state_df['ASECWTH'].cumsum()
-      state_df['PERCENTH'] = state_df['CUMWTH']/(state_df['ASECWTH'].sum())
-
-      # Calculate decile
-      r = 0
-      for kile in kiles:
-        result.iloc[r, i] = state_df.loc[state_df['PERCENTH'] <= kile, incomeType].max()
-        r = r + 1
-    
-      if (i%5000 == 0): print('Start iteration ' + str(i))        
-    result = result.T
-    result.to_csv(output_path + k + '_' + str(seed) + incomeType + str(year) + '_' + str(statefip) + '_' + str(n) + '.csv', index = False)
-    return result
+          self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
   
 def getInteractive(k = 'decile', toState = False, outputHTML = False,
                    input_path = dir_name,
@@ -443,6 +251,9 @@ def getInteractive(k = 'decile', toState = False, outputHTML = False,
 
 def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
                 input_path = dir_name):
+
+  # PyTest
+  assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
   # Display setting
   # fig = plt.figure(figsize=(15,15))
   fig = plt.figure(figsize=(20,17))
