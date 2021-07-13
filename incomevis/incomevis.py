@@ -9,6 +9,8 @@ from scipy.stats import gaussian_kde, norm
 import os.path
 import utils
 
+from bootstrap import bootstrap_age, bootstrap_var
+
 dir_name = os.path.dirname(__file__) + '/data/'
 
 class incomevis:
@@ -80,11 +82,11 @@ class incomevis:
 
 
   def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
-                   year_start = 1977, year_end = 2019,
+                   year_start = 1977, year_end = 2019, n = 100000, 
                    output_path = dir_name, toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
-                   AmChart = True):
+                   AmChart = True, bs_var = False, bs_age = False):
     for year in range(year_start, year_end+1):
       year_df = self.__raw[self.__raw['YEAR'] == year] # Generate year_df dataframe
 
@@ -104,6 +106,14 @@ class incomevis:
       c = 0
       for statefip in self.__statefips:
         state_df = year_df[year_df['STATEFIP'] == statefip] # Generate state dataframe
+
+        # Untested bootstrap
+        if bs_age == True:
+          state_df = bootstrap_age(year_df, n=n, year=year, statefip=statefip)
+        if bs_var == True:
+          state_df = bootstrap_var(year_df, seed=0, incomeType=incomeType, 
+                                   statefip=statefip, year=year, n=n)
+                                   
         state_df = state_df.reset_index(drop = True)
         state_df = state_df.sort_values(incomeType) # Sort state dataframe by RHHINCOME
         state_df['CUMWTH'] = state_df['ASECWTH'].cumsum() # Calculate cumulated weight and Percentage
@@ -228,111 +238,47 @@ class incomevis:
           self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 73) & (self.__raw['EDUC'] < 999), :]
         if educ == False:
           self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
+
+
+  def getIncomevis_nation(self, incomeType='RPPERHHINCOME', k='decile', year=2019, output_path=''):
+      # Adjustable variable
+      year_df = self.__raw[self.__raw['YEAR'] == year] 
+
+      # Generate result grid, decile-column
+      if k == 'decile':
+          result = pd.DataFrame(index = utils.decile, columns = ['nation'])
+      if k == 'percentile':
+          result = pd.DataFrame(index = utils.percentile, columns = ['nation'])
+
+      # Iterate through each state
+      c = 0
+      # for statefip in __statefips:
+      state_df = year_df # Generate state dataframe
+      state_df = state_df.reset_index(drop = True)
+      state_df = state_df.sort_values(incomeType) # Sort state dataframe by RHHINCOME
+      state_df['CUMWTH'] = state_df['ASECWTH'].cumsum() # Calculate cumulated weight and Percentage
+      state_df['PERCENTH'] = state_df['CUMWTH']/(state_df['ASECWTH'].sum())
+
+      # Calculate decile
+      if k == 'decile':
+          r = 0
+          for kile in [0.05, 0.15, 0.25, 0.35, 0.45, 0.50, 0.55, 0.65, 0.75, 0.85, 0.95]:
+              result.iloc[r,c] = state_df.loc[state_df['PERCENTH'] <= kile, incomeType].max()
+              r = r + 1
+          c = c + 1
+      if k == 'percentile':
+          r = 0
+          for kile in np.arange(0.02, 1, 0.01):
+              result.iloc[r,c] = state_df.loc[state_df['PERCENTH'] <= kile, incomeType].max()
+              r = r + 1
+          c = c + 1
+
+      # Transpose result table: column-decile
+      result = result.T
+
+      # Save to csv
+      result.to_csv(output_path + 'nation_' + k + '_' + str(incomeType) + '_' + str(year) + '.csv')        
   
-def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = dir_name,
-                   output_path = dir_name):
-  #Missing files - Need to fix
-  if k == 'decile':
-    if(not toState): html1 = open(dir_name + 'html1_d_year.txt', 'r')
-    else: html1 = open(dir_name + 'html1_p_state.txt', 'r')
-  elif k == 'percentile':
-    if (not toState): html1 = open(dir_name + 'html1_p_year.txt', 'r')
-    else: html1 = html1 = open(dir_name + 'html1_p_state.txt', 'r')
-  html2 = open(dir_name + 'html2.txt', 'r')
-
-  #Need to fix 
-  json = open(input_path + 'decile_year_amchart_js_RHHINCOME1976.js','r')
-  AmChart = html1.read() + json.read() + html2.read()
-  if outputHTML:
-    with open(output_path + 'decile_year_amchart_html_RHHINCOME1976.html', 'w') as outfile:
-      outfile.write(AmChart)
-  return IPython.display.HTML(data = AmChart)
-
-def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                input_path = dir_name):
-
-  # PyTest
-  assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
-  # Display setting
-  # fig = plt.figure(figsize=(15,15))
-  fig = plt.figure(figsize=(20,17))
-  ax = plt.axes(projection='3d')
-  x_scale = 3 # Scalling
-  y_scale = 1
-  z_scale = 1
-  scale = np.diag([x_scale, y_scale, z_scale, 1])
-  scale = scale*(1.0/scale.max())
-  scale[3, 3] = 0.7
-  def short_proj(): return np.dot(Axes3D.get_proj(ax), scale)
-  ax.get_proj = short_proj
-  plt.subplots_adjust(left = -0.35, right = 1, bottom = -0.5, top = 2.45) # Bounding box adjustment
-  plt.close()
-
-  def animate(year):
-    #Read the data
-    pop_label = 'UR_NORMPOP_' + str(year+1)
-    year_df = pd.read_csv(input_path + 'decile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
-    ax.view_init(5,-140)
-    #Convert the data to suitable format for the 3D bar chart
-    deciles = ['5p','15p','25p','35p','45p','50p','55p','65p','75p','85p','95p']
-    label = year_df['Label'].tolist()
-    for j in range(len(label)):
-      if isinstance(label[j], float): label[j] = ''
-      # if year_df.index[j] == 'California': label[j] = 'CA'
-      # if year_df.index[j] == 'District of Columbia': label[j] = 'DC'
-
-    ax.clear() #Clear the vis between each frame
-    ax.set_zlim(0, 400000) #Set the limit of the z axis
-    ax.set_zticklabels([0,50000,100000,150000,200000,250000,300000,350000,400000],fontsize=15)
-    #Resize and label the x axis
-    ax.set_xticks([j for j in range(len(year_df[pop_label].tolist()))])
-    ax.set_xticklabels(label, rotation=-45, fontsize='x-large')
-    ax.grid(False)
-    #Adjust label in z axis
-    ax.tick_params(axis='z', which='major', pad=30)
-    # Get rid of colored axes planes
-    # First remove fill
-    ax.xaxis.pane.fill = False
-    ax.yaxis.pane.fill = False
-    ax.zaxis.pane.fill = False
-    # Now set color to white (or whatever is "invisible")
-    ax.xaxis.pane.set_edgecolor('w')
-    ax.yaxis.pane.set_edgecolor('w')
-    ax.zaxis.pane.set_edgecolor('w')
-    #Resize and label the y axis
-    ax.set_yticks(np.arange(len(deciles)))
-    ax.set_yticklabels(['' for year in range(len(deciles))])
-    ax.zaxis.set_rotate_label(False)  
-    ax.set_zlabel('Annual Household Income (2018$)', rotation = 90, labelpad = 60, fontsize = 20, fontweight = 'bold')
-    ax.set_xlabel('Poorer States                             ' + str(year) + '                             Richer States',
-                  fontweight = 'bold', labelpad = 30, fontsize = 20)
-
-    #Draw the 3D bar chart 11
-    for state in range(year_df.index.size):
-      for decile in range(len(deciles)):
-        if (highlight != ''):
-          if (year_df.iloc[state].name != highlight):
-            ax.bar3d(state, decile, 0,
-                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                    color = '#00C2FB08')
-          else:
-            ax.bar3d(state, decile, 0,
-                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                    year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                    color = year_df.loc[year_df.iloc[state].name, 'Color'])
-        else:
-          ax.bar3d(state, decile, 0,
-                  year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                  year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                  color = year_df.loc[year_df.iloc[state].name, 'Color'])
-
-  #Animation features: frames - max range for year in animate function; interval - time changing between each frame
-  dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
-  rc('animation', html = 'jshtml')
-  return dynamic
-
 # KDE is now unavailable
 # def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
 #   fig = plt.figure(figsize=(15,7))
