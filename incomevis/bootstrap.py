@@ -5,13 +5,6 @@ from incomevis import incomevis
 import utils 
 
 utils.features()
-
-# class gather_absolute_ranking:
-#     def __init__(self, input_path_ipums, input_path_rpp):
-#         iv = incomevis(input_path_ipums = input_path_ipums, input_path_rpp = input_path_rpp)
-#         raw = iv.adjustIncome()
-#         statefip = list(set(raw['STATEFIP']))
-#         pop = iv.getPop()
         
 def bootstrap_age(raw, n=100, year = 2019, statefip = 1):
     dist_age = pd.DataFrame()
