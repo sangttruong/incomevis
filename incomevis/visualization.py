@@ -43,7 +43,7 @@ def axis_config(ax, incomeType, segments):
         # Configure z axis
         ax.set_zlim(0, 300000) 
         ax.set_zticks([0,100000,200000,300000])
-        ax.set_zticklabels([0,100000,200000,300000],fontsize=23, fontweight='bold')
+        ax.set_zticklabels([0,100000,200000,300000],fontsize=15, fontweight='bold')
 
         # Configure y axis
         ax.set_yticks([0,3,7,10])
@@ -61,7 +61,7 @@ def axis_config(ax, incomeType, segments):
         ax.set_yticklabels(['5p','35p','65p','95p'],fontsize=15, fontweight = 'bold')
     
     # z axis tick labels
-    ax.tick_params(axis='z', which='major', pad=45)
+    ax.tick_params(axis='z', which='major', pad=30)
     ax.zaxis.set_rotate_label(False)
     
     # x axis tick labels
@@ -90,11 +90,11 @@ def axis_config(ax, incomeType, segments):
     ax.set_ylim3d(0, len(segments)+1)
 
     # x y z main labels
-    ax.set_xlabel('Distance from benchmark ($)', fontweight = 'bold', labelpad = 65, fontsize = 25)
-    ax.set_ylabel('Percentile',  labelpad = 35, fontsize = 25, fontweight = 'bold')
-    ax.set_zlabel('Adjusted annual household income ($)', rotation = 90, labelpad = 95, fontsize = 25, fontweight = 'bold')
+    ax.set_xlabel('Distance from benchmark ($)', fontweight = 'bold', labelpad = 60, fontsize = 20)
+    ax.set_ylabel('Percentile',  labelpad = 35, fontsize = 20, fontweight = 'bold')
+    ax.set_zlabel('Adjusted annual household income ($)', rotation = 90, labelpad = 50, fontsize = 20, fontweight = 'bold')
 
-def colorbar_config(fig, left=0.77, elevation=0.4, width=0.01, height=0.1, alpha = 0,
+def colorbar_config(fig, left=0.721, elevation=0.62, width=0.02, height=0.2, alpha = 0,
                     cm_str='bwr', upper = 40000, lower=-60000):
   """
     Custom color bar for incomevis
@@ -142,11 +142,11 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
                         new_sort=True, k='decile', sex=None, save_frame=None, using_JN = False):
     
     # Figure size
-    fig = plt.figure(figsize=(20,17), tight_layout=True)
+    fig = plt.figure(figsize=(15,10))
     ax = plt.axes(projection='3d')
 
     # Scalling
-    x_scale, y_scale, z_scale = 3, 1, 1
+    x_scale, y_scale, z_scale = 3, 1, 1.5
     scale = np.diag([x_scale, y_scale, z_scale, 1])
     scale = scale * (1.0/scale.max())
     scale[3, 3] = 0.7
@@ -156,64 +156,63 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
     ax.get_proj = short_proj
 
     # plt.close()
-    plt.subplots_adjust(left = -0.1, right = 0.95, bottom = -0.4, top = 2.5) 
+    plt.subplots_adjust(left = 0, right = 0.95, bottom = -0.5, top = 1.8) 
     
-
     cb = colorbar_config(fig)
 
     def animate(year):
-        ax.clear() # Clear the vis between each frame
-        cb.ax.set_title(str(year), fontsize=30, fontweight='bold', pad=30)
-        # Read the data
-        pop_label = 'UR_NORMPOP_' + str(year+1)
+      ax.clear() # Clear the vis between each frame
+      cb.ax.set_title(str(year), fontsize=30, fontweight='bold', pad=30)
+      # Read the data
+      pop_label = 'UR_NORMPOP_' + str(year+1)
 
-        year_df = pd.read_csv(input_path + k + '_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
+      year_df = pd.read_csv(input_path + k + '_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
 
-        if new_sort:
-            nat = pd.read_csv(benchmark_path + 'nation' + '_' + k + '_' + incomeType + '_2019.csv')
-            year_df['Location'] = year_df['50p'].values - nat['50p'].values
-            year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(color_config(incomeType=incomeType, k=k, gender=sex))
+      if new_sort:
+          nat = pd.read_csv(benchmark_path + 'nation' + '_' + k + '_' + incomeType + '_2019.csv')
+          year_df['Location'] = year_df['50p'].values - nat['50p'].values
+          year_df['Location'] = year_df['Location'].apply(np.int64)
+          year_df['new_color'] = year_df.index.map(color_config(incomeType=incomeType, k=k, gender=sex))
 
-        if k == 'decile':
-            # Decile
-            segments = utils.decile
+      if k == 'decile':
+          # Decile
+          segments = utils.decile
 
-        if k == 'percentile':
-            # Percentile
-            segments = utils.percentile
+      if k == 'percentile':
+          # Percentile
+          segments = utils.percentile
 
-        axis_config(ax, incomeType, segments)
+      axis_config(ax, incomeType, segments)
 
-        for state in range(year_df.index.size):
-            for segment in range(len(segments)):
-                if highlight != '':
-                    for i in highlight:
-                        if (year_df.iloc[state].name != i):
-                            ax.bar3d(year_df['Location'][state], segment, 0,
-                                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                                    year_df.loc[year_df.iloc[state].name, segments[segment]],
-                                    color = '#00C2FB08')
-                        else:
-                            ax.bar3d(year_df['Location'][state], segment, 0,
-                                    year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                                    year_df.loc[year_df.iloc[state].name, segments[segment]],
-                                    color = year_df.loc[year_df.iloc[state].name, 'new_color'])
-                else:
-                    # RPPERHHINCOME
-                    if incomeType == 'RPPERHHINCOME':
-                        ax.bar3d(year_df['Location'][state], segment, 0,
-                                year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                                year_df.loc[year_df.iloc[state].name, segments[segment]],
-                                color = year_df.loc[year_df.iloc[state].name, 'new_color'])
-                    # HHINCOME
-                    elif incomeType == 'HHINCOME':
-                        ax.bar3d(year_df['Location'][state], segment, 0,
-                            year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                            year_df.loc[year_df.iloc[state].name, segments[segment]],
-                            color = year_df.loc[year_df.iloc[state].name, 'new_color'], edgecolor='grey', linewidth=0.25)
-            if save_frame != None:
-              ax.figure.savefig(save_frame, dpi=500)
+      for state in range(year_df.index.size):
+          for segment in range(len(segments)):
+              if highlight != '':
+                  for i in highlight:
+                      if (year_df.iloc[state].name != i):
+                          ax.bar3d(year_df['Location'][state], segment, 0,
+                                  year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                                  year_df.loc[year_df.iloc[state].name, segments[segment]],
+                                  color = '#00C2FB08')
+                      else:
+                          ax.bar3d(year_df['Location'][state], segment, 0,
+                                  year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                                  year_df.loc[year_df.iloc[state].name, segments[segment]],
+                                  color = year_df.loc[year_df.iloc[state].name, 'new_color'])
+              else:
+                  # RPPERHHINCOME
+                  if incomeType == 'RPPERHHINCOME':
+                      ax.bar3d(year_df['Location'][state], segment, 0,
+                              year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                              year_df.loc[year_df.iloc[state].name, segments[segment]],
+                              color = year_df.loc[year_df.iloc[state].name, 'new_color'])
+                  # HHINCOME
+                  elif incomeType == 'HHINCOME':
+                      ax.bar3d(year_df['Location'][state], segment, 0,
+                          year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                          year_df.loc[year_df.iloc[state].name, segments[segment]],
+                          color = year_df.loc[year_df.iloc[state].name, 'new_color'], edgecolor='grey', linewidth=0.25)
+          if save_frame != None:
+            ax.figure.savefig(save_frame, dpi=500)
     
     #Animation features: frames - max range for year in animate function; interval - time changing between each frame
     dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
@@ -328,7 +327,7 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   return dynamic
 
 if __name__=="__main__":
-    plot = getAnimated_abs_rank(incomeType='RPPERHHINCOME', year_start=1977, year_end=2019,
+    plot = getAnimated_abs_rank(incomeType='RPPERHHINCOME', year_start=1977, year_end=2020,
                                 input_path='D:\\Github\\incomevis\\data\\bootstrap\\withreplacement\\bootstrap_age\\data\\',
                                 benchmark_path = 'D:\\Github\\incomevis\\data\\absolute_ranking\\data_nation\\')
     # plt.show()
