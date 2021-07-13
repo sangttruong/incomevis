@@ -17,5 +17,5 @@ It includes incomevis class and several helper functions.
 
 Happy visualizing economic complexity!
 
-.. image:: https://raw.githubusercontent.com/sangttruong/incomevis/master/logo/logo.png
+.. image:: https://raw.githubusercontent.com/hieumtran/incomevis/master/gallery/animation.gif
    :align: center
