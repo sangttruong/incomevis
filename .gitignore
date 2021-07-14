@@ -56,7 +56,7 @@ __pycache__
 .DS_Store
 
 # Data
-data
+data_local
 
 # Build
 build
