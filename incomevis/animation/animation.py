@@ -1,22 +1,14 @@
-
-import pandas as pd
-import numpy as np
+import pandas as pd, numpy as np, matplotlib
 import matplotlib.pyplot as plt
-
 from matplotlib import animation, rc
-from mpl_toolkits.mplot3d.axes3d import Axes3D
-
-import matplotlib
 from pylab import *
-import IPython
-
+from mpl_toolkits.mplot3d.axes3d import Axes3D
 from mpl_toolkits.mplot3d.axis3d import Axis
 
 # Instantiate utils
-import utils
-utils.features()
-
-from config import color_config
+import incomevis.utils
+incomevis.utils.features()
+from incomevis.animation.config import *
 
 dir_name = ""
 # Remove gridlines unneccessary
@@ -28,109 +20,6 @@ if not hasattr(Axis, "_get_coord_info_old"):
         return mins, maxs, centers, deltas, tc, highs
     Axis._get_coord_info_old = Axis._get_coord_info  
     Axis._get_coord_info = _get_coord_info_new
-
-# Axis configuration
-def axis_config(ax, incomeType, segments):
-    ax.view_init(5,-146)
-
-    # z axis tick labels
-    # RPPERHHINCOME
-    if incomeType == 'RPPERHHINCOME':
-        # Configure z axis
-        ax.set_zlim(0, 300000) 
-        ax.set_zticks([0,100000,200000,300000])
-        ax.set_zticklabels([0,100000,200000,300000],fontsize=15, fontweight='bold')
-
-        # Configure y axis
-        ax.set_yticks([0,3,7,10])
-        ax.set_yticklabels(['5p','35p','65p', '95p'],fontsize=15, fontweight = 'bold') 
-
-    # HHINCOME
-    elif incomeType == 'HHINCOME':
-        # Configure z axis
-        ax.set_zlim(0, 400000) 
-        ax.set_zticks([0,100000,200000,300000,400000])
-        ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=15, fontweight='bold')
-
-        # Configure y axis
-        ax.set_yticks([0, 30, 60, 90])
-        ax.set_yticklabels(['5p','35p','65p','95p'],fontsize=15, fontweight = 'bold')
-    
-    # z axis tick labels
-    ax.tick_params(axis='z', which='major', pad=30)
-    ax.zaxis.set_rotate_label(False)
-    
-    # x axis tick labels
-    ax.set_xlim(-70000, 40000)
-    ax.set_xticks([-60000,  -40000, -20000, 0, 20000, 40000])
-    ax.set_xticklabels([-60000,  -40000, -20000, 0, 20000, 40000], fontsize=15, fontweight='bold')
-    ax.tick_params(axis='x', which='major', pad=15)
-
-    # Gridlines option
-    ax.xaxis._axinfo["grid"].update({"linewidth":3, "color" : "grey", 'linestyle': '-.'})
-    ax.yaxis._axinfo["grid"].update({"linewidth":3, "color" : "grey", 'linestyle': '-.'})
-    ax.zaxis._axinfo["grid"].update({"linewidth":3, "color" : "grey", 'linestyle': '-.'})
-    
-    # Get rid of colored axes planes
-    # First remove fill
-    ax.xaxis.pane.fill = False
-    ax.yaxis.pane.fill = False
-    ax.zaxis.pane.fill = False
-
-    # Now set color to white (or whatever is "invisible")
-    ax.xaxis.pane.set_edgecolor('w')
-    ax.yaxis.pane.set_edgecolor('w')
-    ax.zaxis.pane.set_edgecolor('w')
-
-    # y axis tick labels
-    ax.set_ylim3d(0, len(segments)+1)
-
-    # x y z main labels
-    ax.set_xlabel('Distance from benchmark ($)', fontweight = 'bold', labelpad = 60, fontsize = 20)
-    ax.set_ylabel('Percentile',  labelpad = 35, fontsize = 20, fontweight = 'bold')
-    ax.set_zlabel('Adjusted annual household income ($)', rotation = 90, labelpad = 50, fontsize = 20, fontweight = 'bold')
-
-def colorbar_config(fig, left=0.721, elevation=0.62, width=0.02, height=0.2, alpha = 0,
-                    cm_str='bwr', upper = 40000, lower=-60000):
-  """
-    Custom color bar for incomevis
-
-    Arguments
-    =============================
-      fig: matplotlib figure object
-
-      left: adjust left (decrease) and right (increase);
-            Default: 0.73
-      
-      elevation: adjust down (decrease) and up (increase);
-            Default: 0.65
-      
-      width: width of the colorbar;
-            Default: 0.02
-      
-      height: height of the colorbar;
-            Default: 0.2
-
-      alpha: blur the colorbar;
-            Default: 0
-
-      cm_str: string represents colorbar;
-            Default bwr
-
-      upper: upper bound difference;
-            Default: 40000
-      
-      lower: lower bound difference;
-            Default: -60000
-  """
-  cbax = fig.add_axes([left,elevation,width, height], alpha=alpha)
-  all_num = [i for i in range(lower, upper)]
-  all_num.reverse()
-  cmap = plt.cm.get_cmap(cm_str).reversed()
-  norm = matplotlib.colors.TwoSlopeNorm(vmin=-60000, vmax=40001, vcenter=0)
-  cb = fig.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap), cax=cbax, shrink = 0.15, ticks=[-60000,0,40000])
-  cb.ax.set_yticklabels([str(lower) , '0 (50p benchmark)', str(upper)], fontsize=15, weight='bold') 
-  return cb
 
 # Currently availlable for RPPERHHINCOME and HHINCOME
 def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_end = 2019, highlight = '', cm_str='bwr', 
@@ -170,13 +59,8 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
           year_df['Location'] = year_df['Location'].apply(np.int64)
           year_df['new_color'] = year_df.index.map(color_config(incomeType=incomeType, k=k, gender=sex))
 
-      if k == 'decile':
-          # Decile
-          segments = utils.decile
-
-      if k == 'percentile':
-          # Percentile
-          segments = utils.percentile
+      if k == 'decile': segments = incomevis.utils.decile
+      if k == 'percentile': segments = incomevis.utils.percentile
 
       axis_config(ax, incomeType, segments)
 
@@ -217,34 +101,11 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
       rc('animation', html = 'jshtml')
     return dynamic
 
-# Old visualization
-def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = '',
-                   output_path = ''):
-  #Missing files - Need to fix
-  if k == 'decile':
-    if(not toState): html1 = open(input_path + 'html1_d_year.txt', 'r')
-    else: html1 = open(input_path + 'html1_p_state.txt', 'r')
-  elif k == 'percentile':
-    if (not toState): html1 = open(input_path + 'html1_p_year.txt', 'r')
-    else: html1 = html1 = open(input_path + 'html1_p_state.txt', 'r')
-  html2 = open(input_path + 'html2.txt', 'r')
-
-  #Need to fix 
-  json = open(input_path + 'decile_year_amchart_js_RHHINCOME1976.js','r')
-  AmChart = html1.read() + json.read() + html2.read()
-  if outputHTML:
-    with open(output_path + 'decile_year_amchart_html_RHHINCOME1976.html', 'w') as outfile:
-      outfile.write(AmChart)
-  return IPython.display.HTML(data = AmChart)
-
-def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                input_path = dir_name):
+def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '', input_path = dir_name):
 
   # PyTest
   assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
   # Display setting
-  # fig = plt.figure(figsize=(15,15))
   fig = plt.figure(figsize=(20,17), tight_layout=True)
   ax = plt.axes(projection='3d')
   x_scale = 3 # Scalling
@@ -321,14 +182,3 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, hi
   dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
   rc('animation', html = 'jshtml')
   return dynamic
-
-if __name__=="__main__":
-    plot = getAnimated_abs_rank(incomeType='RPPERHHINCOME', year_start=1977, year_end=2020,
-                                input_path='D:\\Github\\incomevis\\data\\bootstrap\\withreplacement\\bootstrap_age\\data\\',
-                                benchmark_path = 'D:\\Github\\incomevis\\data\\absolute_ranking\\data_nation\\')
-    # plt.show()
-    # plot.save('D:\\Github\\incomevis\\gallery\\animation.gif', writer='imagemagick', fps=60)
-    # print(abs_color(incomeType='RPPERHHINCOME', k='decile', gender=None))
-    plt.show()
-    # print(plot)
-    # plt.show()

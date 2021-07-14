@@ -46,8 +46,9 @@ class incomevis:
                      '#51FF00', '#47FF00', '#3DFF00', '#32FF00', '#28FF00', '#1EFF00', '#14FF00',
                      '#0AFF00', '#00FF00']
     self.__colors = pd.DataFrame(self.__colors, columns = ['Color'], index = self.__statefips)
-    self.__deciles = np.arange(0.05, 1.05, 0.1) # 10
-    self.__deciles = np.insert(arr = self.__deciles, obj = 5, values = 0.5) # 11  
+    # self.__deciles = np.arange(0.05, 1.05, 0.1) # 10
+    self.__deciles = [0.05, 0.15, 0.25, 0.35, 0.45, 0.5, 0.55, 0.65, 0.75, 0.85, 0.95]
+    # self.__deciles = np.insert(arr = self.__deciles, obj = 5, values = 0.5) # 11  
     self.__percentiles = np.arange(0.02, 1, 0.01) # 98
     self.__decileNames = ['5p', '15p', '25p', '35p', '45p', '50p', '55p', '65p', '75p', '85p', '95p']
     self.__percentileNames = ['2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p',
