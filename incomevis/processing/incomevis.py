@@ -1,22 +1,20 @@
-import multiprocessing, concurrent.futures, os, sys, IPython, json
+import os, IPython, json
 import pandas as pd, numpy as np, matplotlib.pyplot as plt, matplotlib as mpl, matplotlib.ticker as ticker
 from collections import OrderedDict
 from matplotlib import animation, rc
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from mpl_toolkits.mplot3d import proj3d
-from statsmodels.graphics.utils import _import_mpl, create_mpl_fig
 from scipy.stats import gaussian_kde, norm
 import os.path
 
 dir_name = os.path.dirname(__file__) + '/data/'
 
 class incomevis:
-  def __init__(self, input_path_ipums = '', input_path_rpp = ''):
-    if not input_path_ipums: self.__raw = pd.concat([pd.read_csv(dir_name + 'ipums-cps-lite1.gz'),
-                                                     pd.read_csv(dir_name + 'ipums-cps-lite2.gz')])
-    else: self.__raw = pd.read_csv(input_path_ipums)
-    if not input_path_rpp: self.__rpp = pd.read_csv(dir_name + 'rpp.csv')
-    else: self.__rpp = pd.read_csv(input_path_rpp)
+  def __init__(self, data_path = ''):
+    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-lite1.gz'),
+                            pd.read_csv(data_path + 'ipums-cps-lite2.gz')])
+    self.__rpp = pd.read_csv(data_path + 'rpp.csv')
+
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
