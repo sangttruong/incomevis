@@ -1,36 +1,26 @@
-import os, IPython, json
-import pandas as pd, numpy as np, matplotlib.pyplot as plt, matplotlib as mpl, matplotlib.ticker as ticker
+import os, json, pandas as pd, numpy as np
 from collections import OrderedDict
-from matplotlib import animation, rc
-from mpl_toolkits.mplot3d.axes3d import Axes3D
-from scipy.stats import gaussian_kde, norm
-import os.path
 from incomevis.utils import *
 
 class incomevis:
   def __init__(self, data_path = ''):
     self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-lite1.gz'),
                             pd.read_csv(data_path + 'ipums-cps-lite2.gz')])
+    print(self.__raw.head())
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
 
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
     self.__raw = self.__raw[self.__raw['YEAR'] > 1976]
-    self.__statefips = list(set(self.__raw['STATEFIP']))
     self.label_list = ['']
-    notLabelList = list(set(incomevis.utils.getStateName) - set(self.label_list))
+    notLabelList = list(set(getStateName('string')) - set(self.label_list))
     notLabelDict = dict.fromkeys(notLabelList , '')
-    self.__state_name = pd.DataFrame(data = incomevis.utils.getStateName, index = self.__statefips, columns = ['State'])
+    self.__state_name = pd.DataFrame(data = getStateName('string'), index = getStateName('numeric'), columns = ['State'])
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
 
-    self.__colors = incomevis.utils.getColor()
-    self.__colors = pd.DataFrame(self.__colors, columns = ['Color'], index = self.__statefips)
-    self.__deciles = incomevis.utils.getDecile('numeric')
-    self.__percentiles = incomevis.utils.getPercentile('numeric')
-    self.__decileNames = incomevis.utils.getDecile('string')
-    self.__percentileNames = incomevis.utils.getPercentile('string')
+    self.__colors = pd.DataFrame(getColor(), columns = ['Color'], index = getStateName('numeric'))
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
@@ -41,8 +31,6 @@ class incomevis:
   def getPop (self): return self.__pop
   
   def getData (self): return self.__raw
-   
-  def getSTATEFIPS (self): return self.__statefips
  
   def adjustIncome(self):
     # 1. RHHINCOME in 2018 dollars
@@ -71,53 +59,42 @@ class incomevis:
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
                    AmChart = True,
-                   subpop = False, black = None, hispan = None, sex=None, educ=None,
+                   group = 'all',
                    age_resampling = False, age_resampling_freq = 100,
-                   benchmark = False, benchmark_year = 2019):
-    if subpop:
-      if black is not None:
-        if black == True:
-          sub_raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
-                                      (self.__raw['RACE'] == 807) | (self.__raw['RACE'] == 810) | (self.__raw['RACE'] == 811) |
-                                      (self.__raw['RACE'] == 814) | (self.__raw['RACE'] == 816) | (self.__raw['RACE'] == 818), :]
-        if black == False:
-          sub_raw = self.__raw.loc[(self.__raw['RACE'] != 200) & (self.__raw['RACE'] != 801) & (self.__raw['RACE'] != 805) & (self.__raw['RACE'] != 806) &
-                                      (self.__raw['RACE'] != 807) & (self.__raw['RACE'] != 810) & (self.__raw['RACE'] != 811) &
-                                      (self.__raw['RACE'] != 814) & (self.__raw['RACE'] != 816) & (self.__raw['RACE'] != 818), :]         
-      if hispan is not None:
-        if hispan == True:
-          sub_raw = self.__raw.loc[(self.__raw['HISPAN'] > 0) & (self.__raw['HISPAN'] < 900), :]
-        if hispan == False:
-          sub_raw = self.__raw.loc[self.__raw['HISPAN'] == 0, :]
-      if sex is not None:
-        if sex == True:
-          sub_raw = self.__raw.loc[self.__raw['SEX'] == 1, :]
-        if sex == False:
-          sub_raw = self.__raw.loc[self.__raw['SEX'] == 2, :]
-      if educ is not None:
-        if educ == True:
-          sub_raw = self.__raw.loc[(self.__raw['EDUC'] > 73) & (self.__raw['EDUC'] < 999), :]
-        if educ == False:
-          sub_raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
+                   benchmark = False): # if benchmark = True, then the benchmark year is the start year
+    if group != 'all':
+      if group == 'black': self.__raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
+                                                       (self.__raw['RACE'] == 807) | (self.__raw['RACE'] == 810) | (self.__raw['RACE'] == 811) |
+                                                       (self.__raw['RACE'] == 814) | (self.__raw['RACE'] == 816) | (self.__raw['RACE'] == 818), :]
+      elif group == 'non-black': self.__raw = self.__raw.loc[(self.__raw['RACE'] != 200) & (self.__raw['RACE'] != 801) & (self.__raw['RACE'] != 805) & (self.__raw['RACE'] != 806) &
+                                                           (self.__raw['RACE'] != 807) & (self.__raw['RACE'] != 810) & (self.__raw['RACE'] != 811) &
+                                                           (self.__raw['RACE'] != 814) & (self.__raw['RACE'] != 816) & (self.__raw['RACE'] != 818), :]         
+      elif group == 'hispan': self.__raw = self.__raw.loc[(self.__raw['HISPAN'] > 0) & (self.__raw['HISPAN'] < 900), :]
+      elif group == 'non-hispan': self.__raw = self.__raw.loc[self.__raw['HISPAN'] == 0, :]
+      elif group == 'male': self.__raw = self.__raw.loc[self.__raw['SEX'] == 1, :]
+      elif group == 'female': self.__raw = self.__raw.loc[self.__raw['SEX'] == 2, :]
+      elif group == 'high-educ': self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 73) & (self.__raw['EDUC'] < 999), :]
+      elif group == 'low-educ': self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
+      else: raise ValueError
 
     for year in range(year_start, year_end+1):
       year_df = self.__raw[self.__raw['YEAR'] == year] # Generate year_df dataframe
 
       # Decile or percentile
       if (k == 'decile'):
-        kiles = self.__deciles
-        kNames = self.__decileNames
+        kiles = getDecile('numeric')
+        kNames = getDecile('string')
       elif (k == 'percentile'):
-        kiles = self.__percentiles
-        kNames = self.__percentileNames
+        kiles = getPercentile('numeric')
+        kNames = getPercentile('string')
       else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
 
       # Generate result grid, decile-column
-      result = pd.DataFrame(index = kNames, columns = self.__statefips)
+      result = pd.DataFrame(index = kNames, columns = getStateName('numeric'))
 
       # Iterate through each state
       c = 0
-      for statefip in self.__statefips:
+      for statefip in getStateName('numeric'):
         if (not benchmark):
           state_df = year_df[year_df['STATEFIP'] == statefip] # Generate state dataframe
         else: state_df = year_df # if generating national benchmark, there is no need of partition
@@ -170,7 +147,7 @@ class incomevis:
       # Amchart vs. Matplotlib
       if (AmChart):
         # Replicate each state's dataline with its respective replication number
-        for statefip in self.__statefips:
+        for statefip in getStateName('numeric'):
           rep = self.__pop.loc[statefip, 'NORMPOP_' + str(year)] - 1
           rep = int(rep)
           line = pd.DataFrame(result.loc[statefip]).T
@@ -209,7 +186,7 @@ class incomevis:
         result.to_csv(output_path + k + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
     
     if (toState):    
-      for statefip in self.__statefips:
+      for statefip in getStateName('numeric'):
         #Reformat the columns
         data_df = []
         index_df = [i for i in range(0, 43)]
