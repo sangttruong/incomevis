@@ -1,2 +1,2 @@
 from .animation import *
-from .config import *
+from .animation_config import *
