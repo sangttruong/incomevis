@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from incomevis import incomevis
+from incomevis.processing import *
+from incomevis.utils import *
 
 class gather_absolute_ranking:
     def __init__(self, input_path_ipums, input_path_rpp):
@@ -61,16 +62,7 @@ class gather_absolute_ranking:
                 if educ == False:
                     sub_raw = sub_raw.loc[(sub_raw['EDUC'] > 2) & (sub_raw['EDUC'] <= 73), :]
 
-        state_name = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                    'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-                    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
-                    'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-                    'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-                    'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-                    'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
-                    'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-                    'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',
-                    'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+        state_name = incomevis.Utils.getStateName()
 
         state_name = pd.DataFrame(data = state_name, index = self.statefip, columns = ['State'])
 
@@ -79,7 +71,7 @@ class gather_absolute_ranking:
 
             if k == 'decile':
                 # Generate result grid, decile-column
-                decile_column = ['5p', '15p', '25p', '35p', '45p', '50p', '55p', '65p', '75p', '85p', '95p']
+                decile_column = incomevis.Utils.getDecile()
                 result = pd.DataFrame(index = decile_column, columns=self.statefip)
 
                 # Iterate through each state
@@ -109,17 +101,7 @@ class gather_absolute_ranking:
                 
             if k == 'percentile':
                 # Generate result grid, percentile-column
-                percentile_column = ['2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p',
-                                    '12p', '13p', '14p', '15p', '16p', '17p', '18p', '19p', '20p',
-                                    '21p', '22p', '23p', '24p', '25p', '26p', '27p', '28p', '29p',
-                                    '30p', '31p', '32p', '33p', '34p', '35p', '36p', '37p', '38p',
-                                    '39p', '40p', '41p', '42p', '43p', '44p', '45p', '46p', '47p',
-                                    '48p', '49p', '50p', '51p', '52p', '53p', '54p', '55p', '56p',
-                                    '57p', '58p', '59p', '60p', '61p', '62p', '63p', '64p', '65p',
-                                    '66p', '67p', '68p', '69p', '70p', '71p', '72p', '73p', '74p',
-                                    '75p', '76p', '77p', '78p', '79p', '80p', '81p', '82p', '83p',
-                                    '84p', '85p', '86p', '87p', '88p', '89p', '90p', '91p', '92p',
-                                    '93p', '94p', '95p', '96p', '97p', '98p', '99p']
+                percentile_column = incomevis.Utils.getPercentile()
                 result = pd.DataFrame(index = percentile_column, columns=self.statefip)
 
                 # Iterate through each state
@@ -154,19 +136,9 @@ class gather_absolute_ranking:
 
         # Generate result grid, decile-column
         if k == 'decile':
-            result = pd.DataFrame(index = ['5p', '15p', '25p', '35p', '45p', '50p', '55p', '65p', '75p', '85p', '95p'], columns = ['nation'])
+            result = pd.DataFrame(index = incomevis.utils.getDecile(), columns = ['nation'])
         if k == 'percentile':
-            result = pd.DataFrame(index =  ['2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p',
-                                    '12p', '13p', '14p', '15p', '16p', '17p', '18p', '19p', '20p',
-                                    '21p', '22p', '23p', '24p', '25p', '26p', '27p', '28p', '29p',
-                                    '30p', '31p', '32p', '33p', '34p', '35p', '36p', '37p', '38p',
-                                    '39p', '40p', '41p', '42p', '43p', '44p', '45p', '46p', '47p',
-                                    '48p', '49p', '50p', '51p', '52p', '53p', '54p', '55p', '56p',
-                                    '57p', '58p', '59p', '60p', '61p', '62p', '63p', '64p', '65p',
-                                    '66p', '67p', '68p', '69p', '70p', '71p', '72p', '73p', '74p',
-                                    '75p', '76p', '77p', '78p', '79p', '80p', '81p', '82p', '83p',
-                                    '84p', '85p', '86p', '87p', '88p', '89p', '90p', '91p', '92p',
-                                    '93p', '94p', '95p', '96p', '97p', '98p', '99p'], columns = ['nation'])
+            result = pd.DataFrame(index =  incomevis.utils.getPercentile(), columns = ['nation'])
 
         # Iterate through each state
         c = 0

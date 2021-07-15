@@ -3,11 +3,9 @@ import pandas as pd, numpy as np, matplotlib.pyplot as plt, matplotlib as mpl, m
 from collections import OrderedDict
 from matplotlib import animation, rc
 from mpl_toolkits.mplot3d.axes3d import Axes3D
-from mpl_toolkits.mplot3d import proj3d
 from scipy.stats import gaussian_kde, norm
 import os.path
-
-dir_name = os.path.dirname(__file__) + '/data/'
+from incomevis.utils import *
 
 class incomevis:
   def __init__(self, data_path = ''):
@@ -20,20 +18,10 @@ class incomevis:
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
     self.__raw = self.__raw[self.__raw['YEAR'] > 1976]
     self.__statefips = list(set(self.__raw['STATEFIP']))
-    self.__state_name = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                        'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-                        'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
-                        'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-                        'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-                        'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-                        'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
-                        'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-                        'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',
-                        'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
     self.label_list = ['']
-    notLabelList = list(set(self.__state_name) - set(self.label_list))
+    notLabelList = list(set(incomevis.utils.getStateName) - set(self.label_list))
     notLabelDict = dict.fromkeys(notLabelList , '')
-    self.__state_name = pd.DataFrame(data = self.__state_name, index = self.__statefips, columns = ['State'])
+    self.__state_name = pd.DataFrame(data = incomevis.utils.getStateName, index = self.__statefips, columns = ['State'])
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
 
@@ -46,22 +34,10 @@ class incomevis:
                      '#51FF00', '#47FF00', '#3DFF00', '#32FF00', '#28FF00', '#1EFF00', '#14FF00',
                      '#0AFF00', '#00FF00']
     self.__colors = pd.DataFrame(self.__colors, columns = ['Color'], index = self.__statefips)
-    # self.__deciles = np.arange(0.05, 1.05, 0.1) # 10
-    self.__deciles = [0.05, 0.15, 0.25, 0.35, 0.45, 0.5, 0.55, 0.65, 0.75, 0.85, 0.95]
-    # self.__deciles = np.insert(arr = self.__deciles, obj = 5, values = 0.5) # 11  
+    self.__deciles = [0.05, 0.15, 0.25, 0.35, 0.45, 0.5, 0.55, 0.65, 0.75, 0.85, 0.95] #11
     self.__percentiles = np.arange(0.02, 1, 0.01) # 98
-    self.__decileNames = ['5p', '15p', '25p', '35p', '45p', '50p', '55p', '65p', '75p', '85p', '95p']
-    self.__percentileNames = ['2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p',
-                              '12p', '13p', '14p', '15p', '16p', '17p', '18p', '19p', '20p',
-                              '21p', '22p', '23p', '24p', '25p', '26p', '27p', '28p', '29p',
-                              '30p', '31p', '32p', '33p', '34p', '35p', '36p', '37p', '38p',
-                              '39p', '40p', '41p', '42p', '43p', '44p', '45p', '46p', '47p',
-                              '48p', '49p', '50p', '51p', '52p', '53p', '54p', '55p', '56p',
-                              '57p', '58p', '59p', '60p', '61p', '62p', '63p', '64p', '65p',
-                              '66p', '67p', '68p', '69p', '70p', '71p', '72p', '73p', '74p',
-                              '75p', '76p', '77p', '78p', '79p', '80p', '81p', '82p', '83p',
-                              '84p', '85p', '86p', '87p', '88p', '89p', '90p', '91p', '92p',
-                              '93p', '94p', '95p', '96p', '97p', '98p', '99p']
+    self.__decileNames = incomevis.utils.getDecile()
+    self.__percentileNames = incomevis.utils.getPercentile()
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
@@ -97,7 +73,7 @@ class incomevis:
 
   def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
                    year_start = 1977, year_end = 2019,
-                   output_path = dir_name,
+                   output_path = '',
                    toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
@@ -419,26 +395,6 @@ class incomevis:
     result = result.T
     result.to_csv(output_path + k + '_' + str(seed) + incomeType + str(year) + '_' + str(statefip) + '_' + str(n) + '.csv', index = False)
     return result
-  
-def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = dir_name,
-                   output_path = dir_name):
-  #Missing files - Need to fix
-  if k == 'decile':
-    if(not toState): html1 = open(dir_name + 'html1_d_year.txt', 'r')
-    else: html1 = open(dir_name + 'html1_p_state.txt', 'r')
-  elif k == 'percentile':
-    if (not toState): html1 = open(dir_name + 'html1_p_year.txt', 'r')
-    else: html1 = html1 = open(dir_name + 'html1_p_state.txt', 'r')
-  html2 = open(dir_name + 'html2.txt', 'r')
-
-  #Need to fix 
-  json = open(input_path + 'decile_year_amchart_js_RHHINCOME1976.js','r')
-  AmChart = html1.read() + json.read() + html2.read()
-  if outputHTML:
-    with open(output_path + 'decile_year_amchart_html_RHHINCOME1976.html', 'w') as outfile:
-      outfile.write(AmChart)
-  return IPython.display.HTML(data = AmChart)
 
 def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
                 input_path = dir_name):
