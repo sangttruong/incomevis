@@ -29,6 +29,14 @@ def getColor(type):
                             Deault None
         """
         
+        incomeType = 'RPPERHHINCOME'
+        k = 'decile'
+        cm_str='bwr'
+        reversed_cm = True
+        input_path = '/Users/sangttruong/Documents/GitHub/incomevis/incomevis/data/'
+        benchmark_path = '/Users/sangttruong/Documents/GitHub/incomevis/incomevis/data_nation/'
+        gender=None
+
         # Color map for entire benchmark
         color_map = {}
         all_num = [i for i in range(-60000, 40001)]
