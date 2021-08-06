@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d.axis3d import Axis
 
 # Instantiate utils
 from incomevis.utils import *
-from incomevis.animation.animation_config import *
+from incomevis.vis import *
 
 dir_name = ""
 # Remove gridlines unneccessary
@@ -61,7 +61,7 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
       if k == 'decile': segments = getDecile('numeric')
       if k == 'percentile': segments = getPercentile('numeric')
 
-      axis_config(ax, incomeType, segments)
+      mpl_axes(ax, incomeType, segments)
 
       for state in range(year_df.index.size):
           for segment in range(len(segments)):
