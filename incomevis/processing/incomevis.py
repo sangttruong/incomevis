@@ -6,9 +6,7 @@ class incomevis:
   def __init__(self, data_path = ''):
     self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-lite1.gz'),
                             pd.read_csv(data_path + 'ipums-cps-lite2.gz')])
-    print(self.__raw.head())
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
-
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
@@ -20,18 +18,18 @@ class incomevis:
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
 
-    self.__colors = pd.DataFrame(getColor(), columns = ['Color'], index = getStateName('numeric'))
+    self.__colors = pd.DataFrame(getColor(''), columns = ['Color'], index = getStateName('numeric'))
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
       self.__pop['POP_' + str(year)] = year_df.groupby(['STATEFIP'])['ASECWTH'].agg('sum')
       self.__pop['UR_NORMPOP_' + str(year)] = self.__pop['POP_' + str(year)]/(np.percentile(self.__pop['POP_' + str(year)], 10))
       self.__pop['NORMPOP_' + str(year)] = round(self.__pop['UR_NORMPOP_' + str(year)])
-  
+
   def getPop (self): return self.__pop
-  
+
   def getData (self): return self.__raw
- 
+
   def adjustIncome(self):
     # 1. RHHINCOME in 2018 dollars
     self.__raw['RHHINCOME'] = self.__raw['HHINCOME']*self.__raw['CPI99']*(1/0.652)
@@ -45,11 +43,11 @@ class incomevis:
     self.__raw = self.__raw[self.__raw['PERNUM'] == 1]
     self.__raw['HHSIZE'] = (self.__raw['HHSIZE'])**(1/2)
     self.__raw['ERHHINCOME'] = self.__raw['RHHINCOME']/self.__raw['HHSIZE']
-    
+
     # 3. RPPRHHINCOME and RPPERHHINCOME
     self.__raw['RPPRHHINCOME'] = self.__raw['RHHINCOME']/(self.__raw['RPP']/100)
     self.__raw['RPPERHHINCOME'] = self.__raw['ERHHINCOME']/(self.__raw['RPP']/100)
-    
+
     return self.__raw
 
   def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
@@ -68,7 +66,7 @@ class incomevis:
                                                        (self.__raw['RACE'] == 814) | (self.__raw['RACE'] == 816) | (self.__raw['RACE'] == 818), :]
       elif group == 'non-black': self.__raw = self.__raw.loc[(self.__raw['RACE'] != 200) & (self.__raw['RACE'] != 801) & (self.__raw['RACE'] != 805) & (self.__raw['RACE'] != 806) &
                                                            (self.__raw['RACE'] != 807) & (self.__raw['RACE'] != 810) & (self.__raw['RACE'] != 811) &
-                                                           (self.__raw['RACE'] != 814) & (self.__raw['RACE'] != 816) & (self.__raw['RACE'] != 818), :]         
+                                                           (self.__raw['RACE'] != 814) & (self.__raw['RACE'] != 816) & (self.__raw['RACE'] != 818), :]
       elif group == 'hispan': self.__raw = self.__raw.loc[(self.__raw['HISPAN'] > 0) & (self.__raw['HISPAN'] < 900), :]
       elif group == 'non-hispan': self.__raw = self.__raw.loc[self.__raw['HISPAN'] == 0, :]
       elif group == 'male': self.__raw = self.__raw.loc[self.__raw['SEX'] == 1, :]
@@ -105,7 +103,7 @@ class incomevis:
           state_df = state_df.loc[(state_df['AGE'] >= 18) & (state_df['AGE'] < 80), :]
           age_list = list(set(state_df['AGE']))
           for age in age_list:
-              origin = state_df.loc[(temp['AGE'] == age), :] 
+              origin = state_df.loc[(temp['AGE'] == age), :]
               resampling = pd.DataFrame()
               while(len(resampling) < age_resampling_freq):
                   new_temp = origin.sample(n=age_resampling_freq, replace=True)
@@ -113,7 +111,7 @@ class incomevis:
                   dist_age = pd.concat([dist_age, temp_dist_age])
               dist_age.reset_index(inplace=True, drop=True)
 
-          # Break out of each-state-loop since there is no notion on state for national benchmark   
+          # Break out of each-state-loop since there is no notion on state for national benchmark
           if benchmark: break
 
         state_df = state_df.reset_index(drop = True)
@@ -171,7 +169,7 @@ class incomevis:
           counter = counter + middle
           result.loc[counter, 'Middle'] = 1
           counter = counter - middle + temp_size
-        
+
         # Convert dataframe to JSON
         result = result.to_json(orient = 'records')
         result = json.loads(result, object_pairs_hook = OrderedDict)
@@ -184,8 +182,8 @@ class incomevis:
         result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year)], left_index = True, right_index = True)
         result = result.reindex(index = orderFrame)
         result.to_csv(output_path + k + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
-    
-    if (toState):    
+
+    if (toState):
       for statefip in getStateName('numeric'):
         #Reformat the columns
         data_df = []
@@ -210,7 +208,6 @@ class incomevis:
         # Save JSON file -- y-1 adjusts sample year to HHINCOME year
         with open(output_path + k + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(state_df)
-          
+
       for year in range(year_start, year_end+1):
         os.remove(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv')
-        
