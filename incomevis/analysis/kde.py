@@ -1,3 +1,4 @@
+from scipy.stats import gaussian_kde, norm
 # KDE is now unavailable
 # def KDE(data = pd.read_csv(dir_name + 'xRHHINCOME1977_11_10000.csv')['50p']):
 #   fig = plt.figure(figsize=(15,7))
