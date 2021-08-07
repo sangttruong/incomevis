@@ -1,4 +1,5 @@
 import sys, os
+from IPython import get_ipython
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 
