@@ -73,10 +73,10 @@ class incomevis:
                    toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
-                   AmChart = True,
                    group = 'all',
-                   age_resampling = False, age_resampling_freq = 100,
-                   benchmark = False): # if benchmark = True, then the benchmark year is the start year
+                   age_resampling = False,
+                   age_resampling_freq = 100,
+                   benchmark = False): # if benchmark = True, then the benchmark year is the end year
     """
     Print the dataframe of deflated income.
     """
@@ -101,13 +101,8 @@ class incomevis:
       year_df = self.__raw[self.__raw['YEAR'] == year] # Generate year_df dataframe
 
       # Decile or percentile
-      if (k == 'decile'):
-        kiles = getDecile('numeric')
-        kNames = getDecile('string')
-      elif (k == 'percentile'):
-        kiles = getPercentile('numeric')
-        kNames = getPercentile('string')
-      else: raise ValueError('Illegal value of k. k can only be either decile or percentile.')
+      kiles = getDecile('numeric') if k == 'decile' else getPercentile('numeric')
+      kNames = getDecile('string') if k == 'decile' else getPercentile('string')
 
       # Generate result grid, decile-column
       result = pd.DataFrame(index = kNames, columns = getStateName('numeric'))
@@ -162,48 +157,11 @@ class incomevis:
       # Base color
       if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
       if (returnColor): return colorFrame
+      
       result = pd.concat([self.__state_name, result, self.state_label, colorFrame], axis = 1)
-
-      # Amchart vs. Matplotlib
-      if (AmChart):
-        # Replicate each state's dataline with its respective replication number
-        for statefip in getStateName('numeric'):
-          rep = self.__pop.loc[statefip, 'NORMPOP_' + str(year)] - 1
-          rep = int(rep)
-          line = pd.DataFrame(result.loc[statefip]).T
-          line.loc[statefip, 'Label'] = ''
-          for _ in range(0, rep): result = pd.concat([result, line])
-        result.reset_index(drop = False, inplace = True)
-        result.rename_axis('ID', inplace = True)
-        result.rename(columns={'index': 'STATEFIP'}, inplace = True)
-        result.set_index('STATEFIP', append=True, inplace=True)
-        result = result.groupby(['STATEFIP', 'ID']).sum() # Sum has no effect since all key combinations are unique
-        result = result.reindex(orderFrame, level = 'STATEFIP')
-
-        # Add the middle property
-        result.reset_index(drop = True, inplace = True)
-        result['Middle'] = np.nan
-        counter = 0
-        for state in result.State.drop_duplicates():
-          temp = result[result.State == state]
-          temp_size = len(temp.index)
-          middle = (temp_size // 2)
-          counter = counter + middle
-          result.loc[counter, 'Middle'] = 1
-          counter = counter - middle + temp_size
-
-        # Convert dataframe to JSON
-        result = result.to_json(orient = 'records')
-        result = json.loads(result, object_pairs_hook = OrderedDict)
-        result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
-
-        # Save JSON file -- y-1 adjusts sample year_df to HHINCOME year_df
-        with open(output_path + k + '_' + group + '_year_amchart_js_' + incomeType + str(year-1) + '.js', 'w') as outfile:
-          outfile.write(result)
-      else:
-        result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year)], left_index = True, right_index = True)
-        result = result.reindex(index = orderFrame)
-        result.to_csv(output_path + k + '_' + group + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
+      result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year-1)], left_index = True, right_index = True)
+      result = result.reindex(index = orderFrame)
+      result.to_csv(output_path + k + '_' + group + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
 
     if (toState):
       for statefip in getStateName('numeric'):
