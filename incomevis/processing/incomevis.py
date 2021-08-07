@@ -3,7 +3,7 @@ from collections import OrderedDict
 from incomevis.utils import *
 
 class incomevis:
-  def __init__(self, data_path = ''):
+  def __init__(self, data_path = SOURCE_DATA_PATH):
     self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-lite1.gz'),
                             pd.read_csv(data_path + 'ipums-cps-lite2.gz')])
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
@@ -18,7 +18,7 @@ class incomevis:
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
 
-    self.__colors = pd.DataFrame(getColor(''), columns = ['Color'], index = getStateName('numeric'))
+    self.__colors = pd.DataFrame(getColor('classic'), columns = ['Color'], index = getStateName('numeric'))
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
@@ -52,7 +52,6 @@ class incomevis:
 
   def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
                    year_start = 1977, year_end = 2019,
-                   output_path = '',
                    toState = False,
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
@@ -60,6 +59,10 @@ class incomevis:
                    group = 'all',
                    age_resampling = False, age_resampling_freq = 100,
                    benchmark = False): # if benchmark = True, then the benchmark year is the start year
+    
+    if benchmark: output_path = BENCHMARK_DATA_PATH
+    else: output_path = DEFLATED_DATA_PATH
+    
     if group != 'all':
       if group == 'black': self.__raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
                                                        (self.__raw['RACE'] == 807) | (self.__raw['RACE'] == 810) | (self.__raw['RACE'] == 811) |
