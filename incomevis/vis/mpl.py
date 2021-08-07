@@ -1,7 +1,3 @@
-# TODO: 
-# - create output path to save individual file
-# - test again on google colab env
-
 import pandas as pd, numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation, rc
