@@ -1,4 +1,5 @@
 import matplotlib, matplotlib.pyplot as plt, pandas as pd, numpy as np
+from incomevis.utils import *
 
 def getColor(type):
     if type == 'classic': return ['#FF0000', '#FF0A00', '#FF1400', '#FF1E00', '#FF2800', '#FF3300', '#FF3D00',
@@ -12,36 +13,36 @@ def getColor(type):
     else:
         # Color configuration
         # def color_config(incomeType = 'RPPERHHINCOME', k = 'decile', cm_str='bwr', reversed_cm = True,
-        #             input_path = 'D:\\Github\\incomevis\\data\\bootstrap\\withreplacement\\bootstrap_age\\data\\', 
-        #             benchmark_path = 'D:\\Github\\incomevis\\data\\absolute_ranking\\data_nation\\', gender=None):
+        #             input_path = DEFLATED_DATA_PATH,
+        #             benchmark_path = BENCHMARK_DATA_PATH, gender=None):
         """
         Gather color gradient based on the given benchmark (nation)
         Arguments
         =================================================================
             incomeType (str): Type of income. (RPPERHHINCOME and HHINCOME)
                                 Default RPPERHHINCOME
-            
+
             k (str): Chossing between decile or percentile
                         Deault decile
             input_path (str): Input directory
-            benchmark_path (str): Benchmark directory 
+            benchmark_path (str): Benchmark directory
             gender (str): Choosing between male or female
                             Deault None
         """
-        
+
         incomeType = 'RPPERHHINCOME'
         k = 'decile'
         cm_str='bwr'
         reversed_cm = True
-        input_path = '/Users/sangttruong/Documents/GitHub/incomevis/incomevis/data/'
-        benchmark_path = '/Users/sangttruong/Documents/GitHub/incomevis/incomevis/data_nation/'
+        input_path = DEFLATED_DATA_PATH
+        benchmark_path = BENCHMARK_DATA_PATH
         gender=None
 
         # Color map for entire benchmark
         color_map = {}
         all_num = [i for i in range(-60000, 40001)]
         all_num.reverse()
-        
+
         if reversed_cm == True: cmap = plt.cm.get_cmap(cm_str).reversed()
         else: cmap = plt.cm.get_cmap(cm_str)
         norm = matplotlib.colors.TwoSlopeNorm(vmin=-60000, vmax=40001, vcenter=0)
