@@ -1,5 +1,4 @@
-import pandas as pd, numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd, numpy as np, matplotlib.pyplot as plt
 from matplotlib import animation, rc
 from pylab import *
 from mpl_toolkits.mplot3d.axes3d import Axes3D
@@ -73,20 +72,12 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
           ax.set_zlim(0, 300000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000])
           ax.set_zticklabels([0,100000,200000,300000],fontsize=23, fontweight='bold')
-          ax.tick_params(axis='z', which='major', pad=45)
-          ax.zaxis.set_rotate_label(False)
-        elif incomeType == 'HHINCOME':
-          ax.set_zlim(0, 400000) #Set the limit of the z axis
-          ax.set_zticks([0,100000,200000,300000,400000])
-          ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
-          ax.tick_params(axis='z', which='major', pad=45)
-          ax.zaxis.set_rotate_label(False)
         else:
           ax.set_zlim(0, 400000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000,400000])
           ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
-          ax.tick_params(axis='z', which='major', pad=45)
-          ax.zaxis.set_rotate_label(False)
+        ax.tick_params(axis='z', which='major', pad=45)
+        ax.zaxis.set_rotate_label(False)
 
         # Resize and label the y axis
         # y axis tick labels
@@ -132,10 +123,10 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
                             color = year_df.loc[year_df.iloc[state].name, 'new_color'],
                             edgecolor='grey', linewidth=0.25)
 
-        if sex == 'female':
+        if group == 'female':
           if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
           else: ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
-        elif sex == 'male':
+        elif group == 'male':
           if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile_gender/male_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
           else: ax.figure.savefig(output_dir + '/gallery_decile_gender/male_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
         else:
@@ -149,7 +140,6 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
         #Read the data
         pop_label = 'UR_NORMPOP_' + str(year+1)
         year_df = pd.read_csv(input_path + 'percentile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
-        ################################################################################################################################################
 
         # Absolute ranking
         if new_sort:
@@ -169,15 +159,10 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
           ax.set_zlim(0, 300000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000])
           ax.set_zticklabels([0,100000,200000,300000],fontsize=23, fontweight='bold')
-        elif incomeType == 'HHINCOME':
-          ax.set_zlim(0, 400000) #Set the limit of the z axis
-          ax.set_zticks([0,100000,200000,300000,400000])
-          ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
         else:
           ax.set_zlim(0, 400000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000,400000])
           ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
-        
         ax.tick_params(axis='z', which='major', pad=45)
         ax.zaxis.set_rotate_label(False)
 
@@ -220,10 +205,8 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
                           color = year_df.loc[year_df.iloc[state].name, 'new_color'],
                           edgecolor='grey', linewidth=0.25)
 
-      if highlight == '':
-        ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
-      else:
-        ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
+      if highlight == '': ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
+      else: ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
     rc('axes',linewidth = 3)
     #Animation features: frames - max range for year in animate function; interval - time changing between each frame
     dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
