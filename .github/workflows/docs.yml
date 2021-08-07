@@ -14,7 +14,6 @@ jobs:
       with:
         name: DocumentationHTML
         path: docs/_build/html/ 
-    - uses: actions/upload-artifact@v1
-      run: |
+    - run: |
           pip install sphinx_rtd_theme
     
