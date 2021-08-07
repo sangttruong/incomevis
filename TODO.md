@@ -1,1 +1,3 @@
 - [ ]: detangle group (on August 7, have successfully detangle incometype)
+- merge complex_animation and simple_animation
+- merge bootstrap
