@@ -1,53 +1,3 @@
-.DS_Store
-=======
-build/lib/incomevis/output/decile/year/amchart/.DS_Store
-build/lib/incomevis/output/.DS_Store
-build/lib/incomevis/output/bootstrap/.DS_Store
-build/lib/incomevis/output/bootstrap/decile/.DS_Store
-build/lib/incomevis/output/decile/.DS_Store
-build/lib/incomevis/output/decile/year/.DS_Store
-build/lib/incomevis/output/percentile/.DS_Store
-build/lib/incomevis/output/percentile/year/.DS_Store
-build/lib/incomevis/output/percentile/year/amchart/.DS_Store
-incomevis/output/.DS_Store
-incomevis/output/bootstrap/.DS_Store
-incomevis/output/bootstrap/decile/.DS_Store
-incomevis/output/decile/.DS_Store
-incomevis/output/decile/year/.DS_Store
-incomevis/output/decile/year/amchart/.DS_Store
-incomevis/output/percentile/.DS_Store
-incomevis/output/percentile/year/.DS_Store
-incomevis/output/percentile/year/amchart/.DS_Store
-.DS_Store
-build/lib/incomevis.py
-build/lib/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv
-build/lib/incomevis/input/rpp.csv
-build/lib/incomevis/input/ipums-cps-lite2.gz
-build/lib/incomevis/input/ipums-cps-lite1.gz
-build/lib/incomevis.py
-build/lib/incomevis/output/bootstrap/decile/xRHHINCOME1977_11_10000.csv
-build/lib/incomevis/input/rpp.csv
-build/lib/incomevis/input/ipums-cps-lite2.gz
-build/lib/incomevis/input/ipums-cps-lite1.gz
-build/lib/incomevis.py
-dist/.DS_Store
-dist/incomevis-0.1-py3-none-any.whl
-dist/incomevis-0.1.tar.gz
-dist/.DS_Store
-dist/.DS_Store
-
-dist/.DS_Store
-dist/.DS_Store
-dist/incomevis-0.112-py3-none-any.whl
-dist/incomevis-0.112.tar.gz
-dist/incomevis-1.0-py3-none-any.whl
-incomevis.egg-info/PKG-INFO
-dist/incomevis-1.0.tar.gz
-dist/incomevis-0.112.tar.gz
-incomevis.egg-info/PKG-INFO
-dist/.DS_Store
-dist/.DS_Store
-
 # Py cache folder
 incomevis.egg-info
 __pycache__
@@ -56,8 +6,21 @@ __pycache__
 .DS_Store
 
 # Data
-data_local
+data/data_benchmark/*.csv
+data/deflated_data/*.csv
+data/output/*.csv
 
 # Build
 build
 logo/.DS_Store
+
+# Dist
+dist
+
+incomevis.egg-info/PKG-INFO
+incomevis.egg-info/PKG-INFO
+
+data/output/gallery_decile/*.jpg
+data/output/gallery_percentile/*.jpg
+data/output/gallery_decile_gender/*.jpg
+detangled.ipynb
