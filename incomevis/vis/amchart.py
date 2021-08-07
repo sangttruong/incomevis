@@ -1,33 +1,74 @@
-import IPython
+import IPython, json, pandas as pd, numpy as np
+from collections import OrderedDict
+from incomevis.utils import *
 
-def getInteractive(k = 'decile', toState = False, outputHTML = False,
-                   input_path = '', output_path = ''):
+def visualize(k = 'decile', year = 1977, toState = False,
+              input_path = ''):
   """
-    Get interactive visualization in AmChart
+    Get interactive visualization in AmChart. Receive deflated data of a year with
+    normalized (potentially unrounded) population with details. The data is assumed to
+    have (1) an index column using STATEFIP, (2) State, (3) kiles name,
+    (4) Label, (5) Color, and (6) UR_NORMPOP_$year$, with $year$ replaced with the
+    economic of the visualization.
 
-    Arguments
-    =============================
-      fig: matplotlib figure object
+    Parameters
+    ----------
+    input_path : str
+      Default: Empty string
+      Absolute path to data file.
 
-      left: adjust left (decrease) and right (increase);
-            Default: 0.73
+    year : int
+      Default: 1977
+      Economic year of the analysis (not the year the data was collected).
+    
+    k: st
+      Default: "decile"
+      Either "decile" or "percentile" 
 
-      elevation: adjust down (decrease) and up (increase);
-            Default: 0.65
+    toState: bool
+      Default: False
+      Whether or not converting the data to one state, many year format. 
+      Currently unsupported.
+
   """
-  #Missing files - Need to fix
+
+  # Convert csv to json format
+  result = pd.read_csv(input_path, index_col = 0)
+
+  # Replicate each state's dataline with its respective replication number
+  for statefip in getStateName('numeric'):
+    rep = result.loc[statefip, 'UR_NORMPOP_' + str(year-1)] - 1
+    rep = int(rep)
+    line = pd.DataFrame(result.loc[statefip]).T
+    line.loc[statefip, 'Label'] = ''
+    for _ in range(0, rep): result = pd.concat([result, line])
+
+  # Add the middle property
+  result.reset_index(drop = True, inplace = True)
+  result.sort_values(by=['State'], inplace = True)
+  result['Middle'] = np.nan
+  counter = 0
+  for state in getStateName('string'):
+    temp = result[result['State'] == state]
+    temp_size = len(temp.index)
+    middle = (temp_size // 2)
+    counter = counter + middle
+    result.iloc[counter, -1] = 1
+    counter = counter - middle + temp_size
+  result.sort_values(by=['50p', 'Middle'], inplace = True)
+
+  # Convert dataframe to JSON
+  result = result.to_json(orient = 'records')
+  result = json.loads(result, object_pairs_hook = OrderedDict)
+  result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
+
+  # Open html environment and display
   if k == 'decile':
-    if(not toState): html1 = open(input_path + 'html1_d_year.txt', 'r')
-    else: html1 = open(input_path + 'html1_p_state.txt', 'r')
+    if(not toState): html1 = open(SOURCE_DATA_PATH + 'html1_d_year.txt', 'r')
+    else: html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
   elif k == 'percentile':
-    if (not toState): html1 = open(input_path + 'html1_p_year.txt', 'r')
-    else: html1 = html1 = open(input_path + 'html1_p_state.txt', 'r')
-  html2 = open(input_path + 'html2.txt', 'r')
-
-  #Need to fix 
-  json = open(input_path + 'decile_year_amchart_js_RHHINCOME1976.js','r')
-  AmChart = html1.read() + json.read() + html2.read()
-  if outputHTML:
-    with open(output_path + 'decile_year_amchart_html_RHHINCOME1976.html', 'w') as outfile:
-      outfile.write(AmChart)
-  return IPython.display.HTML(data = AmChart)
+    if (not toState): html1 = open(SOURCE_DATA_PATH + 'html1_p_year.txt', 'r')
+    else: html1 = html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
+  html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
+  result = html1.read() + result + html2.read()
+  return IPython.display.HTML(data = result)
