@@ -22,7 +22,7 @@ incomevis.egg-info/PKG-INFO
 
 data/benchmark_data/*.csv
 
-data/output/gallery_decile/*.jpg
-data/output/gallery_percentile/*.jpg
-data/output/gallery_decile_gender/*.jpg
+data/output_data/gallery_decile/*.jpg
+data/output_data/gallery_percentile/*.jpg
+data/output_data/gallery_decile_gender/*.jpg
 detangled.ipynb
