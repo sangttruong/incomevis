@@ -1,3 +1,7 @@
+# TODO: 
+# - create output path to save individual file
+# - test again on google colab env 
+
 import pandas as pd, numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation, rc
@@ -21,8 +25,9 @@ if not hasattr(Axis, "_get_coord_info_old"):
 
 # Currently availlable for RPPERHHINCOME and HHINCOME
 def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                        input_path = '/Users/sangttruong/Documents/GitHub/incomevis/data/', new_sort=True, k='decile', sex= '', save_frame=None, using_JN = False,
-                        benchmark_dir = '/Users/sangttruong/Documents/GitHub/incomevis/incomevis/data_nation/'):
+                        input_path = SOURCE_DATA_PATH, new_sort=True, k='decile', sex= '', save_frame=None, using_JN = False,
+                        benchmark_dir = BENCHMARK_DATA_PATH,
+                        output_dir = OUTPUT_DATA_PATH):
 
     # Figure size
     fig = plt.figure(figsize=(20,17))
@@ -146,14 +151,14 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
                         year_df.loc[year_df.iloc[state].name, deciles[decile]],
                         color = year_df.loc[year_df.iloc[state].name, 'new_color'],edgecolor='grey', linewidth=0.25)
         if sex == 'female':
-          if highlight == '': ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile_gender/female_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
-          else: ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile_gender/female_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
+          if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
+          else: ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
         elif sex == 'male':
-          if highlight == '': ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile_gender/male_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
-          else: ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile_gender/male_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
+          if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile_gender/male_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
+          else: ax.figure.savefig(output_dir + '/gallery_decile_gender/male_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
         else:
-          if highlight == '': ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
-          else: ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_decile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
+          if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
+          else: ax.figure.savefig(output_dir + '/gallery_decile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
 
       if k == 'percentile':
         ax.clear() #Clear the vis between each frame
@@ -243,16 +248,18 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
                         color = year_df.loc[year_df.iloc[state].name, 'new_color'],edgecolor='grey', linewidth=0.25)
 
       if highlight == '':
-        ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_percentile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
+        ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
       else:
-        ax.figure.savefig('/Users/sangttruong/Documents/GitHub/incomevis/incomevis/gallery_percentile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
+        ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
     rc('axes',linewidth = 3)
     #Animation features: frames - max range for year in animate function; interval - time changing between each frame
     dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
     rc('animation', html = 'jshtml')
     return dynamic
 
-def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019, highlight = '', input_path = '/Users/sangttruong/Documents/GitHub/incomevis/data/'):
+def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
+              highlight = '',
+              input_path = SOURCE_DATA_PATH):
 
   # PyTest
   assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
