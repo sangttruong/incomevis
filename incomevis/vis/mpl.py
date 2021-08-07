@@ -50,6 +50,8 @@ def animate(incomeType = 'RPPERHHINCOME',
   group : str
     Demographic groups.
     Typically male, female, black
+  benchmark_dir: str
+    Benchmark directory
   """
 
   # Figure size
@@ -66,17 +68,17 @@ def animate(incomeType = 'RPPERHHINCOME',
   def short_proj(): return np.dot(Axes3D.get_proj(ax), scale)
   ax.get_proj = short_proj
   rc('axes',linewidth = 3)
-  
+
   if benchmark:
     # animate function need to have precisely a single input
     def animate(year): return complex_animate(year, ax = ax, k = k, cb = colorbar_config(fig),
-                                              benchmark = benchmark, 
+                                              benchmark = benchmark,
                                               input_path = input_path, benchmark_dir = benchmark_dir,
                                               incomeType = incomeType, group = group, highlight = highlight,
                                               year_end = year_end)
   else:
-    def animate(year): return simple_animate(year, ax = ax, k = k, cb = colorbar_config(fig), 
-                                              benchmark = benchmark, 
+    def animate(year): return simple_animate(year, ax = ax, k = k, cb = colorbar_config(fig),
+                                              benchmark = benchmark,
                                               input_path = input_path, benchmark_dir = benchmark_dir,
                                               incomeType = incomeType, group = group, highlight = highlight,
                                               year_end = year_end)
