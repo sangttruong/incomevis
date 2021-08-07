@@ -19,8 +19,12 @@ if not hasattr(Axis, "_get_coord_info_old"):
     Axis._get_coord_info_old = Axis._get_coord_info
     Axis._get_coord_info = _get_coord_info_new
 
-def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
-                        input_path = SOURCE_DATA_PATH, new_sort=True, k='decile', sex= '', save_frame=None, using_JN = False,
+def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
+                        year_start = 1977, year_end = 2019,
+                        highlight = '',
+                        input_path = SOURCE_DATA_PATH, 
+                        new_sort = True,
+                        k = 'decile', group = 'all',
                         benchmark_dir = BENCHMARK_DATA_PATH,
                         output_dir = OUTPUT_DATA_PATH):
 
@@ -50,21 +54,11 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
         year_df = pd.read_csv(input_path + 'decile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
 
         if new_sort:
-          nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
-          year_df['Location'] = year_df['50p'].values - nat['50p'].values
-          year_df['Location'] = year_df['Location'].apply(np.int64)
-          year_df['new_color'] = year_df.index.map(getColor(str(incomeType)))
-
-          if sex == 'male':
-            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
+            nat = pd.read_csv(benchmark_dir + k + '_' + group + '_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_male)
-          elif sex  == 'female':
-            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
-            year_df['Location'] = year_df['50p'].values - nat['50p'].values
-            year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_female)
+            year_df['new_color'] = year_df.index.map(getColor(str(incomeType)))
+            # TODO: getColor() needs to have 'group' as an argument
 
         #Convert the data to suitable format for the 3D bar chart
         deciles = getDecile('string')
@@ -159,7 +153,7 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
 
         # Absolute ranking
         if new_sort:
-          nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
+          nat = pd.read_csv(benchmark_dir + k + '_' + group + '_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
           year_df['Location'] = year_df['50p'].values - nat['50p'].values
           year_df['Location'] = year_df['Location'].apply(np.int64)
           year_df['new_color'] = year_df.index.map(getColor(incomeType))
