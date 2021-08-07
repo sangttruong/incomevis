@@ -10,8 +10,8 @@ class incomevis:
     """
     Take input data from IPUMS-CPS and IPUMS-USA and deflate them
     """
-    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-1-2020.gz'),
-                            pd.read_csv(data_path + 'ipums-cps-2-2020.gz')])
+    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-1-2020.zip'),
+                            pd.read_csv(data_path + 'ipums-cps-2-2020.zip')])
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
