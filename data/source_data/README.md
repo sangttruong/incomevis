@@ -1,0 +1,1 @@
+This directory contains raw data downloaded from IPUMS-CPS and IPUMS-USA.

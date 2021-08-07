@@ -1,0 +1,1 @@
+This directory contains output in the image form.
