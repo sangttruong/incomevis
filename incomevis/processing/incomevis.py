@@ -4,8 +4,8 @@ from incomevis.utils import *
 
 class incomevis:
   def __init__(self, data_path = SOURCE_DATA_PATH):
-    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-lite1.gz'),
-                            pd.read_csv(data_path + 'ipums-cps-lite2.gz')])
+    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-1-2020.gz'),
+                            pd.read_csv(data_path + 'ipums-cps-2-2020.gz')])
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
@@ -62,7 +62,6 @@ class incomevis:
     
     if benchmark: output_path = BENCHMARK_DATA_PATH
     else: output_path = DEFLATED_DATA_PATH
-    
     if group != 'all':
       if group == 'black': self.__raw = self.__raw.loc[(self.__raw['RACE'] == 200) | (self.__raw['RACE'] == 801) | (self.__raw['RACE'] == 805) | (self.__raw['RACE'] == 806) |
                                                        (self.__raw['RACE'] == 807) | (self.__raw['RACE'] == 810) | (self.__raw['RACE'] == 811) |
@@ -138,7 +137,7 @@ class incomevis:
       if (returnOrder): return orderFrame
 
       # Output csv file for toState
-      if (toState): result.to_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
+      if (toState): result.to_csv(output_path + k + '_' + group +  '_state_temp_' + incomeType + str(year-1) + '.csv', index = True)
 
       # Base color
       if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
@@ -179,12 +178,12 @@ class incomevis:
         result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year_df to HHINCOME year_df
-        with open(output_path + k + '_year_amchart_js_' + incomeType + str(year-1) + '.js', 'w') as outfile:
+        with open(output_path + k + '_' + group + '_year_amchart_js_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(result)
       else:
         result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year)], left_index = True, right_index = True)
         result = result.reindex(index = orderFrame)
-        result.to_csv(output_path + k + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
+        result.to_csv(output_path + k + '_' + group + '_year_matplotlib_' + incomeType + str(year-1) + '.csv', index = True)
 
     if (toState):
       for statefip in getStateName('numeric'):
@@ -192,7 +191,7 @@ class incomevis:
         data_df = []
         index_df = [i for i in range(0, 43)]
         for year in range(year_start, year_end+1):
-          df = pd.read_csv(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
+          df = pd.read_csv(output_path + k + '_' + group + '_state_temp_' + incomeType + str(year-1) + '.csv', index_col = 0)
           data_df.append(df.loc[statefip].tolist())
         if (k == 'decile'): state_df = pd.DataFrame(data_df,columns = self.__decileNames,index=index_df)
         elif (k == 'percentile'): state_df = pd.DataFrame(data_df,columns=self.__percentileNames,index=index_df)
@@ -209,8 +208,8 @@ class incomevis:
         state_df = json.dumps(state_df, indent = 4, sort_keys = False) # Make JSON format readable
 
         # Save JSON file -- y-1 adjusts sample year to HHINCOME year
-        with open(output_path + k + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
+        with open(output_path + k + '_' + group + '_state_' + incomeType + str(year-1) + '.js', 'w') as outfile:
           outfile.write(state_df)
 
       for year in range(year_start, year_end+1):
-        os.remove(output_path + k + '_state_temp_' + incomeType + str(year-1) + '.csv')
+        os.remove(output_path + k + '_' + group + '_state_temp_' + incomeType + str(year-1) + '.csv')
