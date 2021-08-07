@@ -1,3 +1,4 @@
+from incomevis.utils.path import *
 import matplotlib, matplotlib.pyplot as plt, pandas as pd, numpy as np
 from incomevis.utils import *
 
