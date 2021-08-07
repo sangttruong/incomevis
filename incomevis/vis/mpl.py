@@ -66,13 +66,13 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
               nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
               year_df['Location'] = year_df['50p'].values - nat['50p'].values
               year_df['Location'] = year_df['Location'].apply(np.int64)
-              year_df['new_color'] = year_df.index.map(getColor(''))
+              year_df['new_color'] = year_df.index.map(getColor('RPPERHHINCOME'))
 
           if incomeType=='HHINCOME':
             nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(new_color_map_HHINCOME)
+            year_df['new_color'] = year_df.index.map(getColor('HHINCOME'))
 
         #Convert the data to suitable format for the 3D bar chart
         deciles = getDecile('string')
@@ -176,7 +176,7 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
             nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(new_color_map_HHINCOME)
+            year_df['new_color'] = year_df.index.map(getColor('HHINCOME'))
 
         # Convert the data to suitable format for the 3D bar chart
         deciles = getPercentile('string')
