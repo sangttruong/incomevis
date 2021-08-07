@@ -31,7 +31,7 @@ def getColor(type):
                             Deault None
         """
 
-        incomeType = 'RPPERHHINCOME'
+        incomeType = type
         k = 'decile'
         cm_str='bwr'
         reversed_cm = True
