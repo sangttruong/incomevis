@@ -35,7 +35,7 @@ def getColor(type):
         reversed_cm = True
         input_path = DEFLATED_DATA_PATH
         benchmark_path = BENCHMARK_DATA_PATH
-        gender=None
+        group = 'all'
         year_end = 2019
 
         # Color map for entire benchmark
@@ -52,11 +52,8 @@ def getColor(type):
         for i in range(len(all_num)): color_map[all_num[i]] = hex_color[i]
 
         # Get color for decile RPPERHHINCOME
-        year_df = ''
-        if gender == None: year_df = pd.read_csv(input_path + k + '_year_matplotlib_' + incomeType + '1976.csv', index_col='State')
-        else: year_df = pd.read_csv(input_path + gender + '_' + k + ' _year_matplotlib_' + incomeType + '1976.csv', index_col='State')
-
-        nat = pd.read_csv(benchmark_path + k + '_year_matplotlib_' + incomeType + str(year_end-1) +'.csv')
+        year_df = pd.read_csv(input_path + k + '_' + group + '_year_matplotlib_' + incomeType + '1976.csv', index_col='State')
+        nat = pd.read_csv(benchmark_path + k + '_' + group + '_year_matplotlib_' + incomeType + str(year_end-1) +'.csv')
         year_df['Location'] = year_df['50p'].values - nat['50p'].values
         year_df['Location'] = year_df['Location'].apply(np.int64)
         state_map = []
