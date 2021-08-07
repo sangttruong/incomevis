@@ -3,6 +3,9 @@ import numpy as np, pandas as pd
 def bootstrap(self, seed = 0, incomeType = 'RHHINCOME', k = 'decile',
             year = 1977, statefip = 1, n = 1000000,
             output_path = ''):
+  """
+  Bootstrap resampling to estimate variance and to adjust for age distributions.
+  """
   np.random.seed(seed)
   year_df = self.__raw[self.__raw['YEAR'] == year]
 

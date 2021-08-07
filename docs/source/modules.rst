@@ -5,5 +5,4 @@ incomevis
    :maxdepth: 4
 
    incomevis
-   main
    setup

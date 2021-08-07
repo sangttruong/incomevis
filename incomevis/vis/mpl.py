@@ -21,35 +21,34 @@ if not hasattr(Axis, "_get_coord_info_old"):
 def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
                         year_start = 1977, year_end = 2020,
                         highlight = '',
-                        input_path = SOURCE_DATA_PATH, 
+                        input_path = SOURCE_DATA_PATH,
                         new_sort = True,
                         k = 'decile', group = 'all',
                         benchmark_dir = BENCHMARK_DATA_PATH,
                         output_dir = OUTPUT_DATA_PATH):
-
   """
   Generates dynamic visualization
   Parameters
   ----------
   incomeType : str
-      Income type.
-      Default value is RPPERHHINCOME.
-      Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+    Income type.
+    Default value is RPPERHHINCOME.
+    Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
   year_start : int
-      Starting data year.
-      Default value is 1977.
+    Starting data year.
+    Default value is 1977.
   year_end : int
-      Ending data year.
-      Default value is 2020.
-      Unlike pandas index convention, the ending data year will be
-      included in render.
+    Ending data year.
+    Default value is 2020.
+    Unlike pandas index convention, the ending data year will be
+    included in render.
   highlight : str
-      State to highlight
+    State to highlight
   k : str
-      decile or percentile.
+    decile or percentile.
   group : str
-      Demographic groups.
-      Typically male, female, black
+    Demographic groups.
+    Typically male, female, black
   """
 
   # Figure size
@@ -223,7 +222,7 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
                   ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'CA', color='black', fontsize=23, zdir = 'z', fontweight='bold')
                 if deciles[decile] == '95p' and year == 2018 and year_df.iloc[state].name == 'District of Columbia':
                   ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'DC', color='black', fontsize=23, zdir = 'z', fontweight='bold')
-          
+
           else: ax.bar3d(year_df['Location'][state], decile, 0,
                         year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
                         year_df.loc[year_df.iloc[state].name, deciles[decile]],
@@ -241,6 +240,30 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
 def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
               highlight = '',
               input_path = SOURCE_DATA_PATH):
+  """
+  Generates dynamic visualization
+  Parameters
+  ----------
+  incomeType : str
+      Income type.
+      Default value is RPPERHHINCOME.
+      Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+  year_start : int
+      Starting data year.
+      Default value is 1977.
+  year_end : int
+      Ending data year.
+      Default value is 2020.
+      Unlike pandas index convention, the ending data year will be
+      included in render.
+  highlight : str
+      State to highlight
+  k : str
+      decile or percentile.
+  group : str
+      Demographic groups.
+      Typically male, female, black
+  """
 
   # PyTest
   assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
@@ -326,4 +349,5 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
   #Animation features: frames - max range for year in animate function; interval - time changing between each frame
   dynamic = animation.FuncAnimation(fig, animate, frames = [year for year in range(year_start - 1, year_end)], interval = 500)
   rc('animation', html = 'jshtml')
+
   return dynamic

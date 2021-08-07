@@ -12,17 +12,6 @@ Subpackages
    incomevis.utils
    incomevis.vis
 
-Submodules
-----------
-
-incomevis.incomevis\_unittest module
-------------------------------------
-
-.. automodule:: incomevis.incomevis_unittest
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

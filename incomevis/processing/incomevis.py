@@ -3,7 +3,13 @@ from collections import OrderedDict
 from incomevis.utils import *
 
 class incomevis:
+  """
+  Primary object for data processing
+  """
   def __init__(self, data_path = SOURCE_DATA_PATH):
+    """
+    Take input data from IPUMS-CPS and IPUMS-USA and deflate them
+    """
     self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-1-2020.gz'),
                             pd.read_csv(data_path + 'ipums-cps-2-2020.gz')])
     self.__rpp = pd.read_csv(data_path + 'rpp.csv')
@@ -26,11 +32,23 @@ class incomevis:
       self.__pop['UR_NORMPOP_' + str(year)] = self.__pop['POP_' + str(year)]/(np.percentile(self.__pop['POP_' + str(year)], 10))
       self.__pop['NORMPOP_' + str(year)] = round(self.__pop['UR_NORMPOP_' + str(year)])
 
-  def getPop (self): return self.__pop
+  def getPop (self):
+    """
+    Return population for each state and each year
+    """
+    return self.__pop
 
-  def getData (self): return self.__raw
+  def getData (self):
+    """
+    Return the dataset as it is in the processing
+    """
+    return self.__raw
 
   def adjustIncome(self):
+    """
+    Deflating income with all three deflators.
+    The results are HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+    """
     # 1. RHHINCOME in 2018 dollars
     self.__raw['RHHINCOME'] = self.__raw['HHINCOME']*self.__raw['CPI99']*(1/0.652)
 
@@ -59,7 +77,9 @@ class incomevis:
                    group = 'all',
                    age_resampling = False, age_resampling_freq = 100,
                    benchmark = False): # if benchmark = True, then the benchmark year is the start year
-    
+    """
+    Print the dataframe of deflated income.
+    """
     if benchmark: output_path = BENCHMARK_DATA_PATH
     else: output_path = DEFLATED_DATA_PATH
     if group != 'all':

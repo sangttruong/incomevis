@@ -1,8 +1,25 @@
 from incomevis.utils.path import *
-import matplotlib, matplotlib.pyplot as plt, pandas as pd, numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 from incomevis.utils import *
 
 def getColor(type):
+    """
+    Gather color gradient based on the given benchmark (nation)
+    Arguments
+    =================================================================
+        incomeType (str): Type of income. (RPPERHHINCOME and HHINCOME)
+                            Default RPPERHHINCOME
+
+        k (str): Chossing between decile or percentile
+                    Deault decile
+        input_path (str): Input directory
+        benchmark_path (str): Benchmark directory
+        gender (str): Choosing between male or female
+                        Deault None
+    """
     if type == 'classic': return ['#FF0000', '#FF0A00', '#FF1400', '#FF1E00', '#FF2800', '#FF3300', '#FF3D00',
                                     '#FF4700', '#FF5100', '#FF5B00', '#FF6600', '#FF7000', '#FF7A00', '#FF8400',
                                     '#FF8E00', '#FF9900', '#FFA300', '#FFAD00', '#FFB700', '#FFC100', '#FFCC00',
@@ -12,25 +29,6 @@ def getColor(type):
                                     '#51FF00', '#47FF00', '#3DFF00', '#32FF00', '#28FF00', '#1EFF00', '#14FF00',
                                     '#0AFF00', '#00FF00']
     else:
-        # Color configuration
-        # def color_config(incomeType = 'RPPERHHINCOME', k = 'decile', cm_str='bwr', reversed_cm = True,
-        #             input_path = DEFLATED_DATA_PATH,
-        #             benchmark_path = BENCHMARK_DATA_PATH, gender=None):
-        """
-        Gather color gradient based on the given benchmark (nation)
-        Arguments
-        =================================================================
-            incomeType (str): Type of income. (RPPERHHINCOME and HHINCOME)
-                                Default RPPERHHINCOME
-
-            k (str): Chossing between decile or percentile
-                        Deault decile
-            input_path (str): Input directory
-            benchmark_path (str): Benchmark directory
-            gender (str): Choosing between male or female
-                            Deault None
-        """
-
         incomeType = type
         k = 'decile'
         cm_str='bwr'

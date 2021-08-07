@@ -1,6 +1,9 @@
 import numpy as np
 
 def getPercentile(type):
+    """
+    Return percentile in either string or numeric form
+    """
     if type == 'numeric': return np.arange(0.02, 1, 0.01)
     elif type == 'string': return [ '5p', '6p', '7p', '8p', '9p', '10p', '11p', '12p', '13p', '14p',
                                     '15p', '16p', '17p', '18p', '19p', '20p', '21p', '22p', '23p',

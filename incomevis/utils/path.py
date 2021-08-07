@@ -1,3 +1,7 @@
+"""
+Path management between local machine in google colab
+"""
+
 import sys, os
 from IPython import get_ipython
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))

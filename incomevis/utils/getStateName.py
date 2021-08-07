@@ -1,4 +1,7 @@
 def getStateName(type):
+    """
+    Return state in either string or numeric form
+    """
     if type == 'string': return ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
                                 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
                                 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',

@@ -2,6 +2,19 @@ import IPython
 
 def getInteractive(k = 'decile', toState = False, outputHTML = False,
                    input_path = '', output_path = ''):
+  """
+    Get interactive visualization in AmChart
+
+    Arguments
+    =============================
+      fig: matplotlib figure object
+
+      left: adjust left (decrease) and right (increase);
+            Default: 0.73
+
+      elevation: adjust down (decrease) and up (increase);
+            Default: 0.65
+  """
   #Missing files - Need to fix
   if k == 'decile':
     if(not toState): html1 = open(input_path + 'html1_d_year.txt', 'r')

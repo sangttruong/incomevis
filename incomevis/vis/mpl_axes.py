@@ -1,4 +1,11 @@
 def axes_config(ax):
+    """
+        Configurate axes for 3D visualization in matplotlib
+
+        Arguments
+        =============================
+        ax: matplotlib 3D axes
+    """
     ax.view_init(5,-146)
 
     # x axis tick labels
