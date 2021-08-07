@@ -12,8 +12,19 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../incomevis'))
-sys.path.insert(0, os.path.abspath('..'))
+
+_HERE = os.path.dirname(__file__)
+_ROOT_DIR = os.path.abspath(os.path.join(_HERE, '..'))
+_PACKAGE_DIR = os.path.abspath(os.path.join(_HERE, '../mypackage'))
+_SUBPACKAGE_DIR = os.path.abspath(os.path.join(_HERE, '../mypackage/subfolder'))
+
+sys.path.insert(0, _ROOT_DIR)
+sys.path.insert(0, _PACKAGE_DIR)
+sys.path.insert(0, _SUBPACKAGE_DIR)
+
+# sys.path.insert(0, os.path.abspath('../incomevis'))
+# sys.path.insert(0, os.path.abspath('..'))
+
 import sphinx_rtd_theme
 # import incomevis
 
