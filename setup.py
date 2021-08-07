@@ -31,6 +31,7 @@ setup(
         'pandas >= 1.0',
         'multiprocess >= 0.7',
         'ipython >= 5.5.0',
+        'sphinx_rtd_theme',
     ],
 
     #Including packages and folder in src files

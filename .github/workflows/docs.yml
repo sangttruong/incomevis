@@ -1,6 +1,6 @@
 name: "Pull Request Docs Check"
 on: 
-- pull_request
+- push
 
 jobs:
   docs:
@@ -14,3 +14,6 @@ jobs:
       with:
         name: DocumentationHTML
         path: docs/_build/html/ 
+    - run: |
+          pip install sphinx_rtd_theme
+    
