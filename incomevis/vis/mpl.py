@@ -53,23 +53,23 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
         if new_sort:
           if incomeType=='RPPERHHINCOME':
             if sex == 'male':
-              nat = pd.read_csv(benchmark_dir + 'nation_decile_RPPERHHINCOME_2019.csv')
+              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
               year_df['Location'] = year_df['50p'].values - nat['50p'].values
               year_df['Location'] = year_df['Location'].apply(np.int64)
               year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_male)
             elif sex  == 'female':
-              nat = pd.read_csv(benchmark_dir + 'nation_decile_RPPERHHINCOME_2019.csv')
+              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
               year_df['Location'] = year_df['50p'].values - nat['50p'].values
               year_df['Location'] = year_df['Location'].apply(np.int64)
               year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_female)
             else:
-              nat = pd.read_csv(benchmark_dir + 'nation_decile_RPPERHHINCOME_2019.csv')
+              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
               year_df['Location'] = year_df['50p'].values - nat['50p'].values
               year_df['Location'] = year_df['Location'].apply(np.int64)
               year_df['new_color'] = year_df.index.map(getColor(''))
 
           if incomeType=='HHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'nation_decile_HHINCOME_2019.csv')
+            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
             year_df['new_color'] = year_df.index.map(new_color_map_HHINCOME)
@@ -168,12 +168,12 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
         # Absolute ranking
         if new_sort:
           if incomeType=='RPPERHHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'nation_percentile_RPPERHHINCOME_2019.csv')
+            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
             year_df['new_color'] = year_df.index.map(getColor(''))
           if incomeType=='HHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'nation_percentile_HHINCOME_2019.csv')
+            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
             year_df['new_color'] = year_df.index.map(new_color_map_HHINCOME)
