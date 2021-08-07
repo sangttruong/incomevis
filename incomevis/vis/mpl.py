@@ -19,7 +19,6 @@ if not hasattr(Axis, "_get_coord_info_old"):
     Axis._get_coord_info_old = Axis._get_coord_info
     Axis._get_coord_info = _get_coord_info_new
 
-# Currently availlable for RPPERHHINCOME and HHINCOME
 def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_end = 2019, highlight = '',
                         input_path = SOURCE_DATA_PATH, new_sort=True, k='decile', sex= '', save_frame=None, using_JN = False,
                         benchmark_dir = BENCHMARK_DATA_PATH,
@@ -51,28 +50,21 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
         year_df = pd.read_csv(input_path + 'decile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
 
         if new_sort:
-          if incomeType=='RPPERHHINCOME':
-            if sex == 'male':
-              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
-              year_df['Location'] = year_df['50p'].values - nat['50p'].values
-              year_df['Location'] = year_df['Location'].apply(np.int64)
-              year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_male)
-            elif sex  == 'female':
-              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
-              year_df['Location'] = year_df['50p'].values - nat['50p'].values
-              year_df['Location'] = year_df['Location'].apply(np.int64)
-              year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_female)
-            else:
-              nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
-              year_df['Location'] = year_df['50p'].values - nat['50p'].values
-              year_df['Location'] = year_df['Location'].apply(np.int64)
-              year_df['new_color'] = year_df.index.map(getColor('RPPERHHINCOME'))
+          nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
+          year_df['Location'] = year_df['50p'].values - nat['50p'].values
+          year_df['Location'] = year_df['Location'].apply(np.int64)
+          year_df['new_color'] = year_df.index.map(getColor(str(incomeType)))
 
-          if incomeType=='HHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
+          if sex == 'male':
+            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
             year_df['Location'] = year_df['50p'].values - nat['50p'].values
             year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(getColor('HHINCOME'))
+            year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_male)
+          elif sex  == 'female':
+            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
+            year_df['Location'] = year_df['50p'].values - nat['50p'].values
+            year_df['Location'] = year_df['Location'].apply(np.int64)
+            year_df['new_color'] = year_df.index.map(new_color_map_RPPERHHINCOME_female)
 
         #Convert the data to suitable format for the 3D bar chart
         deciles = getDecile('string')
@@ -89,7 +81,13 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
           ax.set_zticklabels([0,100000,200000,300000],fontsize=23, fontweight='bold')
           ax.tick_params(axis='z', which='major', pad=45)
           ax.zaxis.set_rotate_label(False)
-        if incomeType == 'HHINCOME':
+        elif incomeType == 'HHINCOME':
+          ax.set_zlim(0, 400000) #Set the limit of the z axis
+          ax.set_zticks([0,100000,200000,300000,400000])
+          ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
+          ax.tick_params(axis='z', which='major', pad=45)
+          ax.zaxis.set_rotate_label(False)
+        else:
           ax.set_zlim(0, 400000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000,400000])
           ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
@@ -134,18 +132,12 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
                     ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'CA', color='black', fontsize=23, zdir = 'z', fontweight='bold')
                   if deciles[decile] == '95p' and year == 2019 and year_df.iloc[state].name == 'District of Columbia':
                     ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'DC', color='black', fontsize=23, zdir = 'z', fontweight='bold')
-            else:
-              # RPPERHHINCOME
-              if incomeType == 'RPPERHHINCOME':
-                ax.bar3d(year_df['Location'][state], decile, 0,
-                        year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                        year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                        color = year_df.loc[year_df.iloc[state].name, 'new_color'])
-              elif incomeType == 'HHINCOME':
-                ax.bar3d(year_df['Location'][state], decile, 0,
-                        year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                        year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                        color = year_df.loc[year_df.iloc[state].name, 'new_color'],edgecolor='grey', linewidth=0.25)
+            else: ax.bar3d(year_df['Location'][state], decile, 0,
+                            year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                            year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                            color = year_df.loc[year_df.iloc[state].name, 'new_color'],
+                            edgecolor='grey', linewidth=0.25)
+
         if sex == 'female':
           if highlight == '': ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(year) + '.jpg', dpi=500)
           else: ax.figure.savefig(output_dir + '/gallery_decile_gender/female_' + incomeType + '_' + str(highlight) + '_' + str(year) + '.jpg', dpi=500)
@@ -167,16 +159,10 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
 
         # Absolute ranking
         if new_sort:
-          if incomeType=='RPPERHHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_RPPERHHINCOME' + str(year_end-1) + '.csv')
-            year_df['Location'] = year_df['50p'].values - nat['50p'].values
-            year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(getColor(''))
-          if incomeType=='HHINCOME':
-            nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_HHINCOME' + str(year_end-1) + '.csv')
-            year_df['Location'] = year_df['50p'].values - nat['50p'].values
-            year_df['Location'] = year_df['Location'].apply(np.int64)
-            year_df['new_color'] = year_df.index.map(getColor('HHINCOME'))
+          nat = pd.read_csv(benchmark_dir + 'decile_year_matplotlib_' + incomeType + str(year_end-1) + '.csv')
+          year_df['Location'] = year_df['50p'].values - nat['50p'].values
+          year_df['Location'] = year_df['Location'].apply(np.int64)
+          year_df['new_color'] = year_df.index.map(getColor(incomeType))
 
         # Convert the data to suitable format for the 3D bar chart
         deciles = getPercentile('string')
@@ -189,14 +175,17 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
           ax.set_zlim(0, 300000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000])
           ax.set_zticklabels([0,100000,200000,300000],fontsize=23, fontweight='bold')
-          ax.tick_params(axis='z', which='major', pad=45)
-          ax.zaxis.set_rotate_label(False)
-        if incomeType == 'HHINCOME':
+        elif incomeType == 'HHINCOME':
           ax.set_zlim(0, 400000) #Set the limit of the z axis
           ax.set_zticks([0,100000,200000,300000,400000])
           ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
-          ax.tick_params(axis='z', which='major', pad=45)
-          ax.zaxis.set_rotate_label(False)
+        else:
+          ax.set_zlim(0, 400000) #Set the limit of the z axis
+          ax.set_zticks([0,100000,200000,300000,400000])
+          ax.set_zticklabels([0,100000,200000,300000,400000],fontsize=23, fontweight='bold')
+        
+        ax.tick_params(axis='z', which='major', pad=45)
+        ax.zaxis.set_rotate_label(False)
 
         axes_config(ax)
 
@@ -230,18 +219,12 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
                     ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'CA', color='black', fontsize=23, zdir = 'z', fontweight='bold')
                   if deciles[decile] == '95p' and year == 2018 and year_df.iloc[state].name == 'District of Columbia':
                     ax.text(year_df['Location'][state]-3000,  decile, year_df.loc[year_df.iloc[state].name, deciles[decile]] + 9000, 'DC', color='black', fontsize=23, zdir = 'z', fontweight='bold')
-            else:
-              # RPPERHHINCOME
-              if incomeType == 'RPPERHHINCOME':
-                ax.bar3d(year_df['Location'][state], decile, 0,
-                        year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                        year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                        color = year_df.loc[year_df.iloc[state].name, 'new_color'])
-              elif incomeType == 'HHINCOME':
-                ax.bar3d(year_df['Location'][state], decile, 0,
-                        year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
-                        year_df.loc[year_df.iloc[state].name, deciles[decile]],
-                        color = year_df.loc[year_df.iloc[state].name, 'new_color'],edgecolor='grey', linewidth=0.25)
+            
+            else: ax.bar3d(year_df['Location'][state], decile, 0,
+                          year_df.loc[year_df.iloc[state].name, pop_label]*0.025, 1,
+                          year_df.loc[year_df.iloc[state].name, deciles[decile]],
+                          color = year_df.loc[year_df.iloc[state].name, 'new_color'],
+                          edgecolor='grey', linewidth=0.25)
 
       if highlight == '':
         ax.figure.savefig(output_dir + '/gallery_percentile/' + incomeType + '_' + str(year) + '.jpg', dpi=500)
