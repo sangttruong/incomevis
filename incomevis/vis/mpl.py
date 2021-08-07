@@ -1,6 +1,6 @@
 # TODO: 
 # - create output path to save individual file
-# - test again on google colab env 
+# - test again on google colab env
 
 import pandas as pd, numpy as np
 import matplotlib.pyplot as plt
@@ -163,12 +163,12 @@ def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME', year_start = 1977, year_e
       if k == 'percentile':
         ax.clear() #Clear the vis between each frame
         cb.ax.set_title(str(year), fontsize=40, fontweight='bold', pad=30)
-        
+
         #Read the data
         pop_label = 'UR_NORMPOP_' + str(year+1)
         year_df = pd.read_csv(input_path + 'percentile_year_matplotlib_' + incomeType + str(year) + '.csv', index_col='State')
         ################################################################################################################################################
-        
+
         # Absolute ranking
         if new_sort:
           if incomeType=='RPPERHHINCOME':
@@ -263,11 +263,11 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
 
   # PyTest
   assert incomeType in ['RHHINCOME', 'RPPERHHINCOME', 'HHINCOME', 'RPPRHHINCOME', 'RPPERHHINCOME', 'ERHHINCOME']
-  
+
   # Display setting
   fig = plt.figure(figsize=(20,17), tight_layout=True)
   ax = plt.axes(projection='3d')
-  
+
   # Scalling
   x_scale, y_scale, z_scale = 3, 1, 1
   scale = np.diag([x_scale, y_scale, z_scale, 1])
@@ -294,26 +294,26 @@ def getAnimated(incomeType = 'RHHINCOME', year_start = 1977, year_end = 2019,
     ax.clear() #Clear the vis between each frame
     ax.set_zlim(0, 400000) #Set the limit of the z axis
     ax.set_zticklabels([0,50000,100000,150000,200000,250000,300000,350000,400000],fontsize=15)
-    
+
     #Resize and label the x axis
     ax.set_xticks([j for j in range(len(year_df[pop_label].tolist()))])
     ax.set_xticklabels(label, rotation=-45, fontsize='x-large')
     ax.grid(False)
-    
+
     #Adjust label in z axis
     ax.tick_params(axis='z', which='major', pad=30)
-    
+
     # Get rid of colored axes planes
     # First remove fill
     ax.xaxis.pane.fill = False
     ax.yaxis.pane.fill = False
     ax.zaxis.pane.fill = False
-    
+
     # Now set color to white (or whatever is "invisible")
     ax.xaxis.pane.set_edgecolor('w')
     ax.yaxis.pane.set_edgecolor('w')
     ax.zaxis.pane.set_edgecolor('w')
-    
+
     # Resize and label the y axis
     ax.set_yticks(np.arange(len(deciles)))
     ax.set_yticklabels(['' for year in range(len(deciles))])
