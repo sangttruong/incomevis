@@ -10,6 +10,9 @@ data/data_benchmark/*.csv
 data/deflated_data/*.csv
 data/output/*.csv
 
+# Sphinx documentation
+docs/_build/
+
 # Build
 build
 logo/.DS_Store

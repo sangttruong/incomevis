@@ -19,13 +19,38 @@ if not hasattr(Axis, "_get_coord_info_old"):
     Axis._get_coord_info = _get_coord_info_new
 
 def getAnimated_abs_rank(incomeType = 'RPPERHHINCOME',
-                        year_start = 1977, year_end = 2019,
+                        year_start = 1977, year_end = 2020,
                         highlight = '',
                         input_path = SOURCE_DATA_PATH, 
                         new_sort = True,
                         k = 'decile', group = 'all',
                         benchmark_dir = BENCHMARK_DATA_PATH,
                         output_dir = OUTPUT_DATA_PATH):
+
+  """
+  Generates dynamic visualization
+  Parameters
+  ----------
+  incomeType : str
+      Income type.
+      Default value is RPPERHHINCOME.
+      Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+  year_start : int
+      Starting data year.
+      Default value is 1977.
+  year_end : int
+      Ending data year.
+      Default value is 2020.
+      Unlike pandas index convention, the ending data year will be
+      included in render.
+  highlight : str
+      State to highlight
+  k : str
+      decile or percentile.
+  group : str
+      Demographic groups.
+      Typically male, female, black
+  """
 
     # Figure size
     fig = plt.figure(figsize=(20,17))
