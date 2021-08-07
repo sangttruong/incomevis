@@ -19,7 +19,8 @@ Welcome to incomevis's documentation!
 
     source/incomevis.processing
     source/incomevis.utils
-    source/incomevis.incomevis
+    source/incomevis.vis
+    source/incomevis.analysis
 
 
 Indices and tables
