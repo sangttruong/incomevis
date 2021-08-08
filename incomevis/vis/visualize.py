@@ -83,4 +83,4 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     else: html1 = html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
   html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
   result = html1.read() + result + html2.read()
-  IPython.display.HTML(data = result)
+  return IPython.display.HTML(data = result)
