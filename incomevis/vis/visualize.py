@@ -16,9 +16,9 @@ __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
 
-def visualize(k = 'decile', year = 1977, input_path = ''):
+def visualize(k = 'decile', input_path = ''):
   """
-    Get interactive visualization in AmChart. Receive deflated data of a year with
+    Get interactive visualization in AmChart. Receive deflated data of one year with
     normalized (potentially unrounded) population with details. The data is assumed to
     have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
     (4) ``Label``, (5) ``Color``, and (6) ``NORMPOP``. Regardless of the state order in the input,
@@ -30,9 +30,6 @@ def visualize(k = 'decile', year = 1977, input_path = ''):
       Absolute path to data file. Unlike the ``animate`` function, there is no requirement
       of naming format for this function.
       Default: Empty string
-
-    year : int
-      Year of visualization. Default: 1977
 
     k: str
       Method of partitioning income, which is either ``'decile'`` or ``'percentile'``.
