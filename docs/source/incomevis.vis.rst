@@ -1,13 +1,10 @@
-incomevis.vis package
+incomevis.vis submodule
 =====================
 
-Submodules
-----------
-
-incomevis.vis.amchart module
+incomevis.vis.visualize function
 ----------------------------
 
-.. automodule:: incomevis.vis.amchart
+.. automodule:: incomevis.vis.visualize
    :members:
    :undoc-members:
    :show-inheritance:

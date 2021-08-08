@@ -21,7 +21,7 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     Get interactive visualization in AmChart. Receive deflated data of a year with
     normalized (potentially unrounded) population with details. The data is assumed to
     have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
-    (4) ``Label``, (5) ``Color``, and (6) ``UR_NORMPOP_$year$``, with ``$year$`` 
+    (4) ``Label``, (5) ``Color``, and (6) ``UR_NORMPOP_$year$``, with ``$year$``
     replaced with the year of the visualization.
 
     Parameters
@@ -31,11 +31,11 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
 
     year : int
       Year of visualization. Default: 1977
-    
+
     k: str
-      Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
+      Method of partitioning income, which is either ``'decile'`` or ``'percentile'``.
       Default: ``'decile'``.
-    
+
     Returns
     ----------
     None
@@ -83,4 +83,3 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
   html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
   result = html1.read() + result + html2.read()
   IPython.display.HTML(data = result)
-  
