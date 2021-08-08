@@ -1,10 +1,7 @@
-incomevis.utils package
+incomevis.utils
 =======================
 
-Submodules
-----------
-
-incomevis.utils.getColor module
+incomevis.utils.getColor
 -------------------------------
 
 .. automodule:: incomevis.utils.getColor
@@ -12,7 +9,7 @@ incomevis.utils.getColor module
    :undoc-members:
    :show-inheritance:
 
-incomevis.utils.getDecile module
+incomevis.utils.getDecile
 --------------------------------
 
 .. automodule:: incomevis.utils.getDecile
@@ -20,7 +17,7 @@ incomevis.utils.getDecile module
    :undoc-members:
    :show-inheritance:
 
-incomevis.utils.getPercentile module
+incomevis.utils.getPercentile
 ------------------------------------
 
 .. automodule:: incomevis.utils.getPercentile
@@ -28,7 +25,7 @@ incomevis.utils.getPercentile module
    :undoc-members:
    :show-inheritance:
 
-incomevis.utils.getStateName module
+incomevis.utils.getStateName
 -----------------------------------
 
 .. automodule:: incomevis.utils.getStateName
@@ -36,18 +33,10 @@ incomevis.utils.getStateName module
    :undoc-members:
    :show-inheritance:
 
-incomevis.utils.path module
+incomevis.utils.path
 ---------------------------
 
 .. automodule:: incomevis.utils.path
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: incomevis.utils
    :members:
    :undoc-members:
    :show-inheritance:

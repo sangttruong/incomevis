@@ -1,7 +1,7 @@
-incomevis.processing submodule
+incomevis.processing
 ============================
 
-incomevis.processing.incomevis class
+incomevis.processing.incomevis
 -------------------------------------
 
 .. automodule:: incomevis.processing.incomevis
