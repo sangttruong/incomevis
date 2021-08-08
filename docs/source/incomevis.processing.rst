@@ -1,10 +1,7 @@
-incomevis.processing package
+incomevis.processing submodule
 ============================
 
-Submodules
-----------
-
-incomevis.processing.incomevis module
+incomevis.processing.incomevis class
 -------------------------------------
 
 .. automodule:: incomevis.processing.incomevis
@@ -12,8 +9,6 @@ incomevis.processing.incomevis module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: incomevis.processing
    :members:
