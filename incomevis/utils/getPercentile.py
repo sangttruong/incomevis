@@ -16,7 +16,16 @@ __status__ = "Dev"
 
 def getPercentile(type):
     """
-    Return percentile in either string or numeric form
+        Return percentile in either string or numeric form.
+        Parameters
+        ----------
+        type: str
+        Type of decile. Currently supported ``'string'`` (e.g. ``'5p'``) or
+        ``'numeric'`` (e.g. ``0.5``)
+
+        Returns
+        -------
+        class 'list'
     """
     if type == 'numeric': return np.arange(0.02, 1, 0.01)
     elif type == 'string': return [ '5p', '6p', '7p', '8p', '9p', '10p', '11p', '12p', '13p', '14p',

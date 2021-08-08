@@ -12,7 +12,16 @@ __status__ = "Dev"
 
 def getStateName(type):
     """
-    Return state in either string or numeric form
+        Return state in either string or numeric form
+        Parameters
+        ----------
+        type: str
+        Type of decile. Currently supported ``'string'`` (e.g. ``'Alabama'``) or
+        ``'numeric'`` (e.g. ``1``)
+
+        Returns
+        -------
+        class 'list'
     """
     if type == 'string': return ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
                                 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',

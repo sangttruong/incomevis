@@ -19,18 +19,31 @@ __status__ = "Dev"
 
 def getColor(type):
     """
-    Gather color gradient based on the given benchmark (nation)
-    Arguments
-    =================================================================
-        incomeType (str): Type of income. (RPPERHHINCOME and HHINCOME)
-                            Default RPPERHHINCOME
+        Gather color gradient based on the given benchmark (nation). More detailed 
+        documentation is coming soon. 
+        Parameters
+        ----------
 
-        k (str): Chossing between decile or percentile
-                    Deault decile
-        input_path (str): Input directory
-        benchmark_path (str): Benchmark directory
-        gender (str): Choosing between male or female
-                        Deault None
+        type: str
+            Type of collor pallette. Currently support ``'classic'`` or one of the 
+            incomeType (``'HHINCOME'``, ``'RHHINCOME'``, ``'ERHHINCOME'``, and 
+            ``'RPPERHHINCOME'``)
+
+        k: str
+            Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
+            Default: ``'decile'``.
+
+        group: str
+            Allowing to export (sub)population of data. Currently supported ``'all'``,
+            ``'male'``, ``'female'``, ``'black'``, ``'non-black'``, ``'hispan'``, 
+            ``'non-hispan'``, ``'high-educ'``, ``'low-educ'``. Default: ``'all'``. 
+
+        Returns
+        ----------
+        class 'list'
+            if the input type is 'classic'
+        pandas.DataFrame object
+            if the input type is one of the household income type.
     """
     if type == 'classic': return ['#FF0000', '#FF0A00', '#FF1400', '#FF1E00', '#FF2800', '#FF3300', '#FF3D00',
                                     '#FF4700', '#FF5100', '#FF5B00', '#FF6600', '#FF7000', '#FF7A00', '#FF8400',

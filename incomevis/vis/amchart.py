@@ -35,6 +35,10 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     k: str
       Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
       Default: ``'decile'``.
+    
+    Returns
+    ----------
+    There is no return for this function.
 
   """
 
@@ -77,5 +81,5 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     else: html1 = html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
   html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
   result = html1.read() + result + html2.read()
-  return IPython.display.HTML(data = result)
+  IPython.display.HTML(data = result)
   
