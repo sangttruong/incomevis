@@ -23,7 +23,24 @@ class incomevis:
   def __init__(self):
     """
       Take input data from IPUMS-CPS and IPUMS-USA and deflate them.
-      The initialization does not take parameter.
+      
+      Parameters
+      ----------
+      None
+        This method does not take parameter.
+
+      Attributes
+      ----------
+        raw: ``pandas DataFrame``
+          Raw data from IPUMS-CPS. By default, data of ASEC samples from IPUMS-CPS of 1977-2020 sample year with only
+          YEAR, ASECWTH, CPI99, STATEFIP, HHINCOME, PERNUM, HFLAG variables and a few more demographic variables will be used.
+          Details about specific demographic variables are coming soon. 
+        
+        rpp: ``pandas DataFrame``
+          Regional price parity (RPP) data from IPUMS-USA.
+        
+        pop: ``pandas DataFrame``
+          Population for all year and states
     """
     self.__raw = pd.concat([pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-1-2020.zip'),
                             pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-2-2020.zip')])
@@ -32,14 +49,15 @@ class incomevis:
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
     self.__raw = self.__raw[self.__raw['YEAR'] > 1976]
-    self.label_list = ['']
-    notLabelList = list(set(getStateName('string')) - set(self.label_list))
+
+    # Redundant information that need to be removed soon. 
+    notLabelList = list(set(getStateName('string')) - set(['']))
     notLabelDict = dict.fromkeys(notLabelList , '')
     self.__state_name = pd.DataFrame(data = getStateName('string'), index = getStateName('numeric'), columns = ['State'])
     self.state_label = self.__state_name.replace(to_replace = notLabelDict)
     self.state_label = self.state_label.rename(columns = {'State': 'Label'})
-
     self.__colors = pd.DataFrame(getColor('classic'), columns = ['Color'], index = getStateName('numeric'))
+    
     self.__pop = pd.DataFrame()
     for year in range(self.__raw['YEAR'].min(), self.__raw['YEAR'].max() + 1):
       year_df = self.__raw[self.__raw.YEAR == year]
@@ -51,12 +69,33 @@ class incomevis:
     """
       Return population for all state and all year in a Pandas dataframe.
       This method does not take parameter.
+
+      Parameters
+      ----------
+      None
+        This method does not take parameter.
+
+      Returns
+      ----------
+      ``pandas DataFrame`` object
+        Dataframe of population
+
     """
     return self.__pop
 
   def getData (self):
     """
       Return the inspected dataset in a Pandas dataframe. This method does not take parameter.
+      
+      Parameters
+      ----------
+      None
+        This method does not take parameter.
+      
+      Returns
+      ----------
+      ``pandas DataFrame`` object
+        Dataframe of full data
     """
     return self.__raw
 
@@ -67,6 +106,16 @@ class incomevis:
       income (RHHINCOME, deflated with only CPI), equivalent real household income (ERHHINCOME, 
       deflated with CPI and HHSIZE), and regional-equivalent-real household income (RPPERHHINCOME, 
       deflated with all three deflators). This method does not take parameter.
+
+      Parameters
+      ----------
+      None
+        This method does not take parameter.
+
+      Returns
+      ----------
+      ``pandas DataFrame`` object
+        Dataframe of deflated data
     """
     # 1. RHHINCOME in 2018 dollars
     self.__raw['RHHINCOME'] = self.__raw['HHINCOME']*self.__raw['CPI99']*(1/0.652)
@@ -127,7 +176,11 @@ class incomevis:
         Whether the exporting data is the benchmark data. If ``benchmark = True``, the
         default benchmark data is the national income (with respect to the selected 
         income type) at ``'year_end'``. Default: False.
-        
+      
+      Returns
+      ----------
+      None
+        This function has no return.
     """
     if benchmark: output_path = BENCHMARK_DATA_PATH
     else: output_path = DEFLATED_DATA_PATH
