@@ -16,6 +16,11 @@ Comparing incomes is complicated. We offer three default deflators (consumer pri
 
 Happy visualizing economic complexity!
 
+### News
+* 01/2021: Our paper is presented at [National Collegiate Research Conference, Harvard University](https://www.hcura.org/about-ncrc).
+* 03/2021: incomevis is presented at the Analytics Department at [Community Health Network](https://www.ecommunity.com/) for Black History Month.
+* 08/2021: We use incomevis for a new course title [ECON390: Economics of Inequality](https://www.depauw.edu/academics/departments-programs/economics-management/courses/details/ECON/390/) at DePauw University.
+
 ## Installation
 
 incomevis can be installed via pip:
@@ -85,7 +90,7 @@ Bellow are bootstrap resampling of 50p of DC in 1977 10000 times (bottom right) 
 * [Sang Truong](sangttruong.github.io) (Stanford University)
 * [Humberto Barreto](http://academic.depauw.edu/hbarreto_web/) (DePauw University)
 
-As this research is continue to evolve, please direct any question, feedback, or comment to [sttruong@stanford.edu](sttruong@cs.stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu).
+As this research is continue to evolve, please direct any question, feedback, or comment to [sttruong@cs.stanford.edu](sttruong@cs.stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu).
 
 ## Acknowledgements
 This project was started by Sang Truong and Humberto Barreto during summer 2019 under the support of Hewlett Mellon Presidential Fund for undergraduate research at DePauw University. We thank Frank Howland, Jonah Barreto, and Bu Tran their support on preparing the manuscript.
