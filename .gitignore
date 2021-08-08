@@ -31,4 +31,4 @@ data/output_data/gallery_percentile/*.jpg
 data/output_data/gallery_decile/*.jpg
 
 detangled.ipynb
-data/hb_data/decile_all_year_matplotlib_HHINCOME2019.csv
+data/hb_data/*.csv
