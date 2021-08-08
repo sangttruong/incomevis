@@ -88,4 +88,4 @@ Bellow are bootstrap resampling of 50p of DC in 1977 10000 times (bottom right) 
 As this research is continue to evolve, please direct any question, feedback, or comment to [sttruong@stanford.edu](sttruong@cs.stanford.edu) or [hbarreto@depauw.edu](hbarreto@depauw.edu).
 
 ## Acknowledgements
-This project was started by Sang Truong and Humberto Barreto during summer 2019 under the support of Hewlett Mellon Presidential Fund for undergraduate research at DePauw University. We thank [Frank Howland](http://persweb.wabash.edu/facstaff/howlandf/) for his help in revising an early version of this paper. We thanks Jonah Barreto for writing the JavaScript code for this website. We thank Bu Tran for his intial help on beautifying (color/display) the 3D barcharts in Python.
+This project was started by Sang Truong and Humberto Barreto during summer 2019 under the support of Hewlett Mellon Presidential Fund for undergraduate research at DePauw University. We thank Frank Howland, Jonah Barreto, and Bu Tran their support on preparing the manuscript.
