@@ -18,28 +18,32 @@ __status__ = "Dev"
 
 class incomevis:
   """
-    Primary object for data processing. The object of this class takes input data from 
-    IPUMS-CPS and IPUMS-USA and deflate them.
-    
-    Parameters
-    ----------
-    None
-      Constructor of this class does not take parameter.
-
-    Attributes
-    ----------
-      raw: ``pandas DataFrame``
-        Raw data from IPUMS-CPS. By default, data of ASEC samples from IPUMS-CPS of 1977-2020 sample year with only
-        YEAR, ASECWTH, CPI99, STATEFIP, HHINCOME, PERNUM, HFLAG variables and a few more demographic variables will be used.
-        Details about specific demographic variables are coming soon. 
-      
-      rpp: ``pandas DataFrame``
-        Regional price parity (RPP) data from IPUMS-USA.
-      
-      pop: ``pandas DataFrame``
-        Population for all year and states
+    Primary object for data processing.
   """
+  # TODO: Sphinx needs to be configurated appropriately to render the attribute of class.
   def __init__(self):
+    """
+      The object of this class takes input data from. IPUMS-CPS and IPUMS-USA and deflate them.
+      
+      Parameters
+      ----------
+      None
+        Constructor of this class does not take parameter.
+
+      Attributes
+      ----------
+        raw: ``pandas DataFrame``
+          Raw data from IPUMS-CPS. By default, data of ASEC samples from IPUMS-CPS of 1977-2020 sample year with only
+          YEAR, ASECWTH, CPI99, STATEFIP, HHINCOME, PERNUM, HFLAG variables and a few more demographic variables will be used.
+          Details about specific demographic variables are coming soon. 
+        
+        rpp: ``pandas DataFrame``
+          Regional price parity (RPP) data from IPUMS-USA.
+        
+        pop: ``pandas DataFrame``
+          Population for all year and states
+    """
+
     self.__raw = pd.concat([pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-1-2020.zip'),
                             pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-2-2020.zip')])
     self.__rpp = pd.read_csv(SOURCE_DATA_PATH + 'rpp.csv')
@@ -48,7 +52,7 @@ class incomevis:
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
     self.__raw = self.__raw[self.__raw['YEAR'] > 1976]
 
-    # Redundant information that need to be removed soon. 
+    # TODO: Redundant information that need to be removed soon. 
     notLabelList = list(set(getStateName('string')) - set(['']))
     notLabelDict = dict.fromkeys(notLabelList , '')
     self.__state_name = pd.DataFrame(data = getStateName('string'), index = getStateName('numeric'), columns = ['State'])
@@ -142,8 +146,7 @@ class incomevis:
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
                    age_resampling = False,
-                   age_resampling_freq = 100,
-                   toState = False): # if benchmark = True, then the benchmark year is the end year
+                   age_resampling_freq = 100): # if benchmark = True, then the benchmark year is the end year
     """
       Get deflated household income for each year.
 
@@ -197,6 +200,9 @@ class incomevis:
       elif group == 'low-educ': self.__raw = self.__raw.loc[(self.__raw['EDUC'] > 2) & (self.__raw['EDUC'] <= 73), :]
       else: raise ValueError
 
+    # TODO: need to refactoring toState to a separated function or deprecate it. 
+    toState = False
+
     for year in range(year_start, year_end+1):
       year_df = self.__raw[self.__raw['YEAR'] == year] # Generate year_df dataframe
 
@@ -214,6 +220,9 @@ class incomevis:
           state_df = year_df[year_df['STATEFIP'] == statefip] # Generate state dataframe
         else: state_df = year_df # if generating national benchmark, there is no need of partition
 
+        # TODO: need to revise age resampling (perhaps resampling will need to be with 
+        # adjustIncome function)
+        
         # Resampling to uniform age distribution
         if age_resampling:
           dist_age = pd.DataFrame()
