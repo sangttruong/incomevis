@@ -19,7 +19,12 @@ def visualize(k = 'decile', year = 1977, toState = False,
 
     year : int
       Default: 1977
-      Economic year of the analysis (not the year the data was collected).
+      Year when the data was collected by IPUMS-CPS (not the economic year).
+      Nonetheles, note that file name or details inside of file are often
+      following economic year instead of data collection year. For example, 
+      year = 1976 is invalid because there is no data collected on 1976. Yet, 
+      in this package, we see analysis of the economy in 1976 using data collected
+      in 1977.
     
     k: st
       Default: "decile"
