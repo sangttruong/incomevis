@@ -1,18 +1,33 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 import os, json, pandas as pd, numpy as np
 from collections import OrderedDict
+
+# Owned
 from incomevis.utils import *
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 class incomevis:
   """
-  Primary object for data processing
+    Primary object for data processing
   """
-  def __init__(self, data_path = SOURCE_DATA_PATH):
+  def __init__(self):
     """
-    Take input data from IPUMS-CPS and IPUMS-USA and deflate them
+      Take input data from IPUMS-CPS and IPUMS-USA and deflate them.
+      The initialization does not take parameter.
     """
-    self.__raw = pd.concat([pd.read_csv(data_path + 'ipums-cps-1-2020.zip'),
-                            pd.read_csv(data_path + 'ipums-cps-2-2020.zip')])
-    self.__rpp = pd.read_csv(data_path + 'rpp.csv')
+    self.__raw = pd.concat([pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-1-2020.zip'),
+                            pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-2-2020.zip')])
+    self.__rpp = pd.read_csv(SOURCE_DATA_PATH + 'rpp.csv')
     self.__raw = pd.merge(self.__raw, self.__rpp, how = 'outer', on = ['YEAR', 'STATEFIP'])
     self.__raw = self.__raw[self.__raw['HFLAG'] != 1]
     self.__raw = self.__raw.drop(columns = ['HFLAG'])
@@ -34,20 +49,24 @@ class incomevis:
 
   def getPop (self):
     """
-    Return population for each state and each year
+      Return population for all state and all year in a Pandas dataframe.
+      This method does not take parameter.
     """
     return self.__pop
 
   def getData (self):
     """
-    Return the dataset as it is in the processing
+      Return the inspected dataset in a Pandas dataframe. This method does not take parameter.
     """
     return self.__raw
 
   def adjustIncome(self):
     """
-    Deflating income with all three deflators.
-    The results are HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+      Deflating househould income (HHINCOME) with consumer price index (CPI), househouse
+      effective size (HHSIZE), and regional parity price (RPP). The result are real household 
+      income (RHHINCOME, deflated with only CPI), equivalent real household income (ERHHINCOME, 
+      deflated with CPI and HHSIZE), and regional-equivalent-real household income (RPPERHHINCOME, 
+      deflated with all three deflators). This method does not take parameter.
     """
     # 1. RHHINCOME in 2018 dollars
     self.__raw['RHHINCOME'] = self.__raw['HHINCOME']*self.__raw['CPI99']*(1/0.652)
@@ -68,17 +87,47 @@ class incomevis:
 
     return self.__raw
 
-  def getIncomevis(self, incomeType = 'RHHINCOME', k = 'decile',
-                   year_start = 1977, year_end = 2019,
-                   toState = False,
+  def getIncomevis(self, incomeType = 'RPPERHHINCOME', k = 'decile',
+                   year_start = 1977, year_end = 2020,
+                   group = 'all',
+                   benchmark = False,
+
                    provide_colorFrame = False, colorFrame = [], returnColor = False,
                    provide_orderFrame = False, orderFrame = pd.DataFrame(), returnOrder = False,
-                   group = 'all',
                    age_resampling = False,
                    age_resampling_freq = 100,
-                   benchmark = False): # if benchmark = True, then the benchmark year is the end year
+                   toState = False): # if benchmark = True, then the benchmark year is the end year
     """
-    Print the dataframe of deflated income.
+      Get deflated household income for each year.
+
+      Parameters
+      ----------
+      incomeType: str
+        Type of household income. Currently supported ``'HHINCOME'``, ``'RHHINCOME'``, 
+        ``'ERHHINCOME'``, and ``'RPPERHHINCOME'``. Default: ``'RPPERHHINCOME'``, i.e.
+        fully deflated.
+
+      k: str
+        Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
+        Default: ``'decile'``.
+
+      year_start: int
+        Starting year of data that will be printed out. Default: 1977, i.e. the earliest
+        year household income was meaningfully documented by IPUMS. 
+      
+      year_end: int
+        Ending year of data that will be printed out. Default: 2020.
+
+      group: str
+        Allowing to export (sub)population of data. Currently supported ``'all'``,
+        ``'male'``, ``'female'``, ``'black'``, ``'non-black'``, ``'hispan'``, 
+        ``'non-hispan'``, ``'high-educ'``, ``'low-educ'``. Default: ``'all'``. 
+      
+      benchmark: bool
+        Whether the exporting data is the benchmark data. If ``benchmark = True``, the
+        default benchmark data is the national income (with respect to the selected 
+        income type) at ``'year_end'``. Default: False.
+        
     """
     if benchmark: output_path = BENCHMARK_DATA_PATH
     else: output_path = DEFLATED_DATA_PATH
@@ -157,7 +206,7 @@ class incomevis:
       # Base color
       if(not provide_colorFrame): colorFrame = pd.DataFrame(data = list(self.__colors['Color']), index = orderFrame, columns=['Color'])
       if (returnColor): return colorFrame
-      
+
       result = pd.concat([self.__state_name, result, self.state_label, colorFrame], axis = 1)
       result = pd.merge(result, self.__pop['UR_NORMPOP_' + str(year-1)], left_index = True, right_index = True)
       result = result.reindex(index = orderFrame)
