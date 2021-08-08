@@ -16,7 +16,7 @@ __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
 
-def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
+def visualize(k = 'decile', year = 1977, input_path = ''):
   """
     Get interactive visualization in AmChart. Receive deflated data of a year with
     normalized (potentially unrounded) population with details. The data is assumed to
@@ -28,7 +28,7 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     Parameters
     ----------
     input_path : str
-      Absolute path to data file. An example of input file name: ``decile_all_year_matplotlib_HHINCOME2019.csv``.
+      Absolute path to data file. An example of input file name: ``decile_all_year_matplotlib_HHINCOME2020.csv``.
       Default: Empty string
 
     year : int
@@ -77,6 +77,7 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
   result = json.dumps(result, indent = 4, sort_keys = False) # Make JSON format readable
 
   # Open html environment and display
+  toState = False # This option will be either deprecated or migrate to another package soon...
   if k == 'decile':
     if(not toState): html1 = open(SOURCE_DATA_PATH + 'html1_d_year.txt', 'r')
     else: html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
