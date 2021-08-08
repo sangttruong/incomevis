@@ -17,7 +17,8 @@ Comparing incomes is complicated. We offer three default deflators (consumer pri
 Happy visualizing economic complexity!
 
 ### News
-* 01/2021: Our paper is presented at [National Collegiate Research Conference, Harvard University](https://www.hcura.org/about-ncrc). 
+* 01/2021: Our paper is presented at [National Collegiate Research Conference, Harvard University](https://www.hcura.org/about-ncrc).
+* 03/2021: incomevis is presented at the Analytics Department at [Community Health Network](https://www.ecommunity.com/) for Black History Month.
 * 08/2021: We use incomevis for a new course title [ECON390: Economics of Inequality](https://www.depauw.edu/academics/departments-programs/economics-management/courses/details/ECON/390/) at DePauw University.
 
 ## Installation
