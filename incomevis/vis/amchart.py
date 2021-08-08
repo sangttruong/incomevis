@@ -1,39 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 import IPython, json, pandas as pd, numpy as np
 from collections import OrderedDict
+
+# Owned
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 from incomevis.utils import *
 
-def visualize(k = 'decile', year = 1977, toState = False,
-              input_path = ''):
+def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
   """
     Get interactive visualization in AmChart. Receive deflated data of a year with
     normalized (potentially unrounded) population with details. The data is assumed to
-    have (1) an index column using STATEFIP, (2) State, (3) kiles name,
-    (4) Label, (5) Color, and (6) UR_NORMPOP_$year$, with $year$ replaced with the
-    economic of the visualization.
+    have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
+    (4) ``Label``, (5) ``Color``, and (6) ``UR_NORMPOP_$year$``, with ``$year$`` 
+    replaced with the year of the visualization.
 
     Parameters
     ----------
     input_path : str
-      Default: Empty string
-      Absolute path to data file.
+      Absolute path to data file. Default: Empty string
 
     year : int
-      Default: 1977
-      Year when the data was collected by IPUMS-CPS (not the economic year).
-      Nonetheles, note that file name or details inside of file are often
-      following economic year instead of data collection year. For example, 
-      year = 1976 is invalid because there is no data collected on 1976. Yet, 
-      in this package, we see analysis of the economy in 1976 using data collected
-      in 1977.
+      Year of visualization. Default: 1977
     
-    k: st
-      Default: "decile"
-      Either "decile" or "percentile" 
-
-    toState: bool
-      Default: False
-      Whether or not converting the data to one state, many year format. 
-      Currently unsupported.
+    k: str
+      Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
+      Default: ``'decile'``.
 
   """
 
@@ -77,3 +78,4 @@ def visualize(k = 'decile', year = 1977, toState = False,
   html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
   result = html1.read() + result + html2.read()
   return IPython.display.HTML(data = result)
+  
