@@ -38,7 +38,8 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     
     Returns
     ----------
-    There is no return for this function.
+    None
+      There is no return for this function.
 
   """
 
