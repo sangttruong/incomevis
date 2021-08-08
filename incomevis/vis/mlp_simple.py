@@ -18,7 +18,7 @@ __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
 
-def simple_animate(year, ax, k, cb, benchmark, input_path, benchmark_dir,
+def simple_animate(year, ax, k, cb, benchmark, input_path, benchmark_path,
                     incomeType, group, highlight, year_end):
   """
     Helper function for animating simple income distribution (i.e. without benchmark). 

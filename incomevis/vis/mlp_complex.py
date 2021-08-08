@@ -18,7 +18,7 @@ __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
 
-def complex_animate(year, ax, k, cb, benchmark, input_path, benchmark_dir,
+def complex_animate(year, ax, k, cb, benchmark, input_path, benchmark_path,
                     incomeType, group, highlight, year_end):
   """
     Helper function for animating complex income distribution (i.e. with benchmark). 
@@ -34,7 +34,7 @@ def complex_animate(year, ax, k, cb, benchmark, input_path, benchmark_dir,
   year_df = pd.read_csv(input_path + k + '_' + group + '_year_matplotlib_'
                     + incomeType + str(year) + '.csv', index_col='State')
   if benchmark:
-      nat = pd.read_csv(benchmark_dir + k + '_' + group + '_year_matplotlib_'
+      nat = pd.read_csv(benchmark_path + k + '_' + group + '_year_matplotlib_'
                       + incomeType + str(year_end-1) + '.csv')
       year_df['Location'] = year_df['50p'].values - nat['50p'].values
       year_df['Location'] = year_df['Location'].apply(np.int64)

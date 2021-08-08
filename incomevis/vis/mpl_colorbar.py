@@ -21,31 +21,31 @@ def colorbar_config(fig, left=0.721, elevation=0.62, width=0.02, height=0.2, alp
 
     Arguments
     =============================
-      fig: matplotlib figure object
+      fig: ``matplotlib figure`` object
 
-      left: adjust left (decrease) and right (increase);
-            Default: 0.73
+      left: int
+            adjust left (decrease) and right (increase). Default: 0.73
 
-      elevation: adjust down (decrease) and up (increase);
-            Default: 0.65
+      elevation: int
+            adjust down (decrease) and up (increase). Default: 0.65
 
-      width: width of the colorbar;
-            Default: 0.02
+      width: int
+            width of the colorbar. Default: 0.02
 
-      height: height of the colorbar;
-            Default: 0.2
+      height: int
+            height of the colorbar. Default: 0.2
 
-      alpha: blur the colorbar;
-            Default: 0
+      alpha: int
+            blur the colorbar. Default: 0
 
-      cm_str: string represents colorbar;
-            Default bwr
+      cm_str: str
+            string represents colorbar. Default ``'bwr'``.
 
-      upper: upper bound difference;
-            Default: 40000
+      upper: int
+            upper bound difference. Default: 40000
 
-      lower: lower bound difference;
-            Default: -60000
+      lower: int
+            lower bound difference. Default: -60000
   """
   cbax = fig.add_axes([left,elevation,width, height], alpha=alpha)
   all_num = [i for i in range(lower, upper)]

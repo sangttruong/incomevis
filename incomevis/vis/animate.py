@@ -34,44 +34,50 @@ if not hasattr(Axis, "_get_coord_info_old"):
   Axis._get_coord_info = _get_coord_info_new
 
 def animate(incomeType = 'RPPERHHINCOME',
-            year_start = 1977, year_end = 2020,
-            highlight = '',
-            benchmark = True,
-            input_path = SOURCE_DATA_PATH,
             k = 'decile', group = 'all',
-            benchmark_dir = BENCHMARK_DATA_PATH):
+            year_start = 1977, year_end = 2020, highlight = '',
+            benchmark = True, benchmark_path = BENCHMARK_DATA_PATH,
+            input_path = DEFLATED_DATA_PATH,):
   """
   Animate economic distribution over year.
 
   Parameters
   ----------
-  incomeType : str
-    Income type.
-    Default value is RPPERHHINCOME.
-    Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
-  
-  year_start : int
-    Starting data year.
-    Default value is 1977.
-  
-  year_end : int
-    Ending data year.
-    Default value is 2020.
-    Unlike pandas index convention, the ending data year will be
-    included in render.
+  incomeType: str
+    Type of household income. Currently supported ``'HHINCOME'``, ``'RHHINCOME'``, 
+    ``'ERHHINCOME'``, and ``'RPPERHHINCOME'``. Default: ``'RPPERHHINCOME'``, i.e.
+    fully deflated.
+
+  k: str
+    Method of partitioning income, which is either ``'decile'`` or ``'percentile'``. 
+    Default: ``'decile'``.
+
+  year_start: int
+    Starting year of data that will be printed out. Default: 1977, i.e. the earliest
+    year household income was meaningfully documented by IPUMS. 
+      
+  year_end: int
+    Ending year of data that will be printed out. Unlike pandas index convention, 
+    the ending data year will be included in render. Default: 2020.
   
   highlight : str
-    State to highlight
+    State to highlight. Default: empty string.
   
-  k : str
-    decile or percentile.
+  group: str
+    Allowing to export (sub)population of data. Currently supported ``'all'``,
+    ``'male'``, ``'female'``, ``'black'``, ``'non-black'``, ``'hispan'``, 
+    ``'non-hispan'``, ``'high-educ'``, ``'low-educ'``. Default: ``'all'``. 
+
+  benchmark: bool
+    Whether the exporting data is the benchmark data. If ``benchmark = True``, the
+    default benchmark data is the national income (with respect to the selected 
+    income type) at ``'year_end'``. Default: False.
   
-  group : str
-    Demographic groups.
-    Typically male, female, black
-  
-  benchmark_dir: str
-    Benchmark directory
+  benchmark_path: str
+    Benchmark directory. Default: ``BENCHMARK_DATA_PATH``.
+
+  input_path: str
+    Path to data to animate. Default: ``DEFLATED_DATA_PATH``
   """
 
   # Figure size
@@ -93,13 +99,13 @@ def animate(incomeType = 'RPPERHHINCOME',
     # animate function need to have precisely a single input
     def animate(year): return complex_animate(year, ax = ax, k = k, cb = colorbar_config(fig),
                                               benchmark = benchmark,
-                                              input_path = input_path, benchmark_dir = benchmark_dir,
+                                              input_path = input_path, benchmark_path = benchmark_path,
                                               incomeType = incomeType, group = group, highlight = highlight,
                                               year_end = year_end)
   else:
     def animate(year): return simple_animate(year, ax = ax, k = k, cb = colorbar_config(fig),
                                               benchmark = benchmark,
-                                              input_path = input_path, benchmark_dir = benchmark_dir,
+                                              input_path = input_path, benchmark_path = benchmark_path,
                                               incomeType = incomeType, group = group, highlight = highlight,
                                               year_end = year_end)
 
