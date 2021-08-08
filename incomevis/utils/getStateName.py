@@ -16,8 +16,8 @@ def getStateName(type):
         Parameters
         ----------
         type: str
-        Type of decile. Currently supported ``'string'`` (e.g. ``'Alabama'``) or
-        ``'numeric'`` (e.g. ``1``)
+            Type of decile. Currently supported ``'string'`` (e.g. ``'Alabama'``) or
+            ``'numeric'`` (e.g. ``1``)
 
         Returns
         -------

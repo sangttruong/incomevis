@@ -17,8 +17,8 @@ def getDecile(type):
         Parameters
         ----------
         type: str
-        Type of decile. Currently supported ``'string'`` (e.g. ``'5p'``) or
-        ``'numeric'`` (e.g. ``0.5``)
+            Type of decile. Currently supported ``'string'`` (e.g. ``'5p'``) or
+            ``'numeric'`` (e.g. ``0.5``)
 
         Returns
         -------
