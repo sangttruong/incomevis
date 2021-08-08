@@ -4,7 +4,7 @@ incomevis.vis
 incomevis.vis.visualize
 ----------------------------
 
-.. autofunction:: incomevis.vis.visualize
+.. automodule:: incomevis.vis.visualize
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ incomevis.vis.visualize
 incomevis.vis.animate
 ------------------------
 
-.. autofunction:: incomevis.vis.animate
+.. automodule:: incomevis.vis.animate
    :members:
    :undoc-members:
    :show-inheritance:
