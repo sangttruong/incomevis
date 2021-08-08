@@ -1,10 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 import numpy as np, pandas as pd
+
+# Owned
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 def bootstrap(self, seed = 0, incomeType = 'RHHINCOME', k = 'decile',
             year = 1977, statefip = 1, n = 1000000,
             output_path = ''):
   """
-  Bootstrap resampling to estimate variance and to adjust for age distributions.
+    Bootstrap resampling to estimate variance and to adjust for age distributions.
   """
   np.random.seed(seed)
   year_df = self.__raw[self.__raw['YEAR'] == year]

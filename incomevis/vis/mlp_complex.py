@@ -1,13 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 import pandas as pd, numpy as np
 from pylab import *
+
+# Owned
 from incomevis.utils import *
 from incomevis.vis.mpl_colorbar import *
 from incomevis.vis.mpl_axes import axes_config
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 def complex_animate(year, ax, k, cb, benchmark, input_path, benchmark_dir,
                     incomeType, group, highlight, year_end):
   """
-  
+    Helper function for animating complex income distribution (i.e. with benchmark). 
+    Documentation coming soon.
   """
 
   # Axes and colorbar configuration

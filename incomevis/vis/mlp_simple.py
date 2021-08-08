@@ -1,12 +1,29 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 import pandas as pd
 from pylab import *
 
+# Owned
 from incomevis.utils import *
 from incomevis.vis.mpl_colorbar import *
 from incomevis.vis.mpl_axes import axes_config
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 def simple_animate(year, ax, k, cb, benchmark, input_path, benchmark_dir,
                     incomeType, group, highlight, year_end):
+  """
+    Helper function for animating simple income distribution (i.e. without benchmark). 
+    Documentation coming soon.
+  """
   
   # Data import and calibrate with benchmark if needed
   year_df = pd.read_csv(input_path + k + '_' + group + '_year_matplotlib_' 

@@ -6,6 +6,7 @@ import IPython, json, pandas as pd, numpy as np
 from collections import OrderedDict
 
 # Owned
+from incomevis.utils import *
 __author__ = "Sang T. Truong"
 __copyright__ = "Copyright 2021, The incomevis project"
 __credits__ = ["Sang T. Truong"]
@@ -14,7 +15,6 @@ __version__ = "0.0.1"
 __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
-from incomevis.utils import *
 
 def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
   """

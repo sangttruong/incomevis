@@ -1,17 +1,37 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
 from incomevis.utils.getDecile import getDecile
 import numpy as np
+
+# Owned
 from incomevis.utils import *
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 def axes_config(ax, type, k):
     """
-        Configurate axes for 3D visualization in matplotlib
+        Helper function tp configurate axes for 3D visualization in ```matplotlib```. 
+        More documentation is coming soon.
 
         Arguments
         =============================
         ax: matplotlib 3D axes
-        type: benchmark or simple
-        k: decile or percentile
+        
+        type: str
+            ``'benchmark'``` or ``'simple'``
+        
+        k: str
+            Method of partitioning income, which is either ``'decile'`` or ``'percentile'``.
     """
+
     ax.clear()
     ax.view_init(5,-146)
     kiles = getDecile('string') if k == 'decile' else getPercentile('string')
@@ -72,17 +92,3 @@ def axes_config(ax, type, k):
         ax.set_xlabel('Poorer States                                                          Richer States',
                 fontweight = 'bold', labelpad = 30, fontsize = 20)
     else: raise RuntimeError
-
-
-# def optimized_axis_config(ax, axes_config):
-#     ax.view_init(5,-146)
-#     # parsing arguments:
-#     for axis in axes_config.key:
-#         axes_config[axis][0](config_dict[axis][0][0], config_dict[axis][0][1])
-#         ax.set_zticks(zticks)
-#         ax.set_zticklabels(ztickslabel,fontsize=15, fontweight='bold')
-#         ax.set_zlabel(zlabel, fontweight = 'bold', labelpad = zlabelpad, fontsize = 20, rotation = 90)
-#         ax.tick_params(axis = 'z', which = 'major', pad = zpad)
-#         axes_dict[axis][4].xaxis._axinfo["grid"].update({"linewidth":3, "color" : "grey", 'linestyle': '-.'})
-#         axes_dict[axis][4].xaxis.pane.fill = False # remove fill
-#         axes_dict[axis][4].xaxis.pane.set_edgecolor('w') # set color to white

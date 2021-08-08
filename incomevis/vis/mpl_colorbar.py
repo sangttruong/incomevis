@@ -1,5 +1,18 @@
-import matplotlib.pyplot as plt
-import matplotlib
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
+import matplotlib.pyplot as plt, matplotlib
+
+# Owned
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 def colorbar_config(fig, left=0.721, elevation=0.62, width=0.02, height=0.2, alpha = 0,
                     cm_str='bwr', upper = 40000, lower=-60000):

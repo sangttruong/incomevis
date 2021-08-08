@@ -1,14 +1,27 @@
-import pandas as pd, numpy as np, matplotlib.pyplot as plt
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Other Libs
+import numpy as np, matplotlib.pyplot as plt
 from matplotlib import animation, rc
 from pylab import *
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from mpl_toolkits.mplot3d.axis3d import Axis
 
+# Owned
 from incomevis.utils import *
 from incomevis.vis.mpl_colorbar import *
 from incomevis.vis.mpl_axes import axes_config
 from incomevis.vis.mlp_simple import *
 from incomevis.vis.mlp_complex import *
+__author__ = "Sang T. Truong"
+__copyright__ = "Copyright 2021, The incomevis project"
+__credits__ = ["Sang T. Truong"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Sang T. Truong"
+__email__ = "sttruong@cs.stanford.edu"
+__status__ = "Dev"
 
 # Remove gridlines unneccessary
 if not hasattr(Axis, "_get_coord_info_old"):
@@ -28,28 +41,35 @@ def animate(incomeType = 'RPPERHHINCOME',
             k = 'decile', group = 'all',
             benchmark_dir = BENCHMARK_DATA_PATH):
   """
-  Generates dynamic visualization
+  Animate economic distribution over year.
+
   Parameters
   ----------
   incomeType : str
     Income type.
     Default value is RPPERHHINCOME.
     Typically HHINCOME, RHHINCOME, ERHHINCOME, RPPERHHINCOME.
+  
   year_start : int
     Starting data year.
     Default value is 1977.
+  
   year_end : int
     Ending data year.
     Default value is 2020.
     Unlike pandas index convention, the ending data year will be
     included in render.
+  
   highlight : str
     State to highlight
+  
   k : str
     decile or percentile.
+  
   group : str
     Demographic groups.
     Typically male, female, black
+  
   benchmark_dir: str
     Benchmark directory
   """
