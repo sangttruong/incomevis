@@ -21,14 +21,15 @@ def visualize(k = 'decile', year = 1977, input_path = ''):
     Get interactive visualization in AmChart. Receive deflated data of a year with
     normalized (potentially unrounded) population with details. The data is assumed to
     have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
-    (4) ``Label``, (5) ``Color``, and (6) ``UR_NORMPOP_$year$``, with ``$year$``
+    (4) ``Label``, (5) ``Color``, and (6) ``NORMPOP_$year$``, with ``$year$``
     replaced with the year of the visualization. Regardless of the state order in the input,
     the output will always be sorted (left to right) according to the ``50p``.
 
     Parameters
     ----------
     input_path : str
-      Absolute path to data file. An example of input file name: ``decile_all_year_matplotlib_HHINCOME2020.csv``.
+      Absolute path to data file. Unlike the ``animate`` function, there is no requirement
+      of naming format for this function.
       Default: Empty string
 
     year : int
@@ -51,7 +52,7 @@ def visualize(k = 'decile', year = 1977, input_path = ''):
 
   # Replicate each state's dataline with its respective replication number
   for statefip in getStateName('numeric'):
-    rep = result.loc[statefip, 'UR_NORMPOP_' + str(year-1)] - 1
+    rep = result.loc[statefip, 'NORMPOP_' + str(year-1)] - 1
     rep = int(rep)
     line = pd.DataFrame(result.loc[statefip]).T
     line.loc[statefip, 'Label'] = ''
