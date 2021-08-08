@@ -80,6 +80,9 @@ def animate(incomeType = 'RPPERHHINCOME',
     Path to data to animate. Default: ``DEFLATED_DATA_PATH``
   """
 
+  # TODO: incomeType, group, benchmark, benchmark_path related stuffs should be move to 
+  # data processing instead of here.
+
   # Figure size
   fig = plt.figure(figsize=(20,17))
 
