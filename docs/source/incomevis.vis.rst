@@ -1,7 +1,7 @@
-incomevis.vis submodule
+incomevis.vis
 =====================
 
-incomevis.vis.visualize function
+incomevis.vis.visualize
 ----------------------------
 
 .. automodule:: incomevis.vis.visualize
@@ -9,34 +9,10 @@ incomevis.vis.visualize function
    :undoc-members:
    :show-inheritance:
 
-incomevis.vis.mpl module
+incomevis.vis.animate
 ------------------------
 
-.. automodule:: incomevis.vis.mpl
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-incomevis.vis.mpl\_axes module
-------------------------------
-
-.. automodule:: incomevis.vis.mpl_axes
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-incomevis.vis.mpl\_colorbar module
-----------------------------------
-
-.. automodule:: incomevis.vis.mpl_colorbar
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: incomevis.vis
+.. automodule:: incomevis.vis.animate
    :members:
    :undoc-members:
    :show-inheritance:

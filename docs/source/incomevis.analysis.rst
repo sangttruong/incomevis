@@ -1,8 +1,5 @@
-incomevis.analysis package
+incomevis.analysis
 ==========================
-
-Submodules
-----------
 
 incomevis.analysis.bootstrap module
 -----------------------------------
@@ -12,7 +9,7 @@ incomevis.analysis.bootstrap module
    :undoc-members:
    :show-inheritance:
 
-incomevis.analysis.compare\_distribution module
+incomevis.analysis.compare\_distribution
 -----------------------------------------------
 
 .. automodule:: incomevis.analysis.compare_distribution
@@ -20,18 +17,10 @@ incomevis.analysis.compare\_distribution module
    :undoc-members:
    :show-inheritance:
 
-incomevis.analysis.kde module
+incomevis.analysis.kde
 -----------------------------
 
 .. automodule:: incomevis.analysis.kde
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: incomevis.analysis
    :members:
    :undoc-members:
    :show-inheritance:
