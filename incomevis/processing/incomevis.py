@@ -18,30 +18,28 @@ __status__ = "Dev"
 
 class incomevis:
   """
-    Primary object for data processing
+    Primary object for data processing. The object of this class takes input data from 
+    IPUMS-CPS and IPUMS-USA and deflate them.
+    
+    Parameters
+    ----------
+    None
+      Constructor of this class does not take parameter.
+
+    Attributes
+    ----------
+      raw: ``pandas DataFrame``
+        Raw data from IPUMS-CPS. By default, data of ASEC samples from IPUMS-CPS of 1977-2020 sample year with only
+        YEAR, ASECWTH, CPI99, STATEFIP, HHINCOME, PERNUM, HFLAG variables and a few more demographic variables will be used.
+        Details about specific demographic variables are coming soon. 
+      
+      rpp: ``pandas DataFrame``
+        Regional price parity (RPP) data from IPUMS-USA.
+      
+      pop: ``pandas DataFrame``
+        Population for all year and states
   """
   def __init__(self):
-    """
-      Take input data from IPUMS-CPS and IPUMS-USA and deflate them.
-      
-      Parameters
-      ----------
-      None
-        This method does not take parameter.
-
-      Attributes
-      ----------
-        raw: ``pandas DataFrame``
-          Raw data from IPUMS-CPS. By default, data of ASEC samples from IPUMS-CPS of 1977-2020 sample year with only
-          YEAR, ASECWTH, CPI99, STATEFIP, HHINCOME, PERNUM, HFLAG variables and a few more demographic variables will be used.
-          Details about specific demographic variables are coming soon. 
-        
-        rpp: ``pandas DataFrame``
-          Regional price parity (RPP) data from IPUMS-USA.
-        
-        pop: ``pandas DataFrame``
-          Population for all year and states
-    """
     self.__raw = pd.concat([pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-1-2020.zip'),
                             pd.read_csv(SOURCE_DATA_PATH + 'ipums-cps-2-2020.zip')])
     self.__rpp = pd.read_csv(SOURCE_DATA_PATH + 'rpp.csv')
