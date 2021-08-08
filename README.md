@@ -18,7 +18,7 @@ Happy visualizing economic complexity!
 
 ### News
 * 01/2021: Our paper is presented at [National Collegiate Research Conference, Harvard University](https://www.hcura.org/about-ncrc). 
-* 08/2021: We use incomevis for a new course title [ECON390: Economics of Inequality at DePauw University](https://www.depauw.edu/academics/departments-programs/economics-management/courses/details/ECON/390/).
+* 08/2021: We use incomevis for a new course title [ECON390: Economics of Inequality](https://www.depauw.edu/academics/departments-programs/economics-management/courses/details/ECON/390/) at DePauw University.
 
 ## Installation
 
