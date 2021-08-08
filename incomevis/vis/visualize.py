@@ -22,13 +22,14 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
     normalized (potentially unrounded) population with details. The data is assumed to
     have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
     (4) ``Label``, (5) ``Color``, and (6) ``UR_NORMPOP_$year$``, with ``$year$``
-    replaced with the year of the visualization. Regardless of the state order in the input, 
+    replaced with the year of the visualization. Regardless of the state order in the input,
     the output will always be sorted (left to right) according to the ``50p``.
 
     Parameters
     ----------
     input_path : str
-      Absolute path to data file. Default: Empty string
+      Absolute path to data file. An example of input file name: ``decile_all_year_matplotlib_HHINCOME2019.csv``.
+      Default: Empty string
 
     year : int
       Year of visualization. Default: 1977
@@ -39,8 +40,9 @@ def visualize(k = 'decile', year = 1977, input_path = '', toState = False):
 
     Returns
     ----------
-    None
-      There is no return for this function.
+    ``IPython.display.HTML`` object
+      The HTML object displaying the 3D graph in IPython notebook environments (which
+      can be Colab Notebook or Jupyter Notebook).
 
   """
 
