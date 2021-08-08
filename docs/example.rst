@@ -9,8 +9,7 @@ A interactive website demonstrates library is on `this website <https://research
 
 To look up a specific function, see the API documentation.
 
-.. highlight:: python
-  :linenos:
+.. code-block:: python
 
   !git clone https://github.com/sangttruong/incomevis.git
   %cd incomevis
