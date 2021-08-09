@@ -244,7 +244,7 @@
 						{
 							"id": "ValueAxis-1",
 							"stackType": "3d",
-							"title": "Annual Household Income (2018$)",
+							"title": "Annual Household Income",
 							"maximum": 400000,
 							"titleFontSize": 15
 						}
