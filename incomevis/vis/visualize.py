@@ -44,7 +44,7 @@ def visualize(k = 'decile', input_path = ''):
   """
 
   # Convert csv to json format
-  result = pd.read_csv(input_path, index_col = 0)
+  result = pd.read_csv(input_path, index_col = 'STATEFIP')
 
   # Replicate each state's dataline with its respective replication number
   for statefip in getStateName('numeric'):
