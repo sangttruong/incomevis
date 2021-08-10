@@ -44,7 +44,7 @@ def visualize(k = 'decile', input_path = ''):
   """
 
   # Convert csv to json format
-  result = pd.read_csv(input_path, index_col = 'STATEFIP')
+  result = pd.read_csv(input_path, index_col = 'State')
 
   # Replicate each state's dataline with its respective replication number
   for statefip in getStateName('numeric'):
@@ -55,7 +55,7 @@ def visualize(k = 'decile', input_path = ''):
     for _ in range(0, rep): result = pd.concat([result, line])
 
   # Add the middle property
-  result.reset_index(drop = True, inplace = True)
+  result.reset_index(drop = False, inplace = True)
   result.sort_values(by=['State'], inplace = True)
   result['Middle'] = np.nan
   counter = 0
