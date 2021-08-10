@@ -20,9 +20,9 @@ def visualize(k = 'decile', input_path = ''):
   """
     Get interactive visualization in AmChart. Receive deflated data of one year with
     normalized (potentially unrounded) population with details. The data is assumed to
-    have (1) an index column using ``STATEFIP``, (2) ``State``, (3) kiles name,
-    (4) ``Label``, (5) ``Color``, and (6) ``NORMPOP``. Regardless of the state order in the input,
-    the output will always be sorted (left to right) according to the ``50p``.
+    have (1) an index column using ``State``, (3) kiles name, (4) ``Label``, (5) ``Color``, 
+    and (6) ``NORMPOP``. Regardless of the state order in the input, the output will always 
+    be sorted (left to right) according to the ``50p``.
 
     Parameters
     ----------
@@ -46,20 +46,25 @@ def visualize(k = 'decile', input_path = ''):
   # Convert csv to json format
   result = pd.read_csv(input_path, index_col = 'State')
 
+  # use statename from the data instead of getStateName('string') function 
+  # to allow user to make mistake of naming state wrong (like DC instead of District of Columbia)
+  statenamee = result.index.tolist()
+
   # Replicate each state's dataline with its respective replication number
-  for statefip in getStateName('numeric'):
-    rep = result.loc[statefip, 'NORMPOP'] - 1
+  for state in statenamee:
+    rep = result.loc[state, 'NORMPOP'] - 1
     rep = int(rep)
-    line = pd.DataFrame(result.loc[statefip]).T
-    line.loc[statefip, 'Label'] = ''
+    line = pd.DataFrame(result.loc[state]).T
+    line.loc[state, 'Label'] = ''
     for _ in range(0, rep): result = pd.concat([result, line])
 
   # Add the middle property
   result.reset_index(drop = False, inplace = True)
+  result.rename(columns={'index': 'State'}, inplace = True)
   result.sort_values(by=['State'], inplace = True)
   result['Middle'] = np.nan
   counter = 0
-  for state in getStateName('string'):
+  for state in statenamee:
     temp = result[result['State'] == state]
     temp_size = len(temp.index)
     middle = (temp_size // 2)
