@@ -8,7 +8,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/incomevis.svg?logo=pypi&logoColor=white)](https://pypi.org/project/incomevis/)
 [![Downloads](https://pepy.tech/badge/incomevis)](https://pepy.tech/project/incomevis)
 
-**[Paper](https://arxiv.org/abs/2108.03733)** | **[Colab Tutorial](https://colab.research.google.com/drive/1oebYZsoDHM8e0urOedVfjimrjvrxR-nY?usp=sharing)** | **[Documentation](https://incomevis.readthedocs.io/en/latest/)** | **[PyPI package](https://pypi.org/project/incomevis/)** |**[External Resources](https://cps.ipums.org/cps/)**
+**[Paper V2](https://arxiv.org/abs/2108.03733)[, V1](https://ideas.repec.org/p/dew/wpaper/2020-03.html)** | **[Tutorial](https://colab.research.google.com/drive/1oebYZsoDHM8e0urOedVfjimrjvrxR-nY?usp=sharing)** | **[Documentation](https://incomevis.readthedocs.io/en/latest/)** 
 
 Are you a *policy-maker* who wants to see the dynamics of national income inequality? Are you a *researcher* who wants to visualize economic growth puzzles such as convergence? Or are you simply a *curious individual* who wants to see your position in the national income distribution? Wonder no more because we present *incomevis*, a library for income visualization (and more)!
 
