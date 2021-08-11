@@ -16,7 +16,7 @@ __maintainer__ = "Sang T. Truong"
 __email__ = "sttruong@cs.stanford.edu"
 __status__ = "Dev"
 
-def visualize(k = 'decile', input_path = ''):
+def visualize(k = 'decile', input_path = '', max_income = 400000):
   """
     Get interactive visualization in AmChart. Receive deflated data of one year with
     normalized (potentially unrounded) population with details. The data is assumed to
@@ -35,6 +35,9 @@ def visualize(k = 'decile', input_path = ''):
     k: str
       Method of partitioning income, which is either ``'decile'`` or ``'percentile'``.
       Default: ``'decile'``.
+
+    max_income: int
+      Maximum income to be display on the vertical axis
 
     Returns
     ----------
@@ -88,5 +91,10 @@ def visualize(k = 'decile', input_path = ''):
     if (not toState): html1 = open(SOURCE_DATA_PATH + 'html1_p_year.txt', 'r')
     else: html1 = html1 = open(SOURCE_DATA_PATH + 'html1_p_state.txt', 'r')
   html2 = open(SOURCE_DATA_PATH + 'html2.txt', 'r')
-  result = html1.read() + result + html2.read()
+
+  # Replace 'max_income' in the html file with the input max_income
+  html1 = html1.read()
+  html1 = html1.replace('max_income', str(max_income))
+
+  result = html1 + result + html2.read()
   return IPython.display.HTML(data = result)

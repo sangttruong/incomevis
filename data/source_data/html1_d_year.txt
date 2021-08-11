@@ -233,7 +233,7 @@
 							"lineAlpha": 1,
 							"position": "right",
 							"toCategory": "X",
-							"toValue": 400000,
+							"toValue": max_income,
 							"value": 0,
 							"valueAxis": "ValueAxis-1",
 										"position": "top",
@@ -245,7 +245,7 @@
 							"id": "ValueAxis-1",
 							"stackType": "3d",
 							"title": "Annual Household Income",
-							"maximum": 400000,
+							"maximum": max_income,
 							"titleFontSize": 15
 						}
 					],
