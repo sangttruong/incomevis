@@ -1,1 +1,0 @@
-This directory contain benchmark data, often average national deflated income.
